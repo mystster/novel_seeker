@@ -5,6 +5,7 @@ part 'narou_novel_info.freezed.dart';
 part 'narou_novel_info.g.dart';
 
 @freezed
+/// なろうAPIからのデータを格納するクラス
 class NarouNovelInfo with _$NarouNovelInfo {
   const factory NarouNovelInfo({
     String? title,

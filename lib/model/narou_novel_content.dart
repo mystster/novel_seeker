@@ -7,6 +7,7 @@ part 'narou_novel_content.freezed.dart';
 part 'narou_novel_content.g.dart';
 
 @freezed
+/// なろうの小説の1章のデータが入っているクラス
 class NarouNovelContent
     with _$NarouNovelContent
     implements Insertable<NarouNovelContent> {
@@ -21,7 +22,7 @@ class NarouNovelContent
 
   @override
   Map<String, Expression<Object>> toColumns(bool nullToAbsent) {
-    return NarouNovelContentTableCompanion(
+    return NarouNovelContentsCompanion(
       title: Value(title),
       body: Value(body),
       chapter: Value(chapter),

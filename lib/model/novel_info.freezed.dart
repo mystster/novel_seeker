@@ -25,7 +25,7 @@ mixin _$NovelInfo {
   DateTime get registrationDate => throw _privateConstructorUsedError;
   List<NarouNovelContent>? get contents => throw _privateConstructorUsedError;
   int? get scrollPosition => throw _privateConstructorUsedError;
-  int? get chapter => throw _privateConstructorUsedError;
+  int? get currentChapter => throw _privateConstructorUsedError;
 
   /// Serializes this NovelInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $NovelInfoCopyWith<$Res> {
       DateTime registrationDate,
       List<NarouNovelContent>? contents,
       int? scrollPosition,
-      int? chapter});
+      int? currentChapter});
 
   $NarouNovelInfoCopyWith<$Res>? get novelInfo;
 }
@@ -73,7 +73,7 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
     Object? registrationDate = null,
     Object? contents = freezed,
     Object? scrollPosition = freezed,
-    Object? chapter = freezed,
+    Object? currentChapter = freezed,
   }) {
     return _then(_value.copyWith(
       ncode: null == ncode
@@ -96,9 +96,9 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
           ? _value.scrollPosition
           : scrollPosition // ignore: cast_nullable_to_non_nullable
               as int?,
-      chapter: freezed == chapter
-          ? _value.chapter
-          : chapter // ignore: cast_nullable_to_non_nullable
+      currentChapter: freezed == currentChapter
+          ? _value.currentChapter
+          : currentChapter // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
   }
@@ -132,7 +132,7 @@ abstract class _$$NovelInfoImplCopyWith<$Res>
       DateTime registrationDate,
       List<NarouNovelContent>? contents,
       int? scrollPosition,
-      int? chapter});
+      int? currentChapter});
 
   @override
   $NarouNovelInfoCopyWith<$Res>? get novelInfo;
@@ -156,7 +156,7 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
     Object? registrationDate = null,
     Object? contents = freezed,
     Object? scrollPosition = freezed,
-    Object? chapter = freezed,
+    Object? currentChapter = freezed,
   }) {
     return _then(_$NovelInfoImpl(
       ncode: null == ncode
@@ -172,16 +172,16 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
           : registrationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       contents: freezed == contents
-          ? _value._contents
+          ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
               as List<NarouNovelContent>?,
       scrollPosition: freezed == scrollPosition
           ? _value.scrollPosition
           : scrollPosition // ignore: cast_nullable_to_non_nullable
               as int?,
-      chapter: freezed == chapter
-          ? _value.chapter
-          : chapter // ignore: cast_nullable_to_non_nullable
+      currentChapter: freezed == currentChapter
+          ? _value.currentChapter
+          : currentChapter // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -189,15 +189,15 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NovelInfoImpl implements _NovelInfo {
+class _$NovelInfoImpl extends _NovelInfo {
   const _$NovelInfoImpl(
       {required this.ncode,
       this.novelInfo,
       required this.registrationDate,
-      final List<NarouNovelContent>? contents,
+      this.contents,
       this.scrollPosition,
-      this.chapter})
-      : _contents = contents;
+      this.currentChapter})
+      : super._();
 
   factory _$NovelInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$NovelInfoImplFromJson(json);
@@ -208,24 +208,16 @@ class _$NovelInfoImpl implements _NovelInfo {
   final NarouNovelInfo? novelInfo;
   @override
   final DateTime registrationDate;
-  final List<NarouNovelContent>? _contents;
   @override
-  List<NarouNovelContent>? get contents {
-    final value = _contents;
-    if (value == null) return null;
-    if (_contents is EqualUnmodifiableListView) return _contents;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<NarouNovelContent>? contents;
   @override
   final int? scrollPosition;
   @override
-  final int? chapter;
+  final int? currentChapter;
 
   @override
   String toString() {
-    return 'NovelInfo(ncode: $ncode, novelInfo: $novelInfo, registrationDate: $registrationDate, contents: $contents, scrollPosition: $scrollPosition, chapter: $chapter)';
+    return 'NovelInfo(ncode: $ncode, novelInfo: $novelInfo, registrationDate: $registrationDate, contents: $contents, scrollPosition: $scrollPosition, currentChapter: $currentChapter)';
   }
 
   @override
@@ -238,10 +230,11 @@ class _$NovelInfoImpl implements _NovelInfo {
                 other.novelInfo == novelInfo) &&
             (identical(other.registrationDate, registrationDate) ||
                 other.registrationDate == registrationDate) &&
-            const DeepCollectionEquality().equals(other._contents, _contents) &&
+            const DeepCollectionEquality().equals(other.contents, contents) &&
             (identical(other.scrollPosition, scrollPosition) ||
                 other.scrollPosition == scrollPosition) &&
-            (identical(other.chapter, chapter) || other.chapter == chapter));
+            (identical(other.currentChapter, currentChapter) ||
+                other.currentChapter == currentChapter));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -251,9 +244,9 @@ class _$NovelInfoImpl implements _NovelInfo {
       ncode,
       novelInfo,
       registrationDate,
-      const DeepCollectionEquality().hash(_contents),
+      const DeepCollectionEquality().hash(contents),
       scrollPosition,
-      chapter);
+      currentChapter);
 
   /// Create a copy of NovelInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -271,14 +264,15 @@ class _$NovelInfoImpl implements _NovelInfo {
   }
 }
 
-abstract class _NovelInfo implements NovelInfo {
+abstract class _NovelInfo extends NovelInfo {
   const factory _NovelInfo(
       {required final String ncode,
       final NarouNovelInfo? novelInfo,
       required final DateTime registrationDate,
       final List<NarouNovelContent>? contents,
       final int? scrollPosition,
-      final int? chapter}) = _$NovelInfoImpl;
+      final int? currentChapter}) = _$NovelInfoImpl;
+  const _NovelInfo._() : super._();
 
   factory _NovelInfo.fromJson(Map<String, dynamic> json) =
       _$NovelInfoImpl.fromJson;
@@ -294,7 +288,7 @@ abstract class _NovelInfo implements NovelInfo {
   @override
   int? get scrollPosition;
   @override
-  int? get chapter;
+  int? get currentChapter;
 
   /// Create a copy of NovelInfo
   /// with the given fields replaced by the non-null parameter values.
