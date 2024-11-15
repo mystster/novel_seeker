@@ -2,12 +2,12 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 import '../model/narou_novel_content.dart';
+import '../model/narou_novel_info.dart';
+import '../model/novel_info.dart';
 
 part 'app_database.g.dart';
 
-
-
-@DriftDatabase(tables: [NarouNovelContentTable])
+@DriftDatabase(tables: [NarouNovelContents, NovelInfos])
 class AppDatabase extends _$AppDatabase {
   // After generating code, this class needs to define a schemaVersion getter
   // and a constructor telling drift where the database should be stored.
@@ -24,9 +24,8 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-
 @UseRowClass(NarouNovelContent)
-class NarouNovelContentTable extends Table {
+class NarouNovelContents extends Table {
   TextColumn get body => text()();
   TextColumn get chapter => text()();
   TextColumn get ncode => text()();
@@ -34,4 +33,14 @@ class NarouNovelContentTable extends Table {
   Set<Column> get primaryKey => {ncode, chapter};
 
   TextColumn get title => text()();
+}
+
+
+@UseRowClass(NovelInfo)
+class NovelInfos extends Table {
+  IntColumn get currentChapter => integer()();
+  TextColumn get ncode => text()();
+  DateTimeColumn get registrationDate => dateTime()();
+  IntColumn get scrollPosition => integer()();
+  
 }
