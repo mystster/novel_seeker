@@ -16,8 +16,8 @@ _$NovelInfoImpl _$$NovelInfoImplFromJson(Map<String, dynamic> json) =>
       contents: (json['contents'] as List<dynamic>?)
           ?.map((e) => NarouNovelContent.fromJson(e as Map<String, dynamic>))
           .toList(),
-      scrollPosition: (json['scroll_position'] as num?)?.toInt(),
-      currentChapter: (json['current_chapter'] as num?)?.toInt(),
+      scrollPosition: (json['scroll_position'] as num?)?.toInt() ?? 0,
+      currentChapter: (json['current_chapter'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$NovelInfoImplToJson(_$NovelInfoImpl instance) =>
