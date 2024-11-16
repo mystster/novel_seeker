@@ -20,44 +20,45 @@ NarouNovelInfo _$NarouNovelInfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NarouNovelInfo {
-  String? get title => throw _privateConstructorUsedError;
-  String? get ncode => throw _privateConstructorUsedError;
-  int? get userid => throw _privateConstructorUsedError;
-  String? get writer => throw _privateConstructorUsedError;
-  String? get story => throw _privateConstructorUsedError;
-  int? get biggenre => throw _privateConstructorUsedError;
-  int? get genre => throw _privateConstructorUsedError;
-  String? get gensaku => throw _privateConstructorUsedError;
-  String? get keyword => throw _privateConstructorUsedError;
-  String? get generalFirstup => throw _privateConstructorUsedError;
-  String? get generalLastup => throw _privateConstructorUsedError;
-  int? get novelType => throw _privateConstructorUsedError;
-  int? get end => throw _privateConstructorUsedError;
-  int? get generalAllNo => throw _privateConstructorUsedError;
-  int? get length => throw _privateConstructorUsedError;
-  int? get time => throw _privateConstructorUsedError;
-  int? get isstop => throw _privateConstructorUsedError;
-  int? get isr15 => throw _privateConstructorUsedError;
-  int? get isbl => throw _privateConstructorUsedError;
-  int? get isgl => throw _privateConstructorUsedError;
-  int? get iszankoku => throw _privateConstructorUsedError;
-  int? get istensei => throw _privateConstructorUsedError;
-  int? get istenni => throw _privateConstructorUsedError;
-  int? get globalPoint => throw _privateConstructorUsedError;
-  int? get dailyPoint => throw _privateConstructorUsedError;
-  int? get weeklyPoint => throw _privateConstructorUsedError;
-  int? get monthlyPoint => throw _privateConstructorUsedError;
-  int? get quarterPoint => throw _privateConstructorUsedError;
-  int? get yearlyPoint => throw _privateConstructorUsedError;
-  int? get favNovelCnt => throw _privateConstructorUsedError;
-  int? get impressionCnt => throw _privateConstructorUsedError;
-  int? get reviewCnt => throw _privateConstructorUsedError;
-  int? get allPoint => throw _privateConstructorUsedError;
-  int? get allHyokaCnt => throw _privateConstructorUsedError;
-  int? get sasieCnt => throw _privateConstructorUsedError;
-  int? get kaiwaritu => throw _privateConstructorUsedError;
-  String? get novelupdatedAt => throw _privateConstructorUsedError;
-  String? get updatedAt => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get ncode => throw _privateConstructorUsedError;
+  int get userid => throw _privateConstructorUsedError;
+  String get writer => throw _privateConstructorUsedError;
+  String get story => throw _privateConstructorUsedError;
+  int get biggenre => throw _privateConstructorUsedError;
+  int get genre => throw _privateConstructorUsedError;
+  int get nocgenre => throw _privateConstructorUsedError;
+  String get gensaku => throw _privateConstructorUsedError;
+  String get keyword => throw _privateConstructorUsedError;
+  DateTime get generalFirstup => throw _privateConstructorUsedError;
+  DateTime get generalLastup => throw _privateConstructorUsedError;
+  int get novelType => throw _privateConstructorUsedError;
+  int get end => throw _privateConstructorUsedError;
+  int get generalAllNo => throw _privateConstructorUsedError;
+  int get length => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
+  int get isstop => throw _privateConstructorUsedError;
+  int get isr15 => throw _privateConstructorUsedError;
+  int get isbl => throw _privateConstructorUsedError;
+  int get isgl => throw _privateConstructorUsedError;
+  int get iszankoku => throw _privateConstructorUsedError;
+  int get istensei => throw _privateConstructorUsedError;
+  int get istenni => throw _privateConstructorUsedError;
+  int get globalPoint => throw _privateConstructorUsedError;
+  int get dailyPoint => throw _privateConstructorUsedError;
+  int get weeklyPoint => throw _privateConstructorUsedError;
+  int get monthlyPoint => throw _privateConstructorUsedError;
+  int get quarterPoint => throw _privateConstructorUsedError;
+  int get yearlyPoint => throw _privateConstructorUsedError;
+  int get favNovelCnt => throw _privateConstructorUsedError;
+  int get impressionCnt => throw _privateConstructorUsedError;
+  int get reviewCnt => throw _privateConstructorUsedError;
+  int get allPoint => throw _privateConstructorUsedError;
+  int get allHyokaCnt => throw _privateConstructorUsedError;
+  int get sasieCnt => throw _privateConstructorUsedError;
+  int get kaiwaritu => throw _privateConstructorUsedError;
+  DateTime get novelupdatedAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this NarouNovelInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -76,44 +77,45 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       _$NarouNovelInfoCopyWithImpl<$Res, NarouNovelInfo>;
   @useResult
   $Res call(
-      {String? title,
-      String? ncode,
-      int? userid,
-      String? writer,
-      String? story,
-      int? biggenre,
-      int? genre,
-      String? gensaku,
-      String? keyword,
-      String? generalFirstup,
-      String? generalLastup,
-      int? novelType,
-      int? end,
-      int? generalAllNo,
-      int? length,
-      int? time,
-      int? isstop,
-      int? isr15,
-      int? isbl,
-      int? isgl,
-      int? iszankoku,
-      int? istensei,
-      int? istenni,
-      int? globalPoint,
-      int? dailyPoint,
-      int? weeklyPoint,
-      int? monthlyPoint,
-      int? quarterPoint,
-      int? yearlyPoint,
-      int? favNovelCnt,
-      int? impressionCnt,
-      int? reviewCnt,
-      int? allPoint,
-      int? allHyokaCnt,
-      int? sasieCnt,
-      int? kaiwaritu,
-      String? novelupdatedAt,
-      String? updatedAt});
+      {String title,
+      String ncode,
+      int userid,
+      String writer,
+      String story,
+      int biggenre,
+      int genre,
+      int nocgenre,
+      String gensaku,
+      String keyword,
+      DateTime generalFirstup,
+      DateTime generalLastup,
+      int novelType,
+      int end,
+      int generalAllNo,
+      int length,
+      int time,
+      int isstop,
+      int isr15,
+      int isbl,
+      int isgl,
+      int iszankoku,
+      int istensei,
+      int istenni,
+      int globalPoint,
+      int dailyPoint,
+      int weeklyPoint,
+      int monthlyPoint,
+      int quarterPoint,
+      int yearlyPoint,
+      int favNovelCnt,
+      int impressionCnt,
+      int reviewCnt,
+      int allPoint,
+      int allHyokaCnt,
+      int sasieCnt,
+      int kaiwaritu,
+      DateTime novelupdatedAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -131,198 +133,203 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? ncode = freezed,
-    Object? userid = freezed,
-    Object? writer = freezed,
-    Object? story = freezed,
-    Object? biggenre = freezed,
-    Object? genre = freezed,
-    Object? gensaku = freezed,
-    Object? keyword = freezed,
-    Object? generalFirstup = freezed,
-    Object? generalLastup = freezed,
-    Object? novelType = freezed,
-    Object? end = freezed,
-    Object? generalAllNo = freezed,
-    Object? length = freezed,
-    Object? time = freezed,
-    Object? isstop = freezed,
-    Object? isr15 = freezed,
-    Object? isbl = freezed,
-    Object? isgl = freezed,
-    Object? iszankoku = freezed,
-    Object? istensei = freezed,
-    Object? istenni = freezed,
-    Object? globalPoint = freezed,
-    Object? dailyPoint = freezed,
-    Object? weeklyPoint = freezed,
-    Object? monthlyPoint = freezed,
-    Object? quarterPoint = freezed,
-    Object? yearlyPoint = freezed,
-    Object? favNovelCnt = freezed,
-    Object? impressionCnt = freezed,
-    Object? reviewCnt = freezed,
-    Object? allPoint = freezed,
-    Object? allHyokaCnt = freezed,
-    Object? sasieCnt = freezed,
-    Object? kaiwaritu = freezed,
-    Object? novelupdatedAt = freezed,
-    Object? updatedAt = freezed,
+    Object? title = null,
+    Object? ncode = null,
+    Object? userid = null,
+    Object? writer = null,
+    Object? story = null,
+    Object? biggenre = null,
+    Object? genre = null,
+    Object? nocgenre = null,
+    Object? gensaku = null,
+    Object? keyword = null,
+    Object? generalFirstup = null,
+    Object? generalLastup = null,
+    Object? novelType = null,
+    Object? end = null,
+    Object? generalAllNo = null,
+    Object? length = null,
+    Object? time = null,
+    Object? isstop = null,
+    Object? isr15 = null,
+    Object? isbl = null,
+    Object? isgl = null,
+    Object? iszankoku = null,
+    Object? istensei = null,
+    Object? istenni = null,
+    Object? globalPoint = null,
+    Object? dailyPoint = null,
+    Object? weeklyPoint = null,
+    Object? monthlyPoint = null,
+    Object? quarterPoint = null,
+    Object? yearlyPoint = null,
+    Object? favNovelCnt = null,
+    Object? impressionCnt = null,
+    Object? reviewCnt = null,
+    Object? allPoint = null,
+    Object? allHyokaCnt = null,
+    Object? sasieCnt = null,
+    Object? kaiwaritu = null,
+    Object? novelupdatedAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
-      title: freezed == title
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ncode: freezed == ncode
+              as String,
+      ncode: null == ncode
           ? _value.ncode
           : ncode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userid: freezed == userid
+              as String,
+      userid: null == userid
           ? _value.userid
           : userid // ignore: cast_nullable_to_non_nullable
-              as int?,
-      writer: freezed == writer
+              as int,
+      writer: null == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      story: freezed == story
+              as String,
+      story: null == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
-              as String?,
-      biggenre: freezed == biggenre
+              as String,
+      biggenre: null == biggenre
           ? _value.biggenre
           : biggenre // ignore: cast_nullable_to_non_nullable
-              as int?,
-      genre: freezed == genre
+              as int,
+      genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int?,
-      gensaku: freezed == gensaku
+              as int,
+      nocgenre: null == nocgenre
+          ? _value.nocgenre
+          : nocgenre // ignore: cast_nullable_to_non_nullable
+              as int,
+      gensaku: null == gensaku
           ? _value.gensaku
           : gensaku // ignore: cast_nullable_to_non_nullable
-              as String?,
-      keyword: freezed == keyword
+              as String,
+      keyword: null == keyword
           ? _value.keyword
           : keyword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      generalFirstup: freezed == generalFirstup
+              as String,
+      generalFirstup: null == generalFirstup
           ? _value.generalFirstup
           : generalFirstup // ignore: cast_nullable_to_non_nullable
-              as String?,
-      generalLastup: freezed == generalLastup
+              as DateTime,
+      generalLastup: null == generalLastup
           ? _value.generalLastup
           : generalLastup // ignore: cast_nullable_to_non_nullable
-              as String?,
-      novelType: freezed == novelType
+              as DateTime,
+      novelType: null == novelType
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
-              as int?,
-      end: freezed == end
+              as int,
+      end: null == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as int?,
-      generalAllNo: freezed == generalAllNo
+              as int,
+      generalAllNo: null == generalAllNo
           ? _value.generalAllNo
           : generalAllNo // ignore: cast_nullable_to_non_nullable
-              as int?,
-      length: freezed == length
+              as int,
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
-              as int?,
-      time: freezed == time
+              as int,
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isstop: freezed == isstop
+              as int,
+      isstop: null == isstop
           ? _value.isstop
           : isstop // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isr15: freezed == isr15
+              as int,
+      isr15: null == isr15
           ? _value.isr15
           : isr15 // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isbl: freezed == isbl
+              as int,
+      isbl: null == isbl
           ? _value.isbl
           : isbl // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isgl: freezed == isgl
+              as int,
+      isgl: null == isgl
           ? _value.isgl
           : isgl // ignore: cast_nullable_to_non_nullable
-              as int?,
-      iszankoku: freezed == iszankoku
+              as int,
+      iszankoku: null == iszankoku
           ? _value.iszankoku
           : iszankoku // ignore: cast_nullable_to_non_nullable
-              as int?,
-      istensei: freezed == istensei
+              as int,
+      istensei: null == istensei
           ? _value.istensei
           : istensei // ignore: cast_nullable_to_non_nullable
-              as int?,
-      istenni: freezed == istenni
+              as int,
+      istenni: null == istenni
           ? _value.istenni
           : istenni // ignore: cast_nullable_to_non_nullable
-              as int?,
-      globalPoint: freezed == globalPoint
+              as int,
+      globalPoint: null == globalPoint
           ? _value.globalPoint
           : globalPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dailyPoint: freezed == dailyPoint
+              as int,
+      dailyPoint: null == dailyPoint
           ? _value.dailyPoint
           : dailyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      weeklyPoint: freezed == weeklyPoint
+              as int,
+      weeklyPoint: null == weeklyPoint
           ? _value.weeklyPoint
           : weeklyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      monthlyPoint: freezed == monthlyPoint
+              as int,
+      monthlyPoint: null == monthlyPoint
           ? _value.monthlyPoint
           : monthlyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      quarterPoint: freezed == quarterPoint
+              as int,
+      quarterPoint: null == quarterPoint
           ? _value.quarterPoint
           : quarterPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      yearlyPoint: freezed == yearlyPoint
+              as int,
+      yearlyPoint: null == yearlyPoint
           ? _value.yearlyPoint
           : yearlyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      favNovelCnt: freezed == favNovelCnt
+              as int,
+      favNovelCnt: null == favNovelCnt
           ? _value.favNovelCnt
           : favNovelCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      impressionCnt: freezed == impressionCnt
+              as int,
+      impressionCnt: null == impressionCnt
           ? _value.impressionCnt
           : impressionCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      reviewCnt: freezed == reviewCnt
+              as int,
+      reviewCnt: null == reviewCnt
           ? _value.reviewCnt
           : reviewCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allPoint: freezed == allPoint
+              as int,
+      allPoint: null == allPoint
           ? _value.allPoint
           : allPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allHyokaCnt: freezed == allHyokaCnt
+              as int,
+      allHyokaCnt: null == allHyokaCnt
           ? _value.allHyokaCnt
           : allHyokaCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sasieCnt: freezed == sasieCnt
+              as int,
+      sasieCnt: null == sasieCnt
           ? _value.sasieCnt
           : sasieCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      kaiwaritu: freezed == kaiwaritu
+              as int,
+      kaiwaritu: null == kaiwaritu
           ? _value.kaiwaritu
           : kaiwaritu // ignore: cast_nullable_to_non_nullable
-              as int?,
-      novelupdatedAt: freezed == novelupdatedAt
+              as int,
+      novelupdatedAt: null == novelupdatedAt
           ? _value.novelupdatedAt
           : novelupdatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: freezed == updatedAt
+              as DateTime,
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -336,44 +343,45 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? title,
-      String? ncode,
-      int? userid,
-      String? writer,
-      String? story,
-      int? biggenre,
-      int? genre,
-      String? gensaku,
-      String? keyword,
-      String? generalFirstup,
-      String? generalLastup,
-      int? novelType,
-      int? end,
-      int? generalAllNo,
-      int? length,
-      int? time,
-      int? isstop,
-      int? isr15,
-      int? isbl,
-      int? isgl,
-      int? iszankoku,
-      int? istensei,
-      int? istenni,
-      int? globalPoint,
-      int? dailyPoint,
-      int? weeklyPoint,
-      int? monthlyPoint,
-      int? quarterPoint,
-      int? yearlyPoint,
-      int? favNovelCnt,
-      int? impressionCnt,
-      int? reviewCnt,
-      int? allPoint,
-      int? allHyokaCnt,
-      int? sasieCnt,
-      int? kaiwaritu,
-      String? novelupdatedAt,
-      String? updatedAt});
+      {String title,
+      String ncode,
+      int userid,
+      String writer,
+      String story,
+      int biggenre,
+      int genre,
+      int nocgenre,
+      String gensaku,
+      String keyword,
+      DateTime generalFirstup,
+      DateTime generalLastup,
+      int novelType,
+      int end,
+      int generalAllNo,
+      int length,
+      int time,
+      int isstop,
+      int isr15,
+      int isbl,
+      int isgl,
+      int iszankoku,
+      int istensei,
+      int istenni,
+      int globalPoint,
+      int dailyPoint,
+      int weeklyPoint,
+      int monthlyPoint,
+      int quarterPoint,
+      int yearlyPoint,
+      int favNovelCnt,
+      int impressionCnt,
+      int reviewCnt,
+      int allPoint,
+      int allHyokaCnt,
+      int sasieCnt,
+      int kaiwaritu,
+      DateTime novelupdatedAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -389,330 +397,343 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? ncode = freezed,
-    Object? userid = freezed,
-    Object? writer = freezed,
-    Object? story = freezed,
-    Object? biggenre = freezed,
-    Object? genre = freezed,
-    Object? gensaku = freezed,
-    Object? keyword = freezed,
-    Object? generalFirstup = freezed,
-    Object? generalLastup = freezed,
-    Object? novelType = freezed,
-    Object? end = freezed,
-    Object? generalAllNo = freezed,
-    Object? length = freezed,
-    Object? time = freezed,
-    Object? isstop = freezed,
-    Object? isr15 = freezed,
-    Object? isbl = freezed,
-    Object? isgl = freezed,
-    Object? iszankoku = freezed,
-    Object? istensei = freezed,
-    Object? istenni = freezed,
-    Object? globalPoint = freezed,
-    Object? dailyPoint = freezed,
-    Object? weeklyPoint = freezed,
-    Object? monthlyPoint = freezed,
-    Object? quarterPoint = freezed,
-    Object? yearlyPoint = freezed,
-    Object? favNovelCnt = freezed,
-    Object? impressionCnt = freezed,
-    Object? reviewCnt = freezed,
-    Object? allPoint = freezed,
-    Object? allHyokaCnt = freezed,
-    Object? sasieCnt = freezed,
-    Object? kaiwaritu = freezed,
-    Object? novelupdatedAt = freezed,
-    Object? updatedAt = freezed,
+    Object? title = null,
+    Object? ncode = null,
+    Object? userid = null,
+    Object? writer = null,
+    Object? story = null,
+    Object? biggenre = null,
+    Object? genre = null,
+    Object? nocgenre = null,
+    Object? gensaku = null,
+    Object? keyword = null,
+    Object? generalFirstup = null,
+    Object? generalLastup = null,
+    Object? novelType = null,
+    Object? end = null,
+    Object? generalAllNo = null,
+    Object? length = null,
+    Object? time = null,
+    Object? isstop = null,
+    Object? isr15 = null,
+    Object? isbl = null,
+    Object? isgl = null,
+    Object? iszankoku = null,
+    Object? istensei = null,
+    Object? istenni = null,
+    Object? globalPoint = null,
+    Object? dailyPoint = null,
+    Object? weeklyPoint = null,
+    Object? monthlyPoint = null,
+    Object? quarterPoint = null,
+    Object? yearlyPoint = null,
+    Object? favNovelCnt = null,
+    Object? impressionCnt = null,
+    Object? reviewCnt = null,
+    Object? allPoint = null,
+    Object? allHyokaCnt = null,
+    Object? sasieCnt = null,
+    Object? kaiwaritu = null,
+    Object? novelupdatedAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$NarouNovelInfoImpl(
-      title: freezed == title
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ncode: freezed == ncode
+              as String,
+      ncode: null == ncode
           ? _value.ncode
           : ncode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userid: freezed == userid
+              as String,
+      userid: null == userid
           ? _value.userid
           : userid // ignore: cast_nullable_to_non_nullable
-              as int?,
-      writer: freezed == writer
+              as int,
+      writer: null == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      story: freezed == story
+              as String,
+      story: null == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
-              as String?,
-      biggenre: freezed == biggenre
+              as String,
+      biggenre: null == biggenre
           ? _value.biggenre
           : biggenre // ignore: cast_nullable_to_non_nullable
-              as int?,
-      genre: freezed == genre
+              as int,
+      genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int?,
-      gensaku: freezed == gensaku
+              as int,
+      nocgenre: null == nocgenre
+          ? _value.nocgenre
+          : nocgenre // ignore: cast_nullable_to_non_nullable
+              as int,
+      gensaku: null == gensaku
           ? _value.gensaku
           : gensaku // ignore: cast_nullable_to_non_nullable
-              as String?,
-      keyword: freezed == keyword
+              as String,
+      keyword: null == keyword
           ? _value.keyword
           : keyword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      generalFirstup: freezed == generalFirstup
+              as String,
+      generalFirstup: null == generalFirstup
           ? _value.generalFirstup
           : generalFirstup // ignore: cast_nullable_to_non_nullable
-              as String?,
-      generalLastup: freezed == generalLastup
+              as DateTime,
+      generalLastup: null == generalLastup
           ? _value.generalLastup
           : generalLastup // ignore: cast_nullable_to_non_nullable
-              as String?,
-      novelType: freezed == novelType
+              as DateTime,
+      novelType: null == novelType
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
-              as int?,
-      end: freezed == end
+              as int,
+      end: null == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as int?,
-      generalAllNo: freezed == generalAllNo
+              as int,
+      generalAllNo: null == generalAllNo
           ? _value.generalAllNo
           : generalAllNo // ignore: cast_nullable_to_non_nullable
-              as int?,
-      length: freezed == length
+              as int,
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
-              as int?,
-      time: freezed == time
+              as int,
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isstop: freezed == isstop
+              as int,
+      isstop: null == isstop
           ? _value.isstop
           : isstop // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isr15: freezed == isr15
+              as int,
+      isr15: null == isr15
           ? _value.isr15
           : isr15 // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isbl: freezed == isbl
+              as int,
+      isbl: null == isbl
           ? _value.isbl
           : isbl // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isgl: freezed == isgl
+              as int,
+      isgl: null == isgl
           ? _value.isgl
           : isgl // ignore: cast_nullable_to_non_nullable
-              as int?,
-      iszankoku: freezed == iszankoku
+              as int,
+      iszankoku: null == iszankoku
           ? _value.iszankoku
           : iszankoku // ignore: cast_nullable_to_non_nullable
-              as int?,
-      istensei: freezed == istensei
+              as int,
+      istensei: null == istensei
           ? _value.istensei
           : istensei // ignore: cast_nullable_to_non_nullable
-              as int?,
-      istenni: freezed == istenni
+              as int,
+      istenni: null == istenni
           ? _value.istenni
           : istenni // ignore: cast_nullable_to_non_nullable
-              as int?,
-      globalPoint: freezed == globalPoint
+              as int,
+      globalPoint: null == globalPoint
           ? _value.globalPoint
           : globalPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dailyPoint: freezed == dailyPoint
+              as int,
+      dailyPoint: null == dailyPoint
           ? _value.dailyPoint
           : dailyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      weeklyPoint: freezed == weeklyPoint
+              as int,
+      weeklyPoint: null == weeklyPoint
           ? _value.weeklyPoint
           : weeklyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      monthlyPoint: freezed == monthlyPoint
+              as int,
+      monthlyPoint: null == monthlyPoint
           ? _value.monthlyPoint
           : monthlyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      quarterPoint: freezed == quarterPoint
+              as int,
+      quarterPoint: null == quarterPoint
           ? _value.quarterPoint
           : quarterPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      yearlyPoint: freezed == yearlyPoint
+              as int,
+      yearlyPoint: null == yearlyPoint
           ? _value.yearlyPoint
           : yearlyPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      favNovelCnt: freezed == favNovelCnt
+              as int,
+      favNovelCnt: null == favNovelCnt
           ? _value.favNovelCnt
           : favNovelCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      impressionCnt: freezed == impressionCnt
+              as int,
+      impressionCnt: null == impressionCnt
           ? _value.impressionCnt
           : impressionCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      reviewCnt: freezed == reviewCnt
+              as int,
+      reviewCnt: null == reviewCnt
           ? _value.reviewCnt
           : reviewCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allPoint: freezed == allPoint
+              as int,
+      allPoint: null == allPoint
           ? _value.allPoint
           : allPoint // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allHyokaCnt: freezed == allHyokaCnt
+              as int,
+      allHyokaCnt: null == allHyokaCnt
           ? _value.allHyokaCnt
           : allHyokaCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sasieCnt: freezed == sasieCnt
+              as int,
+      sasieCnt: null == sasieCnt
           ? _value.sasieCnt
           : sasieCnt // ignore: cast_nullable_to_non_nullable
-              as int?,
-      kaiwaritu: freezed == kaiwaritu
+              as int,
+      kaiwaritu: null == kaiwaritu
           ? _value.kaiwaritu
           : kaiwaritu // ignore: cast_nullable_to_non_nullable
-              as int?,
-      novelupdatedAt: freezed == novelupdatedAt
+              as int,
+      novelupdatedAt: null == novelupdatedAt
           ? _value.novelupdatedAt
           : novelupdatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: freezed == updatedAt
+              as DateTime,
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$NarouNovelInfoImpl
-    with DiagnosticableTreeMixin
-    implements _NarouNovelInfo {
+class _$NarouNovelInfoImpl extends _NarouNovelInfo
+    with DiagnosticableTreeMixin {
   const _$NarouNovelInfoImpl(
-      {this.title,
-      this.ncode,
-      this.userid,
-      this.writer,
-      this.story,
-      this.biggenre,
-      this.genre,
-      this.gensaku,
-      this.keyword,
-      this.generalFirstup,
-      this.generalLastup,
-      this.novelType,
-      this.end,
-      this.generalAllNo,
-      this.length,
-      this.time,
-      this.isstop,
-      this.isr15,
-      this.isbl,
-      this.isgl,
-      this.iszankoku,
-      this.istensei,
-      this.istenni,
-      this.globalPoint,
-      this.dailyPoint,
-      this.weeklyPoint,
-      this.monthlyPoint,
-      this.quarterPoint,
-      this.yearlyPoint,
-      this.favNovelCnt,
-      this.impressionCnt,
-      this.reviewCnt,
-      this.allPoint,
-      this.allHyokaCnt,
-      this.sasieCnt,
-      this.kaiwaritu,
-      this.novelupdatedAt,
-      this.updatedAt});
+      {required this.title,
+      required this.ncode,
+      this.userid = 0,
+      required this.writer,
+      required this.story,
+      this.biggenre = -1,
+      this.genre = -1,
+      this.nocgenre = 0,
+      required this.gensaku,
+      required this.keyword,
+      required this.generalFirstup,
+      required this.generalLastup,
+      required this.novelType,
+      required this.end,
+      required this.generalAllNo,
+      required this.length,
+      required this.time,
+      required this.isstop,
+      this.isr15 = 0,
+      required this.isbl,
+      required this.isgl,
+      required this.iszankoku,
+      required this.istensei,
+      required this.istenni,
+      required this.globalPoint,
+      required this.dailyPoint,
+      required this.weeklyPoint,
+      required this.monthlyPoint,
+      required this.quarterPoint,
+      required this.yearlyPoint,
+      required this.favNovelCnt,
+      required this.impressionCnt,
+      required this.reviewCnt,
+      required this.allPoint,
+      required this.allHyokaCnt,
+      required this.sasieCnt,
+      required this.kaiwaritu,
+      required this.novelupdatedAt,
+      required this.updatedAt})
+      : super._();
 
   factory _$NarouNovelInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$NarouNovelInfoImplFromJson(json);
 
   @override
-  final String? title;
+  final String title;
   @override
-  final String? ncode;
+  final String ncode;
   @override
-  final int? userid;
+  @JsonKey()
+  final int userid;
   @override
-  final String? writer;
+  final String writer;
   @override
-  final String? story;
+  final String story;
   @override
-  final int? biggenre;
+  @JsonKey()
+  final int biggenre;
   @override
-  final int? genre;
+  @JsonKey()
+  final int genre;
   @override
-  final String? gensaku;
+  @JsonKey()
+  final int nocgenre;
   @override
-  final String? keyword;
+  final String gensaku;
   @override
-  final String? generalFirstup;
+  final String keyword;
   @override
-  final String? generalLastup;
+  final DateTime generalFirstup;
   @override
-  final int? novelType;
+  final DateTime generalLastup;
   @override
-  final int? end;
+  final int novelType;
   @override
-  final int? generalAllNo;
+  final int end;
   @override
-  final int? length;
+  final int generalAllNo;
   @override
-  final int? time;
+  final int length;
   @override
-  final int? isstop;
+  final int time;
   @override
-  final int? isr15;
+  final int isstop;
   @override
-  final int? isbl;
+  @JsonKey()
+  final int isr15;
   @override
-  final int? isgl;
+  final int isbl;
   @override
-  final int? iszankoku;
+  final int isgl;
   @override
-  final int? istensei;
+  final int iszankoku;
   @override
-  final int? istenni;
+  final int istensei;
   @override
-  final int? globalPoint;
+  final int istenni;
   @override
-  final int? dailyPoint;
+  final int globalPoint;
   @override
-  final int? weeklyPoint;
+  final int dailyPoint;
   @override
-  final int? monthlyPoint;
+  final int weeklyPoint;
   @override
-  final int? quarterPoint;
+  final int monthlyPoint;
   @override
-  final int? yearlyPoint;
+  final int quarterPoint;
   @override
-  final int? favNovelCnt;
+  final int yearlyPoint;
   @override
-  final int? impressionCnt;
+  final int favNovelCnt;
   @override
-  final int? reviewCnt;
+  final int impressionCnt;
   @override
-  final int? allPoint;
+  final int reviewCnt;
   @override
-  final int? allHyokaCnt;
+  final int allPoint;
   @override
-  final int? sasieCnt;
+  final int allHyokaCnt;
   @override
-  final int? kaiwaritu;
+  final int sasieCnt;
   @override
-  final String? novelupdatedAt;
+  final int kaiwaritu;
   @override
-  final String? updatedAt;
+  final DateTime novelupdatedAt;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, end: $end, generalAllNo: $generalAllNo, length: $length, time: $time, isstop: $isstop, isr15: $isr15, isbl: $isbl, isgl: $isgl, iszankoku: $iszankoku, istensei: $istensei, istenni: $istenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
+    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, nocgenre: $nocgenre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, end: $end, generalAllNo: $generalAllNo, length: $length, time: $time, isstop: $isstop, isr15: $isr15, isbl: $isbl, isgl: $isgl, iszankoku: $iszankoku, istensei: $istensei, istenni: $istenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -727,6 +748,7 @@ class _$NarouNovelInfoImpl
       ..add(DiagnosticsProperty('story', story))
       ..add(DiagnosticsProperty('biggenre', biggenre))
       ..add(DiagnosticsProperty('genre', genre))
+      ..add(DiagnosticsProperty('nocgenre', nocgenre))
       ..add(DiagnosticsProperty('gensaku', gensaku))
       ..add(DiagnosticsProperty('keyword', keyword))
       ..add(DiagnosticsProperty('generalFirstup', generalFirstup))
@@ -773,6 +795,8 @@ class _$NarouNovelInfoImpl
             (identical(other.biggenre, biggenre) ||
                 other.biggenre == biggenre) &&
             (identical(other.genre, genre) || other.genre == genre) &&
+            (identical(other.nocgenre, nocgenre) ||
+                other.nocgenre == nocgenre) &&
             (identical(other.gensaku, gensaku) || other.gensaku == gensaku) &&
             (identical(other.keyword, keyword) || other.keyword == keyword) &&
             (identical(other.generalFirstup, generalFirstup) ||
@@ -838,6 +862,7 @@ class _$NarouNovelInfoImpl
         story,
         biggenre,
         genre,
+        nocgenre,
         gensaku,
         keyword,
         generalFirstup,
@@ -888,126 +913,130 @@ class _$NarouNovelInfoImpl
   }
 }
 
-abstract class _NarouNovelInfo implements NarouNovelInfo {
+abstract class _NarouNovelInfo extends NarouNovelInfo {
   const factory _NarouNovelInfo(
-      {final String? title,
-      final String? ncode,
-      final int? userid,
-      final String? writer,
-      final String? story,
-      final int? biggenre,
-      final int? genre,
-      final String? gensaku,
-      final String? keyword,
-      final String? generalFirstup,
-      final String? generalLastup,
-      final int? novelType,
-      final int? end,
-      final int? generalAllNo,
-      final int? length,
-      final int? time,
-      final int? isstop,
-      final int? isr15,
-      final int? isbl,
-      final int? isgl,
-      final int? iszankoku,
-      final int? istensei,
-      final int? istenni,
-      final int? globalPoint,
-      final int? dailyPoint,
-      final int? weeklyPoint,
-      final int? monthlyPoint,
-      final int? quarterPoint,
-      final int? yearlyPoint,
-      final int? favNovelCnt,
-      final int? impressionCnt,
-      final int? reviewCnt,
-      final int? allPoint,
-      final int? allHyokaCnt,
-      final int? sasieCnt,
-      final int? kaiwaritu,
-      final String? novelupdatedAt,
-      final String? updatedAt}) = _$NarouNovelInfoImpl;
+      {required final String title,
+      required final String ncode,
+      final int userid,
+      required final String writer,
+      required final String story,
+      final int biggenre,
+      final int genre,
+      final int nocgenre,
+      required final String gensaku,
+      required final String keyword,
+      required final DateTime generalFirstup,
+      required final DateTime generalLastup,
+      required final int novelType,
+      required final int end,
+      required final int generalAllNo,
+      required final int length,
+      required final int time,
+      required final int isstop,
+      final int isr15,
+      required final int isbl,
+      required final int isgl,
+      required final int iszankoku,
+      required final int istensei,
+      required final int istenni,
+      required final int globalPoint,
+      required final int dailyPoint,
+      required final int weeklyPoint,
+      required final int monthlyPoint,
+      required final int quarterPoint,
+      required final int yearlyPoint,
+      required final int favNovelCnt,
+      required final int impressionCnt,
+      required final int reviewCnt,
+      required final int allPoint,
+      required final int allHyokaCnt,
+      required final int sasieCnt,
+      required final int kaiwaritu,
+      required final DateTime novelupdatedAt,
+      required final DateTime updatedAt}) = _$NarouNovelInfoImpl;
+  const _NarouNovelInfo._() : super._();
 
   factory _NarouNovelInfo.fromJson(Map<String, dynamic> json) =
       _$NarouNovelInfoImpl.fromJson;
 
   @override
-  String? get title;
+  String get title;
   @override
-  String? get ncode;
+  String get ncode;
   @override
-  int? get userid;
+  int get userid;
   @override
-  String? get writer;
+  String get writer;
   @override
-  String? get story;
+  String get story;
   @override
-  int? get biggenre;
+  int get biggenre;
   @override
-  int? get genre;
+  int get genre;
   @override
-  String? get gensaku;
+  int get nocgenre;
   @override
-  String? get keyword;
+  String get gensaku;
   @override
-  String? get generalFirstup;
+  String get keyword;
   @override
-  String? get generalLastup;
+  DateTime get generalFirstup;
   @override
-  int? get novelType;
+  DateTime get generalLastup;
   @override
-  int? get end;
+  int get novelType;
   @override
-  int? get generalAllNo;
+  int get end;
   @override
-  int? get length;
+  int get generalAllNo;
   @override
-  int? get time;
+  int get length;
   @override
-  int? get isstop;
+  int get time;
   @override
-  int? get isr15;
+  int get isstop;
   @override
-  int? get isbl;
+  int get isr15;
   @override
-  int? get isgl;
+  int get isbl;
   @override
-  int? get iszankoku;
+  int get isgl;
   @override
-  int? get istensei;
+  int get iszankoku;
   @override
-  int? get istenni;
+  int get istensei;
   @override
-  int? get globalPoint;
+  int get istenni;
   @override
-  int? get dailyPoint;
+  int get globalPoint;
   @override
-  int? get weeklyPoint;
+  int get dailyPoint;
   @override
-  int? get monthlyPoint;
+  int get weeklyPoint;
   @override
-  int? get quarterPoint;
+  int get monthlyPoint;
   @override
-  int? get yearlyPoint;
+  int get quarterPoint;
   @override
-  int? get favNovelCnt;
+  int get yearlyPoint;
   @override
-  int? get impressionCnt;
+  int get favNovelCnt;
   @override
-  int? get reviewCnt;
+  int get impressionCnt;
   @override
-  int? get allPoint;
+  int get reviewCnt;
   @override
-  int? get allHyokaCnt;
+  int get allPoint;
   @override
-  int? get sasieCnt;
+  int get allHyokaCnt;
   @override
-  int? get kaiwaritu;
+  int get sasieCnt;
   @override
-  String? get novelupdatedAt;
+  int get kaiwaritu;
   @override
-  String? get updatedAt;
+  DateTime get novelupdatedAt;
+  @override
+  DateTime get updatedAt;
 
   /// Create a copy of NarouNovelInfo
   /// with the given fields replaced by the non-null parameter values.

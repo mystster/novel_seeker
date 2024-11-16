@@ -7,7 +7,7 @@ import '../model/novel_info.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [NarouNovelContents, NovelInfos])
+@DriftDatabase(tables: [NarouNovelContents, NovelInfos, NarouNovelInfos])
 class AppDatabase extends _$AppDatabase {
   // After generating code, this class needs to define a schemaVersion getter
   // and a constructor telling drift where the database should be stored.
@@ -35,6 +35,51 @@ class NarouNovelContents extends Table {
   TextColumn get title => text()();
 }
 
+@UseRowClass(NarouNovelInfo)
+class NarouNovelInfos extends Table {
+  IntColumn get allHyokaCnt => integer()();
+  IntColumn get allPoint => integer()();
+  IntColumn get biggenre => integer()();
+  IntColumn get dailyPoint => integer()();
+  IntColumn get end => integer()();
+  IntColumn get favNovelCnt => integer()();
+  IntColumn get generalAllNo => integer()();
+  DateTimeColumn get generalFirstup => dateTime()();
+  DateTimeColumn get generalLastup => dateTime()();
+  IntColumn get genre => integer()();
+  TextColumn get gensaku => text()();
+  IntColumn get globalPoint => integer()();
+  IntColumn get impressionCnt => integer()();
+  IntColumn get isbl => integer()();
+  IntColumn get isgl => integer()();
+  IntColumn get isr15 => integer()();
+  IntColumn get isstop => integer()();
+  IntColumn get istenni => integer()();
+  IntColumn get istensei => integer()();
+  IntColumn get iszankoku => integer()();
+  IntColumn get kaiwaritu => integer()();
+  TextColumn get keyword => text()();
+  IntColumn get length => integer()();
+  IntColumn get monthlyPoint => integer()();
+  TextColumn get ncode => text()();
+  IntColumn get nocgenre => integer()();
+  IntColumn get novelType => integer()();
+  DateTimeColumn get novelupdatedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {ncode};
+  IntColumn get quarterPoint => integer()();
+  IntColumn get reviewCnt => integer()();
+  IntColumn get sasieCnt => integer()();
+  TextColumn get story => text()();
+  IntColumn get time => integer()();
+  TextColumn get title => text()();
+  DateTimeColumn get updatedAt => dateTime()();
+  IntColumn get userid => integer()();
+  IntColumn get weeklyPoint => integer()();
+  TextColumn get writer => text()();
+
+  IntColumn get yearlyPoint => integer()();
+}
 
 @UseRowClass(NovelInfo)
 class NovelInfos extends Table {
@@ -42,5 +87,4 @@ class NovelInfos extends Table {
   TextColumn get ncode => text()();
   DateTimeColumn get registrationDate => dateTime()();
   IntColumn get scrollPosition => integer()();
-  
 }
