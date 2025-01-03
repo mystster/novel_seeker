@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/novel_info.dart';
@@ -8,6 +9,7 @@ import '../repository/app_database.dart';
 part 'narou_provider.g.dart';
 
 final db = AppDatabase();
+var logger = Logger();
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
@@ -33,7 +35,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 @riverpod
 class NarouProvider extends _$NarouProvider {
   void addNovel(String ncode) {
-    print('Adding novel with ncode: $ncode');
+    logger.d('Adding novel with ncode: $ncode');
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
           ncode: ncode,
           registrationDate: DateTime.now(),
