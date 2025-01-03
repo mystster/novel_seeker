@@ -85,6 +85,8 @@ class NarouNovelInfos extends Table {
 class NovelInfos extends Table {
   IntColumn get currentChapter => integer()();
   TextColumn get ncode => text()();
+  @override
+  Set<Column> get primaryKey => {ncode};
   DateTimeColumn get registrationDate => dateTime()();
   IntColumn get scrollPosition => integer()();
 }
