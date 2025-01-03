@@ -11,8 +11,8 @@ class NovelShelf extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final narouProvider = ref.watch(narouProviderProvider);
-    // Your provider here
-    // final exampleProvider = ref.watch(exampleProvider);
+    
+    final addNcode = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -21,6 +21,62 @@ class NovelShelf extends HookConsumerWidget {
         // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Novel Shelf'),
+      ),
+      drawer: 
+      Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              child: Text(
+                'Drawer Header',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.add),
+              title: const Text('Add Novel'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Add Novel'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            const Text('ncodeを入れてください'),
+                            TextField(controller: addNcode),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('add'),
+                          onPressed: () {
+                            ref.read(narouProviderProvider.notifier).addNovel(addNcode.text);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+            const ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: switch (narouProvider) {

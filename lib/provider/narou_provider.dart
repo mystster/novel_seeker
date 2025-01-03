@@ -32,6 +32,59 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 
 @riverpod
 class NarouProvider extends _$NarouProvider {
+  void addNovel(String ncode) {
+    print('Adding novel with ncode: $ncode');
+    db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
+          ncode: ncode,
+          registrationDate: DateTime.now(),
+          scrollPosition: 0,
+          currentChapter: 0,
+        ));
+    db.into(db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(
+          ncode: ncode,
+          allHyokaCnt: 0,
+          allPoint: 0,
+          biggenre: 0,
+          dailyPoint: 0,
+          end: 0,
+          favNovelCnt: 0,
+          generalAllNo: 0,
+          generalFirstup: DateTime.now(),
+          generalLastup: DateTime.now(),
+          genre: 0,
+          gensaku: '',
+          globalPoint: 0,
+          impressionCnt: 0,
+          isbl: 0,
+          isgl: 0,
+          isr15: 0,
+          isstop: 0,
+          istenni: 0,
+          istensei: 0,
+          iszankoku: 0,
+          kaiwaritu: 0,
+          keyword: '',
+          length: 0,
+          monthlyPoint: 0,
+          nocgenre: 0,
+          novelType: 0,
+          novelupdatedAt: DateTime.now(),
+          quarterPoint: 0,
+          reviewCnt: 0,
+          sasieCnt: 0,
+          story: '',
+          time: 0,
+          title: '',
+          updatedAt: DateTime.now(),
+          userid: 11111,
+          weeklyPoint: 0,
+          writer: '',
+          yearlyPoint: 0,
+        ));
+    ref.invalidate(_novelInfosProvider);
+    ref.invalidateSelf();
+  }
+
   @override
   Future<List<NovelInfo>> build() async {
     final infos = await ref.watch(_novelInfosProvider.future);
