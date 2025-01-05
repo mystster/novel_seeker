@@ -13,44 +13,81 @@ class NarouNovelInfo
     with _$NarouNovelInfo
     implements Insertable<NarouNovelInfo> {
   const factory NarouNovelInfo({
+    /// タイトル
     required String title,
+    /// Nコード
     required String ncode,
+    /// ユーザID
     @Default(0) int userid,
+    /// 作者
     required String writer,
+    /// あらすじ
     required String story,
+    /// 大ジャンル
     @Default(-1) int biggenre,
+    /// ジャンル
     @Default(-1) int genre,
-    @Default(0) int nocgenre,
+    /// 原作（常に空文字列）
     required String gensaku,
+    /// キーワード
     required String keyword,
+    /// 初回掲載日
     required DateTime generalFirstup,
+    /// 最終掲載日
     required DateTime generalLastup,
+    /// 連載の場合は1、短編の場合は2
     required int novelType,
+    /// 短編作品と完結済作品は0となっています。連載中は1です
     required int end,
+    /// 全掲載エピソード数です。短編の場合は1です。
     required int generalAllNo,
+    /// 作品文字数です。スペースや改行は文字数としてカウントしません。
     required int length,
+    /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
     required int time,
+    /// 長期連載停止中なら1、それ以外は0です。
     required int isstop,
+    /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
     @Default(0) int isr15,
+    /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
     required int isbl,
+    /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
     required int isgl,
+    /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
     required int iszankoku,
+    /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
     required int istensei,
+    /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
     required int istenni,
+    /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
     required int globalPoint,
+    /// 日間ポイント
     required int dailyPoint,
+    /// 週間ポイント
     required int weeklyPoint,
+    /// 月間ポイント
     required int monthlyPoint,
+    /// 四半期ポイント
     required int quarterPoint,
+    /// 年間ポイント
     required int yearlyPoint,
+    /// ブックマーク数
     required int favNovelCnt,
+    /// 感想数
     required int impressionCnt,
+    /// レビュー数
     required int reviewCnt,
+    /// 評価点
     required int allPoint,
+    /// 評価者数
     required int allHyokaCnt,
+    /// 挿絵の数
     required int sasieCnt,
+    /// 会話率
     required int kaiwaritu,
+    /// 作品の更新日時
     required DateTime novelupdatedAt,
+    /// 最終更新日時(システム用で作品更新時とは関係ありません)
     required DateTime updatedAt,
   }) = _NarouNovelInfo;
 
@@ -87,7 +124,6 @@ class NarouNovelInfo
       length: Value(length),
       monthlyPoint: Value(monthlyPoint),
       ncode: Value(ncode),
-      nocgenre: Value(nocgenre),
       novelType: Value(novelType),
       novelupdatedAt: Value(novelupdatedAt),
       quarterPoint: Value(quarterPoint),

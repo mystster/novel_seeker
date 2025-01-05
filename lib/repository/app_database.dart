@@ -62,7 +62,6 @@ class NarouNovelInfos extends Table {
   IntColumn get length => integer()();
   IntColumn get monthlyPoint => integer()();
   TextColumn get ncode => text()();
-  IntColumn get nocgenre => integer()();
   IntColumn get novelType => integer()();
   DateTimeColumn get novelupdatedAt => dateTime()();
   @override

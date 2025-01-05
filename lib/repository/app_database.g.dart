@@ -514,12 +514,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<String> ncode = GeneratedColumn<String>(
       'ncode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _nocgenreMeta =
-      const VerificationMeta('nocgenre');
-  @override
-  late final GeneratedColumn<int> nocgenre = GeneratedColumn<int>(
-      'nocgenre', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _novelTypeMeta =
       const VerificationMeta('novelType');
   @override
@@ -620,7 +614,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
         length,
         monthlyPoint,
         ncode,
-        nocgenre,
         novelType,
         novelupdatedAt,
         quarterPoint,
@@ -813,12 +806,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_ncodeMeta);
     }
-    if (data.containsKey('nocgenre')) {
-      context.handle(_nocgenreMeta,
-          nocgenre.isAcceptableOrUnknown(data['nocgenre']!, _nocgenreMeta));
-    } else if (isInserting) {
-      context.missing(_nocgenreMeta);
-    }
     if (data.containsKey('novel_type')) {
       context.handle(_novelTypeMeta,
           novelType.isAcceptableOrUnknown(data['novel_type']!, _novelTypeMeta));
@@ -928,8 +915,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
           .read(DriftSqlType.int, data['${effectivePrefix}biggenre'])!,
       genre: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}genre'])!,
-      nocgenre: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}nocgenre'])!,
       gensaku: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}gensaku'])!,
       keyword: attachedDatabase.typeMapping
@@ -1027,7 +1012,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   final Value<int> length;
   final Value<int> monthlyPoint;
   final Value<String> ncode;
-  final Value<int> nocgenre;
   final Value<int> novelType;
   final Value<DateTime> novelupdatedAt;
   final Value<int> quarterPoint;
@@ -1068,7 +1052,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     this.length = const Value.absent(),
     this.monthlyPoint = const Value.absent(),
     this.ncode = const Value.absent(),
-    this.nocgenre = const Value.absent(),
     this.novelType = const Value.absent(),
     this.novelupdatedAt = const Value.absent(),
     this.quarterPoint = const Value.absent(),
@@ -1110,7 +1093,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     required int length,
     required int monthlyPoint,
     required String ncode,
-    required int nocgenre,
     required int novelType,
     required DateTime novelupdatedAt,
     required int quarterPoint,
@@ -1150,7 +1132,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
         length = Value(length),
         monthlyPoint = Value(monthlyPoint),
         ncode = Value(ncode),
-        nocgenre = Value(nocgenre),
         novelType = Value(novelType),
         novelupdatedAt = Value(novelupdatedAt),
         quarterPoint = Value(quarterPoint),
@@ -1190,7 +1171,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     Expression<int>? length,
     Expression<int>? monthlyPoint,
     Expression<String>? ncode,
-    Expression<int>? nocgenre,
     Expression<int>? novelType,
     Expression<DateTime>? novelupdatedAt,
     Expression<int>? quarterPoint,
@@ -1232,7 +1212,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       if (length != null) 'length': length,
       if (monthlyPoint != null) 'monthly_point': monthlyPoint,
       if (ncode != null) 'ncode': ncode,
-      if (nocgenre != null) 'nocgenre': nocgenre,
       if (novelType != null) 'novel_type': novelType,
       if (novelupdatedAt != null) 'novelupdated_at': novelupdatedAt,
       if (quarterPoint != null) 'quarter_point': quarterPoint,
@@ -1276,7 +1255,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       Value<int>? length,
       Value<int>? monthlyPoint,
       Value<String>? ncode,
-      Value<int>? nocgenre,
       Value<int>? novelType,
       Value<DateTime>? novelupdatedAt,
       Value<int>? quarterPoint,
@@ -1317,7 +1295,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       length: length ?? this.length,
       monthlyPoint: monthlyPoint ?? this.monthlyPoint,
       ncode: ncode ?? this.ncode,
-      nocgenre: nocgenre ?? this.nocgenre,
       novelType: novelType ?? this.novelType,
       novelupdatedAt: novelupdatedAt ?? this.novelupdatedAt,
       quarterPoint: quarterPoint ?? this.quarterPoint,
@@ -1413,9 +1390,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     if (ncode.present) {
       map['ncode'] = Variable<String>(ncode.value);
     }
-    if (nocgenre.present) {
-      map['nocgenre'] = Variable<int>(nocgenre.value);
-    }
     if (novelType.present) {
       map['novel_type'] = Variable<int>(novelType.value);
     }
@@ -1489,7 +1463,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
           ..write('length: $length, ')
           ..write('monthlyPoint: $monthlyPoint, ')
           ..write('ncode: $ncode, ')
-          ..write('nocgenre: $nocgenre, ')
           ..write('novelType: $novelType, ')
           ..write('novelupdatedAt: $novelupdatedAt, ')
           ..write('quarterPoint: $quarterPoint, ')
@@ -1868,7 +1841,6 @@ typedef $$NarouNovelInfosTableCreateCompanionBuilder = NarouNovelInfosCompanion
   required int length,
   required int monthlyPoint,
   required String ncode,
-  required int nocgenre,
   required int novelType,
   required DateTime novelupdatedAt,
   required int quarterPoint,
@@ -1911,7 +1883,6 @@ typedef $$NarouNovelInfosTableUpdateCompanionBuilder = NarouNovelInfosCompanion
   Value<int> length,
   Value<int> monthlyPoint,
   Value<String> ncode,
-  Value<int> nocgenre,
   Value<int> novelType,
   Value<DateTime> novelupdatedAt,
   Value<int> quarterPoint,
@@ -2012,9 +1983,6 @@ class $$NarouNovelInfosTableFilterComposer
 
   ColumnFilters<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get nocgenre => $composableBuilder(
-      column: $table.nocgenre, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get novelType => $composableBuilder(
       column: $table.novelType, builder: (column) => ColumnFilters(column));
@@ -2146,9 +2114,6 @@ class $$NarouNovelInfosTableOrderingComposer
   ColumnOrderings<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get nocgenre => $composableBuilder(
-      column: $table.nocgenre, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<int> get novelType => $composableBuilder(
       column: $table.novelType, builder: (column) => ColumnOrderings(column));
 
@@ -2275,9 +2240,6 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<String> get ncode =>
       $composableBuilder(column: $table.ncode, builder: (column) => column);
 
-  GeneratedColumn<int> get nocgenre =>
-      $composableBuilder(column: $table.nocgenre, builder: (column) => column);
-
   GeneratedColumn<int> get novelType =>
       $composableBuilder(column: $table.novelType, builder: (column) => column);
 
@@ -2370,7 +2332,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             Value<int> length = const Value.absent(),
             Value<int> monthlyPoint = const Value.absent(),
             Value<String> ncode = const Value.absent(),
-            Value<int> nocgenre = const Value.absent(),
             Value<int> novelType = const Value.absent(),
             Value<DateTime> novelupdatedAt = const Value.absent(),
             Value<int> quarterPoint = const Value.absent(),
@@ -2412,7 +2373,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             length: length,
             monthlyPoint: monthlyPoint,
             ncode: ncode,
-            nocgenre: nocgenre,
             novelType: novelType,
             novelupdatedAt: novelupdatedAt,
             quarterPoint: quarterPoint,
@@ -2454,7 +2414,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             required int length,
             required int monthlyPoint,
             required String ncode,
-            required int nocgenre,
             required int novelType,
             required DateTime novelupdatedAt,
             required int quarterPoint,
@@ -2496,7 +2455,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             length: length,
             monthlyPoint: monthlyPoint,
             ncode: ncode,
-            nocgenre: nocgenre,
             novelType: novelType,
             novelupdatedAt: novelupdatedAt,
             quarterPoint: quarterPoint,

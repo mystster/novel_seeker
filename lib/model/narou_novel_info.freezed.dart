@@ -20,44 +20,118 @@ NarouNovelInfo _$NarouNovelInfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NarouNovelInfo {
+  /// タイトル
   String get title => throw _privateConstructorUsedError;
+
+  /// Nコード
   String get ncode => throw _privateConstructorUsedError;
+
+  /// ユーザID
   int get userid => throw _privateConstructorUsedError;
+
+  /// 作者
   String get writer => throw _privateConstructorUsedError;
+
+  /// あらすじ
   String get story => throw _privateConstructorUsedError;
+
+  /// 大ジャンル
   int get biggenre => throw _privateConstructorUsedError;
+
+  /// ジャンル
   int get genre => throw _privateConstructorUsedError;
-  int get nocgenre => throw _privateConstructorUsedError;
+
+  /// 原作（常に空文字列）
   String get gensaku => throw _privateConstructorUsedError;
+
+  /// キーワード
   String get keyword => throw _privateConstructorUsedError;
+
+  /// 初回掲載日
   DateTime get generalFirstup => throw _privateConstructorUsedError;
+
+  /// 最終掲載日
   DateTime get generalLastup => throw _privateConstructorUsedError;
+
+  /// 連載の場合は1、短編の場合は2
   int get novelType => throw _privateConstructorUsedError;
+
+  /// 短編作品と完結済作品は0となっています。連載中は1です
   int get end => throw _privateConstructorUsedError;
+
+  /// 全掲載エピソード数です。短編の場合は1です。
   int get generalAllNo => throw _privateConstructorUsedError;
+
+  /// 作品文字数です。スペースや改行は文字数としてカウントしません。
   int get length => throw _privateConstructorUsedError;
+
+  /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
   int get time => throw _privateConstructorUsedError;
+
+  /// 長期連載停止中なら1、それ以外は0です。
   int get isstop => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
   int get isr15 => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
   int get isbl => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
   int get isgl => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
   int get iszankoku => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
   int get istensei => throw _privateConstructorUsedError;
+
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
   int get istenni => throw _privateConstructorUsedError;
+
+  /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   int get globalPoint => throw _privateConstructorUsedError;
+
+  /// 日間ポイント
   int get dailyPoint => throw _privateConstructorUsedError;
+
+  /// 週間ポイント
   int get weeklyPoint => throw _privateConstructorUsedError;
+
+  /// 月間ポイント
   int get monthlyPoint => throw _privateConstructorUsedError;
+
+  /// 四半期ポイント
   int get quarterPoint => throw _privateConstructorUsedError;
+
+  /// 年間ポイント
   int get yearlyPoint => throw _privateConstructorUsedError;
+
+  /// ブックマーク数
   int get favNovelCnt => throw _privateConstructorUsedError;
+
+  /// 感想数
   int get impressionCnt => throw _privateConstructorUsedError;
+
+  /// レビュー数
   int get reviewCnt => throw _privateConstructorUsedError;
+
+  /// 評価点
   int get allPoint => throw _privateConstructorUsedError;
+
+  /// 評価者数
   int get allHyokaCnt => throw _privateConstructorUsedError;
+
+  /// 挿絵の数
   int get sasieCnt => throw _privateConstructorUsedError;
+
+  /// 会話率
   int get kaiwaritu => throw _privateConstructorUsedError;
+
+  /// 作品の更新日時
   DateTime get novelupdatedAt => throw _privateConstructorUsedError;
+
+  /// 最終更新日時(システム用で作品更新時とは関係ありません)
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this NarouNovelInfo to a JSON map.
@@ -84,7 +158,6 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       String story,
       int biggenre,
       int genre,
-      int nocgenre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
@@ -140,7 +213,6 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
     Object? story = null,
     Object? biggenre = null,
     Object? genre = null,
-    Object? nocgenre = null,
     Object? gensaku = null,
     Object? keyword = null,
     Object? generalFirstup = null,
@@ -201,10 +273,6 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int,
-      nocgenre: null == nocgenre
-          ? _value.nocgenre
-          : nocgenre // ignore: cast_nullable_to_non_nullable
               as int,
       gensaku: null == gensaku
           ? _value.gensaku
@@ -350,7 +418,6 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
       String story,
       int biggenre,
       int genre,
-      int nocgenre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
@@ -404,7 +471,6 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
     Object? story = null,
     Object? biggenre = null,
     Object? genre = null,
-    Object? nocgenre = null,
     Object? gensaku = null,
     Object? keyword = null,
     Object? generalFirstup = null,
@@ -465,10 +531,6 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int,
-      nocgenre: null == nocgenre
-          ? _value.nocgenre
-          : nocgenre // ignore: cast_nullable_to_non_nullable
               as int,
       gensaku: null == gensaku
           ? _value.gensaku
@@ -610,7 +672,6 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       required this.story,
       this.biggenre = -1,
       this.genre = -1,
-      this.nocgenre = 0,
       required this.gensaku,
       required this.keyword,
       required this.generalFirstup,
@@ -647,93 +708,165 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
   factory _$NarouNovelInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$NarouNovelInfoImplFromJson(json);
 
+  /// タイトル
   @override
   final String title;
+
+  /// Nコード
   @override
   final String ncode;
+
+  /// ユーザID
   @override
   @JsonKey()
   final int userid;
+
+  /// 作者
   @override
   final String writer;
+
+  /// あらすじ
   @override
   final String story;
+
+  /// 大ジャンル
   @override
   @JsonKey()
   final int biggenre;
+
+  /// ジャンル
   @override
   @JsonKey()
   final int genre;
-  @override
-  @JsonKey()
-  final int nocgenre;
+
+  /// 原作（常に空文字列）
   @override
   final String gensaku;
+
+  /// キーワード
   @override
   final String keyword;
+
+  /// 初回掲載日
   @override
   final DateTime generalFirstup;
+
+  /// 最終掲載日
   @override
   final DateTime generalLastup;
+
+  /// 連載の場合は1、短編の場合は2
   @override
   final int novelType;
+
+  /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
   final int end;
+
+  /// 全掲載エピソード数です。短編の場合は1です。
   @override
   final int generalAllNo;
+
+  /// 作品文字数です。スペースや改行は文字数としてカウントしません。
   @override
   final int length;
+
+  /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
   @override
   final int time;
+
+  /// 長期連載停止中なら1、それ以外は0です。
   @override
   final int isstop;
+
+  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
   @override
   @JsonKey()
   final int isr15;
+
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
   @override
   final int isbl;
+
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
   @override
   final int isgl;
+
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
   @override
   final int iszankoku;
+
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
   @override
   final int istensei;
+
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
   @override
   final int istenni;
+
+  /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   @override
   final int globalPoint;
+
+  /// 日間ポイント
   @override
   final int dailyPoint;
+
+  /// 週間ポイント
   @override
   final int weeklyPoint;
+
+  /// 月間ポイント
   @override
   final int monthlyPoint;
+
+  /// 四半期ポイント
   @override
   final int quarterPoint;
+
+  /// 年間ポイント
   @override
   final int yearlyPoint;
+
+  /// ブックマーク数
   @override
   final int favNovelCnt;
+
+  /// 感想数
   @override
   final int impressionCnt;
+
+  /// レビュー数
   @override
   final int reviewCnt;
+
+  /// 評価点
   @override
   final int allPoint;
+
+  /// 評価者数
   @override
   final int allHyokaCnt;
+
+  /// 挿絵の数
   @override
   final int sasieCnt;
+
+  /// 会話率
   @override
   final int kaiwaritu;
+
+  /// 作品の更新日時
   @override
   final DateTime novelupdatedAt;
+
+  /// 最終更新日時(システム用で作品更新時とは関係ありません)
   @override
   final DateTime updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, nocgenre: $nocgenre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, end: $end, generalAllNo: $generalAllNo, length: $length, time: $time, isstop: $isstop, isr15: $isr15, isbl: $isbl, isgl: $isgl, iszankoku: $iszankoku, istensei: $istensei, istenni: $istenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
+    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, end: $end, generalAllNo: $generalAllNo, length: $length, time: $time, isstop: $isstop, isr15: $isr15, isbl: $isbl, isgl: $isgl, iszankoku: $iszankoku, istensei: $istensei, istenni: $istenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -748,7 +881,6 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       ..add(DiagnosticsProperty('story', story))
       ..add(DiagnosticsProperty('biggenre', biggenre))
       ..add(DiagnosticsProperty('genre', genre))
-      ..add(DiagnosticsProperty('nocgenre', nocgenre))
       ..add(DiagnosticsProperty('gensaku', gensaku))
       ..add(DiagnosticsProperty('keyword', keyword))
       ..add(DiagnosticsProperty('generalFirstup', generalFirstup))
@@ -795,8 +927,6 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
             (identical(other.biggenre, biggenre) ||
                 other.biggenre == biggenre) &&
             (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.nocgenre, nocgenre) ||
-                other.nocgenre == nocgenre) &&
             (identical(other.gensaku, gensaku) || other.gensaku == gensaku) &&
             (identical(other.keyword, keyword) || other.keyword == keyword) &&
             (identical(other.generalFirstup, generalFirstup) ||
@@ -862,7 +992,6 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
         story,
         biggenre,
         genre,
-        nocgenre,
         gensaku,
         keyword,
         generalFirstup,
@@ -922,7 +1051,6 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
       required final String story,
       final int biggenre,
       final int genre,
-      final int nocgenre,
       required final String gensaku,
       required final String keyword,
       required final DateTime generalFirstup,
@@ -959,82 +1087,155 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
   factory _NarouNovelInfo.fromJson(Map<String, dynamic> json) =
       _$NarouNovelInfoImpl.fromJson;
 
+  /// タイトル
   @override
   String get title;
+
+  /// Nコード
   @override
   String get ncode;
+
+  /// ユーザID
   @override
   int get userid;
+
+  /// 作者
   @override
   String get writer;
+
+  /// あらすじ
   @override
   String get story;
+
+  /// 大ジャンル
   @override
   int get biggenre;
+
+  /// ジャンル
   @override
   int get genre;
-  @override
-  int get nocgenre;
+
+  /// 原作（常に空文字列）
   @override
   String get gensaku;
+
+  /// キーワード
   @override
   String get keyword;
+
+  /// 初回掲載日
   @override
   DateTime get generalFirstup;
+
+  /// 最終掲載日
   @override
   DateTime get generalLastup;
+
+  /// 連載の場合は1、短編の場合は2
   @override
   int get novelType;
+
+  /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
   int get end;
+
+  /// 全掲載エピソード数です。短編の場合は1です。
   @override
   int get generalAllNo;
+
+  /// 作品文字数です。スペースや改行は文字数としてカウントしません。
   @override
   int get length;
+
+  /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
   @override
   int get time;
+
+  /// 長期連載停止中なら1、それ以外は0です。
   @override
   int get isstop;
+
+  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
   @override
   int get isr15;
+
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
   @override
   int get isbl;
+
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
   @override
   int get isgl;
+
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
   @override
   int get iszankoku;
+
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
   @override
   int get istensei;
+
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
   @override
   int get istenni;
+
+  /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   @override
   int get globalPoint;
+
+  /// 日間ポイント
   @override
   int get dailyPoint;
+
+  /// 週間ポイント
   @override
   int get weeklyPoint;
+
+  /// 月間ポイント
   @override
   int get monthlyPoint;
+
+  /// 四半期ポイント
   @override
   int get quarterPoint;
+
+  /// 年間ポイント
   @override
   int get yearlyPoint;
+
+  /// ブックマーク数
   @override
   int get favNovelCnt;
+
+  /// 感想数
   @override
   int get impressionCnt;
+
+  /// レビュー数
   @override
   int get reviewCnt;
+
+  /// 評価点
   @override
   int get allPoint;
+
+  /// 評価者数
   @override
   int get allHyokaCnt;
+
+  /// 挿絵の数
   @override
   int get sasieCnt;
+
+  /// 会話率
   @override
   int get kaiwaritu;
+
+  /// 作品の更新日時
   @override
   DateTime get novelupdatedAt;
+
+  /// 最終更新日時(システム用で作品更新時とは関係ありません)
   @override
   DateTime get updatedAt;
 
