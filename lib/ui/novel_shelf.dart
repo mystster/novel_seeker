@@ -3,14 +3,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
-import '../provider/narou_provider.dart';
+import '../provider/narou_novel_provider.dart';
 
 class NovelShelf extends HookConsumerWidget {
   const NovelShelf({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final narouProvider = ref.watch(narouProviderProvider);
+    final narouProvider = ref.watch(narouNovelProvider);
     
     final addNcode = TextEditingController();
 
@@ -60,7 +60,7 @@ class NovelShelf extends HookConsumerWidget {
                         TextButton(
                           child: const Text('add'),
                           onPressed: () {
-                            ref.read(narouProviderProvider.notifier).addNovel(addNcode.text);
+                            ref.read(narouNovelProvider.notifier).addNovel(addNcode.text);
                             Navigator.of(context).pop();
                           },
                         ),
@@ -70,9 +70,12 @@ class NovelShelf extends HookConsumerWidget {
                 );
               },
             ),
-            const ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
+            ListTile(
+              leading: const Icon(Icons.delete_forever),
+              title: const Text('delete all novel'),
+              onTap: () async {
+                await ref.read(narouNovelProvider.notifier).deleteAllNovel();
+              },
 
             ),
           ],

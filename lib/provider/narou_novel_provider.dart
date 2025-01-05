@@ -103,11 +103,11 @@ class NarouNovel extends _$NarouNovel {
     return infos;
   }
 
-  void deleteAllNovel() {
-    var r = db.delete(db.novelInfos).go();
+  Future<void> deleteAllNovel() async {
+    var r = await db.delete(db.novelInfos).go();
     logger.d('Removed ${r.toString()} novelInfos');
-    r = db.delete(db.narouNovelInfos).go();
-    logger.d('Removed ${r.toString()} narouNovelInfos');
+    r = await db.delete(db.narouNovelInfos).go();
+    logger.d('Removed $r narouNovelInfos');
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
   }
