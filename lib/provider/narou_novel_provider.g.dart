@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'narou_provider.dart';
+part of 'narou_novel_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -26,21 +26,20 @@ final _novelInfosProvider = AutoDisposeFutureProvider<List<NovelInfo>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _NovelInfosRef = AutoDisposeFutureProviderRef<List<NovelInfo>>;
-String _$narouProviderHash() => r'346824810c857dac3612f42e1187b78992dc6ee6';
+String _$narouNovelHash() => r'04fecdb4b4d46a663006d84c045706dfa32a18d0';
 
-/// See also [NarouProvider].
-@ProviderFor(NarouProvider)
-final narouProviderProvider =
-    AutoDisposeAsyncNotifierProvider<NarouProvider, List<NovelInfo>>.internal(
-  NarouProvider.new,
-  name: r'narouProviderProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$narouProviderHash,
+/// See also [NarouNovel].
+@ProviderFor(NarouNovel)
+final narouNovelProvider =
+    AutoDisposeAsyncNotifierProvider<NarouNovel, List<NovelInfo>>.internal(
+  NarouNovel.new,
+  name: r'narouNovelProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$narouNovelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$NarouProvider = AutoDisposeAsyncNotifier<List<NovelInfo>>;
+typedef _$NarouNovel = AutoDisposeAsyncNotifier<List<NovelInfo>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

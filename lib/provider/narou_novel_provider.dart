@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -6,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/novel_info.dart';
 import '../repository/app_database.dart';
 
-part 'narou_provider.g.dart';
+part 'narou_novel_provider.g.dart';
 
 final db = AppDatabase();
 var logger = Logger();
@@ -33,7 +35,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 }
 
 @riverpod
-class NarouProvider extends _$NarouProvider {
+class NarouNovel extends _$NarouNovel {
   void addNovel(String ncode) {
     logger.d('Adding novel with ncode: $ncode');
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
@@ -45,43 +47,42 @@ class NarouProvider extends _$NarouProvider {
     db.into(db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(
           ncode: ncode,
           allHyokaCnt: 0,
-          allPoint: 0,
-          biggenre: 0,
-          dailyPoint: 0,
-          end: 0,
-          favNovelCnt: 0,
-          generalAllNo: 0,
+          allPoint: math.Random().nextInt(100) + 1,
+          biggenre: math.Random().nextInt(5),
+          dailyPoint: math.Random().nextInt(100) + 1,
+          end: math.Random().nextInt(2),
+          favNovelCnt: math.Random().nextInt(100) + 1,
+          generalAllNo: math.Random().nextInt(100) + 1,
           generalFirstup: DateTime.now(),
           generalLastup: DateTime.now(),
-          genre: 0,
+          genre: math.Random().nextInt(7) + 301,
           gensaku: '',
-          globalPoint: 0,
-          impressionCnt: 0,
-          isbl: 0,
-          isgl: 0,
-          isr15: 0,
-          isstop: 0,
-          istenni: 0,
-          istensei: 0,
-          iszankoku: 0,
+          globalPoint: math.Random().nextInt(100) + 1,
+          impressionCnt: math.Random().nextInt(100) + 1,
+          isbl: math.Random().nextInt(2),
+          isgl: math.Random().nextInt(2),
+          isr15: math.Random().nextInt(2),
+          isstop: math.Random().nextInt(2),
+          istenni: math.Random().nextInt(2),
+          istensei: math.Random().nextInt(2),
+          iszankoku: math.Random().nextInt(2),
           kaiwaritu: 0,
-          keyword: '',
-          length: 0,
+          keyword: 'キーワード_${math.Random().nextInt(100).toString()}',
+          length: math.Random().nextInt(100000),
           monthlyPoint: 0,
-          nocgenre: 0,
-          novelType: 0,
+          novelType: math.Random().nextInt(2) + 1,
           novelupdatedAt: DateTime.now(),
-          quarterPoint: 0,
-          reviewCnt: 0,
-          sasieCnt: 0,
-          story: '',
-          time: 0,
-          title: '',
+          quarterPoint: math.Random().nextInt(100),
+          reviewCnt: math.Random().nextInt(100),
+          sasieCnt: math.Random().nextInt(100),
+          story: 'あらすじ_${math.Random().nextInt(100).toString()}',
+          time: math.Random().nextInt(100000),
+          title: 'タイトル_${math.Random().nextInt(100).toString()}',
           updatedAt: DateTime.now(),
-          userid: 11111,
-          weeklyPoint: 0,
-          writer: '',
-          yearlyPoint: 0,
+          userid: math.Random().nextInt(10000),
+          weeklyPoint: math.Random().nextInt(100),
+          writer: '作者_${math.Random().nextInt(100).toString()}',
+          yearlyPoint: math.Random().nextInt(100),
         ));
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
@@ -100,5 +101,14 @@ class NarouProvider extends _$NarouProvider {
       }
     }
     return infos;
+  }
+
+  void deleteAllNovel() {
+    var r = db.delete(db.novelInfos).go();
+    logger.d('Removed ${r.toString()} novelInfos');
+    r = db.delete(db.narouNovelInfos).go();
+    logger.d('Removed ${r.toString()} narouNovelInfos');
+    ref.invalidate(_novelInfosProvider);
+    ref.invalidateSelf();
   }
 }
