@@ -80,13 +80,25 @@ class NovelShelf extends HookConsumerWidget {
       ),
       body: Center(
         child: switch (narouProvider) {
-          AsyncData(:final value) => Text(value.length.toString()),
+          AsyncData(:final value) => ListView.builder(
+            itemCount: value.length,
+            itemBuilder: (context, index) {
+              return novelInfo(value[index]);
+            },
+          ),
           AsyncLoading() => const CircularProgressIndicator(),
           AsyncError(:final error, :final stackTrace) => Text('Error: $error, ST: $stackTrace'),
           // TODO: Handle this case.
           AsyncValue<List<NovelInfo>>() => throw UnimplementedError(),
         },
       ),
+    );
+  }
+
+  Widget novelInfo(NovelInfo novelInfo) {
+    return ListTile(
+      title: Text(novelInfo.ncode),
+      subtitle: Text(novelInfo.novelInfo?.title ?? ''),
     );
   }
 }
