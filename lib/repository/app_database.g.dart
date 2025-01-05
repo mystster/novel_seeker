@@ -17,9 +17,9 @@ class $NarouNovelContentsTable extends NarouNovelContents
   static const VerificationMeta _chapterMeta =
       const VerificationMeta('chapter');
   @override
-  late final GeneratedColumn<String> chapter = GeneratedColumn<String>(
+  late final GeneratedColumn<int> chapter = GeneratedColumn<int>(
       'chapter', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _ncodeMeta = const VerificationMeta('ncode');
   @override
   late final GeneratedColumn<String> ncode = GeneratedColumn<String>(
@@ -82,7 +82,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
       body: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
       chapter: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}chapter'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}chapter'])!,
     );
   }
 
@@ -94,7 +94,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
 
 class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   final Value<String> body;
-  final Value<String> chapter;
+  final Value<int> chapter;
   final Value<String> ncode;
   final Value<String> title;
   final Value<int> rowid;
@@ -107,7 +107,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   });
   NarouNovelContentsCompanion.insert({
     required String body,
-    required String chapter,
+    required int chapter,
     required String ncode,
     required String title,
     this.rowid = const Value.absent(),
@@ -117,7 +117,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
         title = Value(title);
   static Insertable<NarouNovelContent> custom({
     Expression<String>? body,
-    Expression<String>? chapter,
+    Expression<int>? chapter,
     Expression<String>? ncode,
     Expression<String>? title,
     Expression<int>? rowid,
@@ -133,7 +133,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
 
   NarouNovelContentsCompanion copyWith(
       {Value<String>? body,
-      Value<String>? chapter,
+      Value<int>? chapter,
       Value<String>? ncode,
       Value<String>? title,
       Value<int>? rowid}) {
@@ -153,7 +153,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       map['body'] = Variable<String>(body.value);
     }
     if (chapter.present) {
-      map['chapter'] = Variable<String>(chapter.value);
+      map['chapter'] = Variable<int>(chapter.value);
     }
     if (ncode.present) {
       map['ncode'] = Variable<String>(ncode.value);
@@ -1501,7 +1501,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$NarouNovelContentsTableCreateCompanionBuilder
     = NarouNovelContentsCompanion Function({
   required String body,
-  required String chapter,
+  required int chapter,
   required String ncode,
   required String title,
   Value<int> rowid,
@@ -1509,7 +1509,7 @@ typedef $$NarouNovelContentsTableCreateCompanionBuilder
 typedef $$NarouNovelContentsTableUpdateCompanionBuilder
     = NarouNovelContentsCompanion Function({
   Value<String> body,
-  Value<String> chapter,
+  Value<int> chapter,
   Value<String> ncode,
   Value<String> title,
   Value<int> rowid,
@@ -1527,7 +1527,7 @@ class $$NarouNovelContentsTableFilterComposer
   ColumnFilters<String> get body => $composableBuilder(
       column: $table.body, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get chapter => $composableBuilder(
+  ColumnFilters<int> get chapter => $composableBuilder(
       column: $table.chapter, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get ncode => $composableBuilder(
@@ -1549,7 +1549,7 @@ class $$NarouNovelContentsTableOrderingComposer
   ColumnOrderings<String> get body => $composableBuilder(
       column: $table.body, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get chapter => $composableBuilder(
+  ColumnOrderings<int> get chapter => $composableBuilder(
       column: $table.chapter, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get ncode => $composableBuilder(
@@ -1571,7 +1571,7 @@ class $$NarouNovelContentsTableAnnotationComposer
   GeneratedColumn<String> get body =>
       $composableBuilder(column: $table.body, builder: (column) => column);
 
-  GeneratedColumn<String> get chapter =>
+  GeneratedColumn<int> get chapter =>
       $composableBuilder(column: $table.chapter, builder: (column) => column);
 
   GeneratedColumn<String> get ncode =>
@@ -1610,7 +1610,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> body = const Value.absent(),
-            Value<String> chapter = const Value.absent(),
+            Value<int> chapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
             Value<String> title = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -1624,7 +1624,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             required String body,
-            required String chapter,
+            required int chapter,
             required String ncode,
             required String title,
             Value<int> rowid = const Value.absent(),

@@ -23,7 +23,7 @@ mixin _$NarouNovelContent {
   String get title => throw _privateConstructorUsedError;
   String get ncode => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
-  String get chapter => throw _privateConstructorUsedError;
+  int get chapter => throw _privateConstructorUsedError;
 
   /// Serializes this NarouNovelContent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $NarouNovelContentCopyWith<$Res> {
           NarouNovelContent value, $Res Function(NarouNovelContent) then) =
       _$NarouNovelContentCopyWithImpl<$Res, NarouNovelContent>;
   @useResult
-  $Res call({String title, String ncode, String body, String chapter});
+  $Res call({String title, String ncode, String body, int chapter});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
       chapter: null == chapter
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -93,7 +93,7 @@ abstract class _$$NarouNovelContentImplCopyWith<$Res>
       __$$NarouNovelContentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String ncode, String body, String chapter});
+  $Res call({String title, String ncode, String body, int chapter});
 }
 
 /// @nodoc
@@ -130,7 +130,7 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
       chapter: null == chapter
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -155,7 +155,7 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   @override
   final String body;
   @override
-  final String chapter;
+  final int chapter;
 
   @override
   String toString() {
@@ -199,7 +199,7 @@ abstract class _NarouNovelContent extends NarouNovelContent {
       {required final String title,
       required final String ncode,
       required final String body,
-      required final String chapter}) = _$NarouNovelContentImpl;
+      required final int chapter}) = _$NarouNovelContentImpl;
   const _NarouNovelContent._() : super._();
 
   factory _NarouNovelContent.fromJson(Map<String, dynamic> json) =
@@ -212,7 +212,7 @@ abstract class _NarouNovelContent extends NarouNovelContent {
   @override
   String get body;
   @override
-  String get chapter;
+  int get chapter;
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.

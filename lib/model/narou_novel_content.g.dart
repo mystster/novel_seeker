@@ -12,7 +12,7 @@ _$NarouNovelContentImpl _$$NarouNovelContentImplFromJson(
       title: json['title'] as String,
       ncode: json['ncode'] as String,
       body: json['body'] as String,
-      chapter: json['chapter'] as String,
+      chapter: (json['chapter'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$NarouNovelContentImplToJson(
