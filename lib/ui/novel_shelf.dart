@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +13,7 @@ class NovelShelf extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final narouProvider = ref.watch(narouNovelProvider);
-    
+
     final addNcode = TextEditingController();
 
     return Scaffold(
@@ -22,8 +24,7 @@ class NovelShelf extends HookConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Novel Shelf'),
       ),
-      drawer: 
-      Drawer(
+      drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -60,7 +61,9 @@ class NovelShelf extends HookConsumerWidget {
                         TextButton(
                           child: const Text('add'),
                           onPressed: () {
-                            ref.read(narouNovelProvider.notifier).addNovel(addNcode.text);
+                            ref
+                                .read(narouNovelProvider.notifier)
+                                .addNovel(addNcode.text);
                             Navigator.of(context).pop();
                           },
                         ),
@@ -76,7 +79,6 @@ class NovelShelf extends HookConsumerWidget {
               onTap: () async {
                 await ref.read(narouNovelProvider.notifier).deleteAllNovel();
               },
-
             ),
           ],
         ),
@@ -84,13 +86,14 @@ class NovelShelf extends HookConsumerWidget {
       body: Center(
         child: switch (narouProvider) {
           AsyncData(:final value) => ListView.builder(
-            itemCount: value.length,
-            itemBuilder: (context, index) {
-              return novelInfo(value[index]);
-            },
-          ),
+              itemCount: value.length,
+              itemBuilder: (context, index) {
+                return novelInfo(context, value[index]);
+              },
+            ),
           AsyncLoading() => const CircularProgressIndicator(),
-          AsyncError(:final error, :final stackTrace) => Text('Error: $error, ST: $stackTrace'),
+          AsyncError(:final error, :final stackTrace) =>
+            Text('Error: $error, ST: $stackTrace'),
           // TODO: Handle this case.
           AsyncValue<List<NovelInfo>>() => throw UnimplementedError(),
         },
@@ -98,10 +101,82 @@ class NovelShelf extends HookConsumerWidget {
     );
   }
 
-  Widget novelInfo(NovelInfo novelInfo) {
-    return ListTile(
-      title: Text(novelInfo.ncode),
-      subtitle: Text(novelInfo.novelInfo?.title ?? ''),
+  Widget novelInfo(BuildContext context, NovelInfo novelInfo) {
+    return InkWell(
+      onTap: () {
+        //Navigator.of(context).push('/novel', arguments: novelInfo.novelInfo?.ncode);
+      },
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(novelInfo.novelInfo?.title ?? '',
+                    style: Theme.of(context).textTheme.headlineSmall),
+                Row(
+                  children: [
+                    textWithIcon(
+                        Icons.person, novelInfo.novelInfo?.writer ?? ''),
+                    const SizedBox(width: 8),
+                    textWithIcon(Icons.book,
+                        novelInfo.novelInfo?.generalAllNo.toString() ?? ''),
+                  ],
+                ),
+                Row(
+                  children: [
+                    tag(context, novelInfo.novelInfo?.isstop == 1, '停止中'),
+                    tag(context, novelInfo.novelInfo?.isr15 == 1, 'R15'),
+                    tag(context, novelInfo.novelInfo?.istensei == 1, '転生'),
+                    tag(context, novelInfo.novelInfo?.isbl == 1, 'BL'),
+                  ],
+                ),
+              ],
+            ),
+            PopupMenuButton<String>(
+              onSelected: (String result) {
+                logger.d('$result selected');
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: textWithIcon(Icons.delete, 'Delete'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget tag(BuildContext context, bool enable, String text) {
+    if (enable) {
+      return Container(
+        margin: const EdgeInsets.only(left: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).colorScheme.primary),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          text,
+          selectionColor: Theme.of(context).colorScheme.primary,
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget textWithIcon(IconData icon, String text, {double mergin = 4.0}) {
+    return Row(
+      children: [
+        Icon(icon),
+        SizedBox(width: mergin),
+        Text(text),
+      ],
     );
   }
 }
