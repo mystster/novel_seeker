@@ -387,9 +387,10 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   static const VerificationMeta _biggenreMeta =
       const VerificationMeta('biggenre');
   @override
-  late final GeneratedColumn<int> biggenre = GeneratedColumn<int>(
-      'biggenre', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<Biggenre, int> biggenre =
+      GeneratedColumn<int>('biggenre', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<Biggenre>($NarouNovelInfosTable.$converterbiggenre);
   static const VerificationMeta _dailyPointMeta =
       const VerificationMeta('dailyPoint');
   @override
@@ -422,9 +423,10 @@ class $NarouNovelInfosTable extends NarouNovelInfos
           type: DriftSqlType.dateTime, requiredDuringInsert: true);
   static const VerificationMeta _genreMeta = const VerificationMeta('genre');
   @override
-  late final GeneratedColumn<int> genre = GeneratedColumn<int>(
-      'genre', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<Genre, int> genre =
+      GeneratedColumn<int>('genre', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<Genre>($NarouNovelInfosTable.$convertergenre);
   static const VerificationMeta _gensakuMeta =
       const VerificationMeta('gensaku');
   @override
@@ -541,9 +543,10 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   static const VerificationMeta _novelTypeMeta =
       const VerificationMeta('novelType');
   @override
-  late final GeneratedColumn<int> novelType = GeneratedColumn<int>(
-      'novel_type', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<NovelType, int> novelType =
+      GeneratedColumn<int>('novel_type', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<NovelType>($NarouNovelInfosTable.$converternovelType);
   static const VerificationMeta _novelupdatedAtMeta =
       const VerificationMeta('novelupdatedAt');
   @override
@@ -676,12 +679,7 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_allPointMeta);
     }
-    if (data.containsKey('biggenre')) {
-      context.handle(_biggenreMeta,
-          biggenre.isAcceptableOrUnknown(data['biggenre']!, _biggenreMeta));
-    } else if (isInserting) {
-      context.missing(_biggenreMeta);
-    }
+    context.handle(_biggenreMeta, const VerificationResult.success());
     if (data.containsKey('daily_point')) {
       context.handle(
           _dailyPointMeta,
@@ -722,12 +720,7 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_generalLastupMeta);
     }
-    if (data.containsKey('genre')) {
-      context.handle(
-          _genreMeta, genre.isAcceptableOrUnknown(data['genre']!, _genreMeta));
-    } else if (isInserting) {
-      context.missing(_genreMeta);
-    }
+    context.handle(_genreMeta, const VerificationResult.success());
     if (data.containsKey('gensaku')) {
       context.handle(_gensakuMeta,
           gensaku.isAcceptableOrUnknown(data['gensaku']!, _gensakuMeta));
@@ -830,12 +823,7 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_ncodeMeta);
     }
-    if (data.containsKey('novel_type')) {
-      context.handle(_novelTypeMeta,
-          novelType.isAcceptableOrUnknown(data['novel_type']!, _novelTypeMeta));
-    } else if (isInserting) {
-      context.missing(_novelTypeMeta);
-    }
+    context.handle(_novelTypeMeta, const VerificationResult.success());
     if (data.containsKey('novelupdated_at')) {
       context.handle(
           _novelupdatedAtMeta,
@@ -935,10 +923,12 @@ class $NarouNovelInfosTable extends NarouNovelInfos
           .read(DriftSqlType.string, data['${effectivePrefix}writer'])!,
       story: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}story'])!,
-      biggenre: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}biggenre'])!,
-      genre: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}genre'])!,
+      biggenre: $NarouNovelInfosTable.$converterbiggenre.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.int, data['${effectivePrefix}biggenre'])!),
+      genre: $NarouNovelInfosTable.$convertergenre.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}genre'])!),
       gensaku: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}gensaku'])!,
       keyword: attachedDatabase.typeMapping
@@ -947,8 +937,9 @@ class $NarouNovelInfosTable extends NarouNovelInfos
           DriftSqlType.dateTime, data['${effectivePrefix}general_firstup'])!,
       generalLastup: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}general_lastup'])!,
-      novelType: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}novel_type'])!,
+      novelType: $NarouNovelInfosTable.$converternovelType.fromSql(
+          attachedDatabase.typeMapping
+              .read(DriftSqlType.int, data['${effectivePrefix}novel_type'])!),
       isEnd: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_end'])!,
       generalAllNo: attachedDatabase.typeMapping
@@ -1008,18 +999,25 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   $NarouNovelInfosTable createAlias(String alias) {
     return $NarouNovelInfosTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<Biggenre, int, int> $converterbiggenre =
+      const BiggenreConverter();
+  static JsonTypeConverter2<Genre, int, int> $convertergenre =
+      const GenreConverter();
+  static JsonTypeConverter2<NovelType, int, int> $converternovelType =
+      const NovelTypeConverter();
 }
 
 class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   final Value<int> allHyokaCnt;
   final Value<int> allPoint;
-  final Value<int> biggenre;
+  final Value<Biggenre> biggenre;
   final Value<int> dailyPoint;
   final Value<int> favNovelCnt;
   final Value<int> generalAllNo;
   final Value<DateTime> generalFirstup;
   final Value<DateTime> generalLastup;
-  final Value<int> genre;
+  final Value<Genre> genre;
   final Value<String> gensaku;
   final Value<int> globalPoint;
   final Value<int> impressionCnt;
@@ -1036,7 +1034,7 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   final Value<int> length;
   final Value<int> monthlyPoint;
   final Value<String> ncode;
-  final Value<int> novelType;
+  final Value<NovelType> novelType;
   final Value<DateTime> novelupdatedAt;
   final Value<int> quarterPoint;
   final Value<int> reviewCnt;
@@ -1094,13 +1092,13 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   NarouNovelInfosCompanion.insert({
     required int allHyokaCnt,
     required int allPoint,
-    required int biggenre,
+    required Biggenre biggenre,
     required int dailyPoint,
     required int favNovelCnt,
     required int generalAllNo,
     required DateTime generalFirstup,
     required DateTime generalLastup,
-    required int genre,
+    required Genre genre,
     required String gensaku,
     required int globalPoint,
     required int impressionCnt,
@@ -1117,7 +1115,7 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     required int length,
     required int monthlyPoint,
     required String ncode,
-    required int novelType,
+    required NovelType novelType,
     required DateTime novelupdatedAt,
     required int quarterPoint,
     required int reviewCnt,
@@ -1256,13 +1254,13 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   NarouNovelInfosCompanion copyWith(
       {Value<int>? allHyokaCnt,
       Value<int>? allPoint,
-      Value<int>? biggenre,
+      Value<Biggenre>? biggenre,
       Value<int>? dailyPoint,
       Value<int>? favNovelCnt,
       Value<int>? generalAllNo,
       Value<DateTime>? generalFirstup,
       Value<DateTime>? generalLastup,
-      Value<int>? genre,
+      Value<Genre>? genre,
       Value<String>? gensaku,
       Value<int>? globalPoint,
       Value<int>? impressionCnt,
@@ -1279,7 +1277,7 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       Value<int>? length,
       Value<int>? monthlyPoint,
       Value<String>? ncode,
-      Value<int>? novelType,
+      Value<NovelType>? novelType,
       Value<DateTime>? novelupdatedAt,
       Value<int>? quarterPoint,
       Value<int>? reviewCnt,
@@ -1346,7 +1344,8 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       map['all_point'] = Variable<int>(allPoint.value);
     }
     if (biggenre.present) {
-      map['biggenre'] = Variable<int>(biggenre.value);
+      map['biggenre'] = Variable<int>(
+          $NarouNovelInfosTable.$converterbiggenre.toSql(biggenre.value));
     }
     if (dailyPoint.present) {
       map['daily_point'] = Variable<int>(dailyPoint.value);
@@ -1364,7 +1363,8 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       map['general_lastup'] = Variable<DateTime>(generalLastup.value);
     }
     if (genre.present) {
-      map['genre'] = Variable<int>(genre.value);
+      map['genre'] = Variable<int>(
+          $NarouNovelInfosTable.$convertergenre.toSql(genre.value));
     }
     if (gensaku.present) {
       map['gensaku'] = Variable<String>(gensaku.value);
@@ -1415,7 +1415,8 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       map['ncode'] = Variable<String>(ncode.value);
     }
     if (novelType.present) {
-      map['novel_type'] = Variable<int>(novelType.value);
+      map['novel_type'] = Variable<int>(
+          $NarouNovelInfosTable.$converternovelType.toSql(novelType.value));
     }
     if (novelupdatedAt.present) {
       map['novelupdated_at'] = Variable<DateTime>(novelupdatedAt.value);
@@ -1842,13 +1843,13 @@ typedef $$NarouNovelInfosTableCreateCompanionBuilder = NarouNovelInfosCompanion
     Function({
   required int allHyokaCnt,
   required int allPoint,
-  required int biggenre,
+  required Biggenre biggenre,
   required int dailyPoint,
   required int favNovelCnt,
   required int generalAllNo,
   required DateTime generalFirstup,
   required DateTime generalLastup,
-  required int genre,
+  required Genre genre,
   required String gensaku,
   required int globalPoint,
   required int impressionCnt,
@@ -1865,7 +1866,7 @@ typedef $$NarouNovelInfosTableCreateCompanionBuilder = NarouNovelInfosCompanion
   required int length,
   required int monthlyPoint,
   required String ncode,
-  required int novelType,
+  required NovelType novelType,
   required DateTime novelupdatedAt,
   required int quarterPoint,
   required int reviewCnt,
@@ -1884,13 +1885,13 @@ typedef $$NarouNovelInfosTableUpdateCompanionBuilder = NarouNovelInfosCompanion
     Function({
   Value<int> allHyokaCnt,
   Value<int> allPoint,
-  Value<int> biggenre,
+  Value<Biggenre> biggenre,
   Value<int> dailyPoint,
   Value<int> favNovelCnt,
   Value<int> generalAllNo,
   Value<DateTime> generalFirstup,
   Value<DateTime> generalLastup,
-  Value<int> genre,
+  Value<Genre> genre,
   Value<String> gensaku,
   Value<int> globalPoint,
   Value<int> impressionCnt,
@@ -1907,7 +1908,7 @@ typedef $$NarouNovelInfosTableUpdateCompanionBuilder = NarouNovelInfosCompanion
   Value<int> length,
   Value<int> monthlyPoint,
   Value<String> ncode,
-  Value<int> novelType,
+  Value<NovelType> novelType,
   Value<DateTime> novelupdatedAt,
   Value<int> quarterPoint,
   Value<int> reviewCnt,
@@ -1938,8 +1939,10 @@ class $$NarouNovelInfosTableFilterComposer
   ColumnFilters<int> get allPoint => $composableBuilder(
       column: $table.allPoint, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get biggenre => $composableBuilder(
-      column: $table.biggenre, builder: (column) => ColumnFilters(column));
+  ColumnWithTypeConverterFilters<Biggenre, Biggenre, int> get biggenre =>
+      $composableBuilder(
+          column: $table.biggenre,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<int> get dailyPoint => $composableBuilder(
       column: $table.dailyPoint, builder: (column) => ColumnFilters(column));
@@ -1957,8 +1960,10 @@ class $$NarouNovelInfosTableFilterComposer
   ColumnFilters<DateTime> get generalLastup => $composableBuilder(
       column: $table.generalLastup, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get genre => $composableBuilder(
-      column: $table.genre, builder: (column) => ColumnFilters(column));
+  ColumnWithTypeConverterFilters<Genre, Genre, int> get genre =>
+      $composableBuilder(
+          column: $table.genre,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<String> get gensaku => $composableBuilder(
       column: $table.gensaku, builder: (column) => ColumnFilters(column));
@@ -2008,8 +2013,10 @@ class $$NarouNovelInfosTableFilterComposer
   ColumnFilters<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get novelType => $composableBuilder(
-      column: $table.novelType, builder: (column) => ColumnFilters(column));
+  ColumnWithTypeConverterFilters<NovelType, NovelType, int> get novelType =>
+      $composableBuilder(
+          column: $table.novelType,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<DateTime> get novelupdatedAt => $composableBuilder(
       column: $table.novelupdatedAt,
@@ -2195,7 +2202,7 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<int> get allPoint =>
       $composableBuilder(column: $table.allPoint, builder: (column) => column);
 
-  GeneratedColumn<int> get biggenre =>
+  GeneratedColumnWithTypeConverter<Biggenre, int> get biggenre =>
       $composableBuilder(column: $table.biggenre, builder: (column) => column);
 
   GeneratedColumn<int> get dailyPoint => $composableBuilder(
@@ -2213,7 +2220,7 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<DateTime> get generalLastup => $composableBuilder(
       column: $table.generalLastup, builder: (column) => column);
 
-  GeneratedColumn<int> get genre =>
+  GeneratedColumnWithTypeConverter<Genre, int> get genre =>
       $composableBuilder(column: $table.genre, builder: (column) => column);
 
   GeneratedColumn<String> get gensaku =>
@@ -2264,7 +2271,7 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<String> get ncode =>
       $composableBuilder(column: $table.ncode, builder: (column) => column);
 
-  GeneratedColumn<int> get novelType =>
+  GeneratedColumnWithTypeConverter<NovelType, int> get novelType =>
       $composableBuilder(column: $table.novelType, builder: (column) => column);
 
   GeneratedColumn<DateTime> get novelupdatedAt => $composableBuilder(
@@ -2333,13 +2340,13 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> allHyokaCnt = const Value.absent(),
             Value<int> allPoint = const Value.absent(),
-            Value<int> biggenre = const Value.absent(),
+            Value<Biggenre> biggenre = const Value.absent(),
             Value<int> dailyPoint = const Value.absent(),
             Value<int> favNovelCnt = const Value.absent(),
             Value<int> generalAllNo = const Value.absent(),
             Value<DateTime> generalFirstup = const Value.absent(),
             Value<DateTime> generalLastup = const Value.absent(),
-            Value<int> genre = const Value.absent(),
+            Value<Genre> genre = const Value.absent(),
             Value<String> gensaku = const Value.absent(),
             Value<int> globalPoint = const Value.absent(),
             Value<int> impressionCnt = const Value.absent(),
@@ -2356,7 +2363,7 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             Value<int> length = const Value.absent(),
             Value<int> monthlyPoint = const Value.absent(),
             Value<String> ncode = const Value.absent(),
-            Value<int> novelType = const Value.absent(),
+            Value<NovelType> novelType = const Value.absent(),
             Value<DateTime> novelupdatedAt = const Value.absent(),
             Value<int> quarterPoint = const Value.absent(),
             Value<int> reviewCnt = const Value.absent(),
@@ -2415,13 +2422,13 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             required int allHyokaCnt,
             required int allPoint,
-            required int biggenre,
+            required Biggenre biggenre,
             required int dailyPoint,
             required int favNovelCnt,
             required int generalAllNo,
             required DateTime generalFirstup,
             required DateTime generalLastup,
-            required int genre,
+            required Genre genre,
             required String gensaku,
             required int globalPoint,
             required int impressionCnt,
@@ -2438,7 +2445,7 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             required int length,
             required int monthlyPoint,
             required String ncode,
-            required int novelType,
+            required NovelType novelType,
             required DateTime novelupdatedAt,
             required int quarterPoint,
             required int reviewCnt,

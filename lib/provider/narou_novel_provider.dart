@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../model/narou_enum.dart';
 import '../model/novel_info.dart';
 import '../repository/app_database.dart';
 
@@ -48,14 +49,14 @@ class NarouNovel extends _$NarouNovel {
           ncode: ncode,
           allHyokaCnt: 0,
           allPoint: math.Random().nextInt(100) + 1,
-          biggenre: math.Random().nextInt(5),
+          biggenre: Biggenre.values[math.Random().nextInt(7)],
           dailyPoint: math.Random().nextInt(100) + 1,
           isEnd: math.Random().nextBool(),
           favNovelCnt: math.Random().nextInt(100) + 1,
           generalAllNo: math.Random().nextInt(100) + 1,
           generalFirstup: DateTime.now(),
           generalLastup: DateTime.now(),
-          genre: math.Random().nextInt(7) + 301,
+          genre: Genre.values[math.Random().nextInt(22)],
           gensaku: '',
           globalPoint: math.Random().nextInt(100) + 1,
           impressionCnt: math.Random().nextInt(100) + 1,
@@ -70,7 +71,7 @@ class NarouNovel extends _$NarouNovel {
           keyword: 'キーワード_${math.Random().nextInt(100).toString()}',
           length: math.Random().nextInt(100000),
           monthlyPoint: 0,
-          novelType: math.Random().nextInt(2) + 1,
+          novelType: NovelType.values[math.Random().nextInt(2)],
           novelupdatedAt: DateTime.now(),
           quarterPoint: math.Random().nextInt(100),
           reviewCnt: math.Random().nextInt(100),

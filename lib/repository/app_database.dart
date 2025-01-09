@@ -1,9 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import '../model/narou_enum.dart';
 import '../model/narou_novel_content.dart';
 import '../model/narou_novel_info.dart';
 import '../model/novel_info.dart';
+import '../util/converter.dart';
 
 part 'app_database.g.dart';
 
@@ -39,13 +41,13 @@ class NarouNovelContents extends Table {
 class NarouNovelInfos extends Table {
   IntColumn get allHyokaCnt => integer()();
   IntColumn get allPoint => integer()();
-  IntColumn get biggenre => integer()();
+  IntColumn get biggenre => integer().map(const BiggenreConverter())();
   IntColumn get dailyPoint => integer()();
   IntColumn get favNovelCnt => integer()();
   IntColumn get generalAllNo => integer()();
   DateTimeColumn get generalFirstup => dateTime()();
   DateTimeColumn get generalLastup => dateTime()();
-  IntColumn get genre => integer()();
+  IntColumn get genre => integer().map(const GenreConverter())();
   TextColumn get gensaku => text()();
   IntColumn get globalPoint => integer()();
   IntColumn get impressionCnt => integer()();
@@ -62,7 +64,7 @@ class NarouNovelInfos extends Table {
   IntColumn get length => integer()();
   IntColumn get monthlyPoint => integer()();
   TextColumn get ncode => text()();
-  IntColumn get novelType => integer()();
+  IntColumn get novelType => integer().map(const NovelTypeConverter())();
   DateTimeColumn get novelupdatedAt => dateTime()();
   @override
   Set<Column> get primaryKey => {ncode};

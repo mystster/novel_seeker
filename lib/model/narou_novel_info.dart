@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../repository/app_database.dart';
 import '../util/converter.dart';
+import 'narou_enum.dart';
 
 part 'narou_novel_info.freezed.dart';
 part 'narou_novel_info.g.dart';
@@ -25,9 +26,9 @@ class NarouNovelInfo
     /// あらすじ
     required String story,
     /// 大ジャンル
-    @Default(-1) int biggenre,
+    @Default(Biggenre.unselected) Biggenre biggenre,
     /// ジャンル
-    @Default(-1) int genre,
+    @Default(Genre.unselected) Genre genre,
     /// 原作（常に空文字列）
     required String gensaku,
     /// キーワード
@@ -36,9 +37,9 @@ class NarouNovelInfo
     required DateTime generalFirstup,
     /// 最終掲載日
     required DateTime generalLastup,
-    /// 連載の場合は1、短編の場合は2
-    required int novelType,
-    /// 短編作品と完結済作品は0となっています。連載中は1です
+    /// 連載の場合はserial、短編の場合はshortStory
+    @Default(NovelType.unselected) NovelType novelType,
+    /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
     @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
     required bool isEnd,
     /// 全掲載エピソード数です。短編の場合は1です。

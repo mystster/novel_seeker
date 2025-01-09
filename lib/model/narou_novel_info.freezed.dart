@@ -36,10 +36,10 @@ mixin _$NarouNovelInfo {
   String get story => throw _privateConstructorUsedError;
 
   /// 大ジャンル
-  int get biggenre => throw _privateConstructorUsedError;
+  Biggenre get biggenre => throw _privateConstructorUsedError;
 
   /// ジャンル
-  int get genre => throw _privateConstructorUsedError;
+  Genre get genre => throw _privateConstructorUsedError;
 
   /// 原作（常に空文字列）
   String get gensaku => throw _privateConstructorUsedError;
@@ -53,10 +53,10 @@ mixin _$NarouNovelInfo {
   /// 最終掲載日
   DateTime get generalLastup => throw _privateConstructorUsedError;
 
-  /// 連載の場合は1、短編の場合は2
-  int get novelType => throw _privateConstructorUsedError;
+  /// 連載の場合はserial、短編の場合はshortStory
+  NovelType get novelType => throw _privateConstructorUsedError;
 
-  /// 短編作品と完結済作品は0となっています。連載中は1です
+  /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
   @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   bool get isEnd => throw _privateConstructorUsedError;
 
@@ -164,13 +164,13 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       int userid,
       String writer,
       String story,
-      int biggenre,
-      int genre,
+      Biggenre biggenre,
+      Genre genre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
       DateTime generalLastup,
-      int novelType,
+      NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
       int length,
@@ -282,11 +282,11 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
       biggenre: null == biggenre
           ? _value.biggenre
           : biggenre // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Biggenre,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Genre,
       gensaku: null == gensaku
           ? _value.gensaku
           : gensaku // ignore: cast_nullable_to_non_nullable
@@ -306,7 +306,7 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
       novelType: null == novelType
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
-              as int,
+              as NovelType,
       isEnd: null == isEnd
           ? _value.isEnd
           : isEnd // ignore: cast_nullable_to_non_nullable
@@ -429,13 +429,13 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
       int userid,
       String writer,
       String story,
-      int biggenre,
-      int genre,
+      Biggenre biggenre,
+      Genre genre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
       DateTime generalLastup,
-      int novelType,
+      NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
       int length,
@@ -545,11 +545,11 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
       biggenre: null == biggenre
           ? _value.biggenre
           : biggenre // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Biggenre,
       genre: null == genre
           ? _value.genre
           : genre // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Genre,
       gensaku: null == gensaku
           ? _value.gensaku
           : gensaku // ignore: cast_nullable_to_non_nullable
@@ -569,7 +569,7 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
       novelType: null == novelType
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
-              as int,
+              as NovelType,
       isEnd: null == isEnd
           ? _value.isEnd
           : isEnd // ignore: cast_nullable_to_non_nullable
@@ -688,13 +688,13 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       this.userid = 0,
       required this.writer,
       required this.story,
-      this.biggenre = -1,
-      this.genre = -1,
+      this.biggenre = Biggenre.unselected,
+      this.genre = Genre.unselected,
       required this.gensaku,
       required this.keyword,
       required this.generalFirstup,
       required this.generalLastup,
-      required this.novelType,
+      this.novelType = NovelType.unselected,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required this.isEnd,
       required this.generalAllNo,
@@ -758,12 +758,12 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
   /// 大ジャンル
   @override
   @JsonKey()
-  final int biggenre;
+  final Biggenre biggenre;
 
   /// ジャンル
   @override
   @JsonKey()
-  final int genre;
+  final Genre genre;
 
   /// 原作（常に空文字列）
   @override
@@ -781,11 +781,12 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
   @override
   final DateTime generalLastup;
 
-  /// 連載の場合は1、短編の場合は2
+  /// 連載の場合はserial、短編の場合はshortStory
   @override
-  final int novelType;
+  @JsonKey()
+  final NovelType novelType;
 
-  /// 短編作品と完結済作品は0となっています。連載中は1です
+  /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
   @override
   @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   final bool isEnd;
@@ -1082,13 +1083,13 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
       final int userid,
       required final String writer,
       required final String story,
-      final int biggenre,
-      final int genre,
+      final Biggenre biggenre,
+      final Genre genre,
       required final String gensaku,
       required final String keyword,
       required final DateTime generalFirstup,
       required final DateTime generalLastup,
-      required final int novelType,
+      final NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required final bool isEnd,
       required final int generalAllNo,
@@ -1150,11 +1151,11 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 大ジャンル
   @override
-  int get biggenre;
+  Biggenre get biggenre;
 
   /// ジャンル
   @override
-  int get genre;
+  Genre get genre;
 
   /// 原作（常に空文字列）
   @override
@@ -1172,11 +1173,11 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
   @override
   DateTime get generalLastup;
 
-  /// 連載の場合は1、短編の場合は2
+  /// 連載の場合はserial、短編の場合はshortStory
   @override
-  int get novelType;
+  NovelType get novelType;
 
-  /// 短編作品と完結済作品は0となっています。連載中は1です
+  /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
   @override
   @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   bool get isEnd;

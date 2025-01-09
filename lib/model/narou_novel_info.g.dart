@@ -13,13 +13,16 @@ _$NarouNovelInfoImpl _$$NarouNovelInfoImplFromJson(Map<String, dynamic> json) =>
       userid: (json['userid'] as num?)?.toInt() ?? 0,
       writer: json['writer'] as String,
       story: json['story'] as String,
-      biggenre: (json['biggenre'] as num?)?.toInt() ?? -1,
-      genre: (json['genre'] as num?)?.toInt() ?? -1,
+      biggenre: $enumDecodeNullable(_$BiggenreEnumMap, json['biggenre']) ??
+          Biggenre.unselected,
+      genre: $enumDecodeNullable(_$GenreEnumMap, json['genre']) ??
+          Genre.unselected,
       gensaku: json['gensaku'] as String,
       keyword: json['keyword'] as String,
       generalFirstup: DateTime.parse(json['general_firstup'] as String),
       generalLastup: DateTime.parse(json['general_lastup'] as String),
-      novelType: (json['novel_type'] as num).toInt(),
+      novelType: $enumDecodeNullable(_$NovelTypeEnumMap, json['novel_type']) ??
+          NovelType.unselected,
       isEnd: intToBool((json['end'] as num).toInt()),
       generalAllNo: (json['general_all_no'] as num).toInt(),
       length: (json['length'] as num).toInt(),
@@ -58,13 +61,13 @@ Map<String, dynamic> _$$NarouNovelInfoImplToJson(
       'userid': instance.userid,
       'writer': instance.writer,
       'story': instance.story,
-      'biggenre': instance.biggenre,
-      'genre': instance.genre,
+      'biggenre': _$BiggenreEnumMap[instance.biggenre]!,
+      'genre': _$GenreEnumMap[instance.genre]!,
       'gensaku': instance.gensaku,
       'keyword': instance.keyword,
       'general_firstup': instance.generalFirstup.toIso8601String(),
       'general_lastup': instance.generalLastup.toIso8601String(),
-      'novel_type': instance.novelType,
+      'novel_type': _$NovelTypeEnumMap[instance.novelType]!,
       'end': boolToInt(instance.isEnd),
       'general_all_no': instance.generalAllNo,
       'length': instance.length,
@@ -92,3 +95,43 @@ Map<String, dynamic> _$$NarouNovelInfoImplToJson(
       'novelupdated_at': instance.novelupdatedAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
     };
+
+const _$BiggenreEnumMap = {
+  Biggenre.unselected: 'unselected',
+  Biggenre.romance: 'romance',
+  Biggenre.fantasy: 'fantasy',
+  Biggenre.literature: 'literature',
+  Biggenre.sf: 'sf',
+  Biggenre.other: 'other',
+  Biggenre.nonGenre: 'nonGenre',
+};
+
+const _$GenreEnumMap = {
+  Genre.unselected: 'unselected',
+  Genre.isekaiRomance: 'isekaiRomance',
+  Genre.realWorldRomance: 'realWorldRomance',
+  Genre.highFantasy: 'highFantasy',
+  Genre.lowFantasy: 'lowFantasy',
+  Genre.pureLiterature: 'pureLiterature',
+  Genre.humanDrama: 'humanDrama',
+  Genre.history: 'history',
+  Genre.mystery: 'mystery',
+  Genre.horror: 'horror',
+  Genre.action: 'action',
+  Genre.comedy: 'comedy',
+  Genre.vrGame: 'vrGame',
+  Genre.space: 'space',
+  Genre.scienceFiction: 'scienceFiction',
+  Genre.panic: 'panic',
+  Genre.fairyTale: 'fairyTale',
+  Genre.poetry: 'poetry',
+  Genre.essay: 'essay',
+  Genre.replay: 'replay',
+  Genre.others: 'others',
+  Genre.nonGenre: 'nonGenre',
+};
+
+const _$NovelTypeEnumMap = {
+  NovelType.serial: 'serial',
+  NovelType.shortStory: 'shortStory',
+};
