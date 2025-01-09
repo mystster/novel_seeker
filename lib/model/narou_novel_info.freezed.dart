@@ -57,7 +57,7 @@ mixin _$NarouNovelInfo {
   int get novelType => throw _privateConstructorUsedError;
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   bool get isEnd => throw _privateConstructorUsedError;
 
   /// 全掲載エピソード数です。短編の場合は1です。
@@ -70,31 +70,31 @@ mixin _$NarouNovelInfo {
   int get time => throw _privateConstructorUsedError;
 
   /// 長期連載停止中ならTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
   bool get isStop => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
   bool get isR15 => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl')
   bool get isBl => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl')
   bool get isGl => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
   bool get isZankoku => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
   bool get isTensei => throw _privateConstructorUsedError;
 
   /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
   bool get isTenni => throw _privateConstructorUsedError;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
@@ -171,24 +171,21 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       DateTime generalFirstup,
       DateTime generalLastup,
       int novelType,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
-      bool isEnd,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
       int length,
       int time,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
       bool isStop,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
       bool isR15,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
-      bool isBl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
-      bool isGl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl') bool isBl,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl') bool isGl,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
       bool isZankoku,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
       bool isTensei,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
       bool isTenni,
       int globalPoint,
       int dailyPoint,
@@ -439,24 +436,21 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
       DateTime generalFirstup,
       DateTime generalLastup,
       int novelType,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
-      bool isEnd,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
       int length,
       int time,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
       bool isStop,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
       bool isR15,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
-      bool isBl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
-      bool isGl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl') bool isBl,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl') bool isGl,
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
       bool isZankoku,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
       bool isTensei,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
       bool isTenni,
       int globalPoint,
       int dailyPoint,
@@ -701,24 +695,24 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       required this.generalFirstup,
       required this.generalLastup,
       required this.novelType,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required this.isEnd,
       required this.generalAllNo,
       required this.length,
       required this.time,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
       required this.isStop,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
       this.isR15 = false,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl')
       required this.isBl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl')
       required this.isGl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
       required this.isZankoku,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
       required this.isTensei,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
       required this.isTenni,
       required this.globalPoint,
       required this.dailyPoint,
@@ -793,7 +787,7 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   final bool isEnd;
 
   /// 全掲載エピソード数です。短編の場合は1です。
@@ -810,37 +804,37 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   /// 長期連載停止中ならTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
   final bool isStop;
 
   /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
   final bool isR15;
 
   /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl')
   final bool isBl;
 
   /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl')
   final bool isGl;
 
   /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
   final bool isZankoku;
 
   /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
   final bool isTensei;
 
   /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
   final bool isTenni;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
@@ -1095,24 +1089,24 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
       required final DateTime generalFirstup,
       required final DateTime generalLastup,
       required final int novelType,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required final bool isEnd,
       required final int generalAllNo,
       required final int length,
       required final int time,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
       required final bool isStop,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
       final bool isR15,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl')
       required final bool isBl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl')
       required final bool isGl,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
       required final bool isZankoku,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
       required final bool isTensei,
-      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
       required final bool isTenni,
       required final int globalPoint,
       required final int dailyPoint,
@@ -1184,7 +1178,7 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
   bool get isEnd;
 
   /// 全掲載エピソード数です。短編の場合は1です。
@@ -1201,37 +1195,37 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 長期連載停止中ならTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isstop')
   bool get isStop;
 
   /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isr15')
   bool get isR15;
 
   /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isbl')
   bool get isBl;
 
   /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'isgl')
   bool get isGl;
 
   /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'iszankoku')
   bool get isZankoku;
 
   /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istensei')
   bool get isTensei;
 
   /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'istenni')
   bool get isTenni;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
