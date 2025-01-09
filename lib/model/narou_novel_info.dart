@@ -7,6 +7,10 @@ import '../repository/app_database.dart';
 part 'narou_novel_info.freezed.dart';
 part 'narou_novel_info.g.dart';
 
+int _boolToInt(bool value) => value ? 1 : 0;
+
+bool _intToBool(int value) => value == 1;
+
 /// なろうAPIからのデータを格納するクラス
 @freezed
 class NarouNovelInfo
@@ -38,27 +42,35 @@ class NarouNovelInfo
     /// 連載の場合は1、短編の場合は2
     required int novelType,
     /// 短編作品と完結済作品は0となっています。連載中は1です
-    required int end,
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+    required bool isEnd,
     /// 全掲載エピソード数です。短編の場合は1です。
     required int generalAllNo,
     /// 作品文字数です。スペースや改行は文字数としてカウントしません。
     required int length,
     /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
     required int time,
-    /// 長期連載停止中なら1、それ以外は0です。
-    required int isstop,
-    /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
-    @Default(0) int isr15,
-    /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
-    required int isbl,
-    /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
-    required int isgl,
-    /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
-    required int iszankoku,
-    /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
-    required int istensei,
-    /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
-    required int istenni,
+    /// 長期連載停止中ならTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'isstop')
+    required bool isStop,
+    /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'isr15')
+    @Default(false) bool isR15,
+    /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'isbl')
+    required bool isBl,
+    /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'isgl')
+    required bool isGl,
+    /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'iszankoku')
+    required bool isZankoku,
+    /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'istensei')
+    required bool isTensei,
+    /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
+    @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name:'istenni')
+    required bool isTenni,
     /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
     required int globalPoint,
     /// 日間ポイント
@@ -103,7 +115,7 @@ class NarouNovelInfo
       allPoint: Value(allPoint),
       biggenre: Value(biggenre),
       dailyPoint: Value(dailyPoint),
-      end: Value(end),
+      isEnd: Value(isEnd),
       favNovelCnt: Value(favNovelCnt),
       generalAllNo: Value(generalAllNo),
       generalFirstup: Value(generalFirstup),
@@ -112,13 +124,13 @@ class NarouNovelInfo
       gensaku: Value(gensaku),
       globalPoint: Value(globalPoint),
       impressionCnt: Value(impressionCnt),
-      isbl: Value(isbl),
-      isgl: Value(isgl),
-      isr15: Value(isr15),
-      isstop: Value(isstop),
-      istenni: Value(istenni),
-      istensei: Value(istensei),
-      iszankoku: Value(iszankoku),
+      isBl: Value(isBl),
+      isGl: Value(isGl),
+      isR15: Value(isR15),
+      isStop: Value(isStop),
+      isTenni: Value(isTenni),
+      isTensei: Value(isTensei),
+      isZankoku: Value(isZankoku),
       kaiwaritu: Value(kaiwaritu),
       keyword: Value(keyword),
       length: Value(length),
@@ -140,7 +152,6 @@ class NarouNovelInfo
     ).toColumns(nullToAbsent);
   }
 }
-
 @freezed
 class NarouNovelInfoCollection with _$NarouNovelInfoCollection {
   const factory NarouNovelInfoCollection({List<NarouNovelInfo>? data}) =

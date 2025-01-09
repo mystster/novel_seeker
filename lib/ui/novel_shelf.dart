@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -126,10 +125,10 @@ class NovelShelf extends HookConsumerWidget {
                 ),
                 Row(
                   children: [
-                    tag(context, novelInfo.novelInfo?.isstop == 1, '停止中'),
-                    tag(context, novelInfo.novelInfo?.isr15 == 1, 'R15'),
-                    tag(context, novelInfo.novelInfo?.istensei == 1, '転生'),
-                    tag(context, novelInfo.novelInfo?.isbl == 1, 'BL'),
+                    tag(context, novelInfo.novelInfo?.isStop, '停止中'),
+                    tag(context, novelInfo.novelInfo?.isR15, 'R15'),
+                    tag(context, novelInfo.novelInfo?.isTensei, '転生'),
+                    tag(context, novelInfo.novelInfo?.isBl, 'BL'),
                   ],
                 ),
               ],
@@ -151,8 +150,8 @@ class NovelShelf extends HookConsumerWidget {
     );
   }
 
-  Widget tag(BuildContext context, bool enable, String text) {
-    if (enable) {
+  Widget tag(BuildContext context, bool? enable, String text) {
+    if (enable != null && enable) {
       return Container(
         margin: const EdgeInsets.only(left: 5),
         padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0),

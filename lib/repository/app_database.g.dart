@@ -396,11 +396,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<int> dailyPoint = GeneratedColumn<int>(
       'daily_point', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _endMeta = const VerificationMeta('end');
-  @override
-  late final GeneratedColumn<int> end = GeneratedColumn<int>(
-      'end', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _favNovelCntMeta =
       const VerificationMeta('favNovelCnt');
   @override
@@ -448,44 +443,73 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<int> impressionCnt = GeneratedColumn<int>(
       'impression_cnt', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _isblMeta = const VerificationMeta('isbl');
+  static const VerificationMeta _isBlMeta = const VerificationMeta('isBl');
   @override
-  late final GeneratedColumn<int> isbl = GeneratedColumn<int>(
-      'isbl', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _isglMeta = const VerificationMeta('isgl');
+  late final GeneratedColumn<bool> isBl = GeneratedColumn<bool>(
+      'is_bl', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_bl" IN (0, 1))'));
+  static const VerificationMeta _isEndMeta = const VerificationMeta('isEnd');
   @override
-  late final GeneratedColumn<int> isgl = GeneratedColumn<int>(
-      'isgl', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _isr15Meta = const VerificationMeta('isr15');
+  late final GeneratedColumn<bool> isEnd = GeneratedColumn<bool>(
+      'is_end', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_end" IN (0, 1))'));
+  static const VerificationMeta _isGlMeta = const VerificationMeta('isGl');
   @override
-  late final GeneratedColumn<int> isr15 = GeneratedColumn<int>(
-      'isr15', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _isstopMeta = const VerificationMeta('isstop');
+  late final GeneratedColumn<bool> isGl = GeneratedColumn<bool>(
+      'is_gl', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_gl" IN (0, 1))'));
+  static const VerificationMeta _isR15Meta = const VerificationMeta('isR15');
   @override
-  late final GeneratedColumn<int> isstop = GeneratedColumn<int>(
-      'isstop', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _istenniMeta =
-      const VerificationMeta('istenni');
+  late final GeneratedColumn<bool> isR15 = GeneratedColumn<bool>(
+      'is_r15', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_r15" IN (0, 1))'));
+  static const VerificationMeta _isStopMeta = const VerificationMeta('isStop');
   @override
-  late final GeneratedColumn<int> istenni = GeneratedColumn<int>(
-      'istenni', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _istenseiMeta =
-      const VerificationMeta('istensei');
+  late final GeneratedColumn<bool> isStop = GeneratedColumn<bool>(
+      'is_stop', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_stop" IN (0, 1))'));
+  static const VerificationMeta _isTenniMeta =
+      const VerificationMeta('isTenni');
   @override
-  late final GeneratedColumn<int> istensei = GeneratedColumn<int>(
-      'istensei', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _iszankokuMeta =
-      const VerificationMeta('iszankoku');
+  late final GeneratedColumn<bool> isTenni = GeneratedColumn<bool>(
+      'is_tenni', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_tenni" IN (0, 1))'));
+  static const VerificationMeta _isTenseiMeta =
+      const VerificationMeta('isTensei');
   @override
-  late final GeneratedColumn<int> iszankoku = GeneratedColumn<int>(
-      'iszankoku', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<bool> isTensei = GeneratedColumn<bool>(
+      'is_tensei', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_tensei" IN (0, 1))'));
+  static const VerificationMeta _isZankokuMeta =
+      const VerificationMeta('isZankoku');
+  @override
+  late final GeneratedColumn<bool> isZankoku = GeneratedColumn<bool>(
+      'is_zankoku', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_zankoku" IN (0, 1))'));
   static const VerificationMeta _kaiwarituMeta =
       const VerificationMeta('kaiwaritu');
   @override
@@ -593,7 +617,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
         allPoint,
         biggenre,
         dailyPoint,
-        end,
         favNovelCnt,
         generalAllNo,
         generalFirstup,
@@ -602,13 +625,14 @@ class $NarouNovelInfosTable extends NarouNovelInfos
         gensaku,
         globalPoint,
         impressionCnt,
-        isbl,
-        isgl,
-        isr15,
-        isstop,
-        istenni,
-        istensei,
-        iszankoku,
+        isBl,
+        isEnd,
+        isGl,
+        isR15,
+        isStop,
+        isTenni,
+        isTensei,
+        isZankoku,
         kaiwaritu,
         keyword,
         length,
@@ -665,12 +689,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
               data['daily_point']!, _dailyPointMeta));
     } else if (isInserting) {
       context.missing(_dailyPointMeta);
-    }
-    if (data.containsKey('end')) {
-      context.handle(
-          _endMeta, end.isAcceptableOrUnknown(data['end']!, _endMeta));
-    } else if (isInserting) {
-      context.missing(_endMeta);
     }
     if (data.containsKey('fav_novel_cnt')) {
       context.handle(
@@ -732,47 +750,53 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_impressionCntMeta);
     }
-    if (data.containsKey('isbl')) {
+    if (data.containsKey('is_bl')) {
       context.handle(
-          _isblMeta, isbl.isAcceptableOrUnknown(data['isbl']!, _isblMeta));
+          _isBlMeta, isBl.isAcceptableOrUnknown(data['is_bl']!, _isBlMeta));
     } else if (isInserting) {
-      context.missing(_isblMeta);
+      context.missing(_isBlMeta);
     }
-    if (data.containsKey('isgl')) {
+    if (data.containsKey('is_end')) {
       context.handle(
-          _isglMeta, isgl.isAcceptableOrUnknown(data['isgl']!, _isglMeta));
+          _isEndMeta, isEnd.isAcceptableOrUnknown(data['is_end']!, _isEndMeta));
     } else if (isInserting) {
-      context.missing(_isglMeta);
+      context.missing(_isEndMeta);
     }
-    if (data.containsKey('isr15')) {
+    if (data.containsKey('is_gl')) {
       context.handle(
-          _isr15Meta, isr15.isAcceptableOrUnknown(data['isr15']!, _isr15Meta));
+          _isGlMeta, isGl.isAcceptableOrUnknown(data['is_gl']!, _isGlMeta));
     } else if (isInserting) {
-      context.missing(_isr15Meta);
+      context.missing(_isGlMeta);
     }
-    if (data.containsKey('isstop')) {
-      context.handle(_isstopMeta,
-          isstop.isAcceptableOrUnknown(data['isstop']!, _isstopMeta));
+    if (data.containsKey('is_r15')) {
+      context.handle(
+          _isR15Meta, isR15.isAcceptableOrUnknown(data['is_r15']!, _isR15Meta));
     } else if (isInserting) {
-      context.missing(_isstopMeta);
+      context.missing(_isR15Meta);
     }
-    if (data.containsKey('istenni')) {
-      context.handle(_istenniMeta,
-          istenni.isAcceptableOrUnknown(data['istenni']!, _istenniMeta));
+    if (data.containsKey('is_stop')) {
+      context.handle(_isStopMeta,
+          isStop.isAcceptableOrUnknown(data['is_stop']!, _isStopMeta));
     } else if (isInserting) {
-      context.missing(_istenniMeta);
+      context.missing(_isStopMeta);
     }
-    if (data.containsKey('istensei')) {
-      context.handle(_istenseiMeta,
-          istensei.isAcceptableOrUnknown(data['istensei']!, _istenseiMeta));
+    if (data.containsKey('is_tenni')) {
+      context.handle(_isTenniMeta,
+          isTenni.isAcceptableOrUnknown(data['is_tenni']!, _isTenniMeta));
     } else if (isInserting) {
-      context.missing(_istenseiMeta);
+      context.missing(_isTenniMeta);
     }
-    if (data.containsKey('iszankoku')) {
-      context.handle(_iszankokuMeta,
-          iszankoku.isAcceptableOrUnknown(data['iszankoku']!, _iszankokuMeta));
+    if (data.containsKey('is_tensei')) {
+      context.handle(_isTenseiMeta,
+          isTensei.isAcceptableOrUnknown(data['is_tensei']!, _isTenseiMeta));
     } else if (isInserting) {
-      context.missing(_iszankokuMeta);
+      context.missing(_isTenseiMeta);
+    }
+    if (data.containsKey('is_zankoku')) {
+      context.handle(_isZankokuMeta,
+          isZankoku.isAcceptableOrUnknown(data['is_zankoku']!, _isZankokuMeta));
+    } else if (isInserting) {
+      context.missing(_isZankokuMeta);
     }
     if (data.containsKey('kaiwaritu')) {
       context.handle(_kaiwarituMeta,
@@ -925,28 +949,28 @@ class $NarouNovelInfosTable extends NarouNovelInfos
           DriftSqlType.dateTime, data['${effectivePrefix}general_lastup'])!,
       novelType: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}novel_type'])!,
-      end: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}end'])!,
+      isEnd: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_end'])!,
       generalAllNo: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}general_all_no'])!,
       length: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}length'])!,
       time: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}time'])!,
-      isstop: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}isstop'])!,
-      isr15: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}isr15'])!,
-      isbl: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}isbl'])!,
-      isgl: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}isgl'])!,
-      iszankoku: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}iszankoku'])!,
-      istensei: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}istensei'])!,
-      istenni: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}istenni'])!,
+      isStop: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_stop'])!,
+      isR15: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_r15'])!,
+      isBl: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_bl'])!,
+      isGl: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_gl'])!,
+      isZankoku: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_zankoku'])!,
+      isTensei: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_tensei'])!,
+      isTenni: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_tenni'])!,
       globalPoint: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}global_point'])!,
       dailyPoint: attachedDatabase.typeMapping
@@ -991,7 +1015,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   final Value<int> allPoint;
   final Value<int> biggenre;
   final Value<int> dailyPoint;
-  final Value<int> end;
   final Value<int> favNovelCnt;
   final Value<int> generalAllNo;
   final Value<DateTime> generalFirstup;
@@ -1000,13 +1023,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
   final Value<String> gensaku;
   final Value<int> globalPoint;
   final Value<int> impressionCnt;
-  final Value<int> isbl;
-  final Value<int> isgl;
-  final Value<int> isr15;
-  final Value<int> isstop;
-  final Value<int> istenni;
-  final Value<int> istensei;
-  final Value<int> iszankoku;
+  final Value<bool> isBl;
+  final Value<bool> isEnd;
+  final Value<bool> isGl;
+  final Value<bool> isR15;
+  final Value<bool> isStop;
+  final Value<bool> isTenni;
+  final Value<bool> isTensei;
+  final Value<bool> isZankoku;
   final Value<int> kaiwaritu;
   final Value<String> keyword;
   final Value<int> length;
@@ -1031,7 +1055,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     this.allPoint = const Value.absent(),
     this.biggenre = const Value.absent(),
     this.dailyPoint = const Value.absent(),
-    this.end = const Value.absent(),
     this.favNovelCnt = const Value.absent(),
     this.generalAllNo = const Value.absent(),
     this.generalFirstup = const Value.absent(),
@@ -1040,13 +1063,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     this.gensaku = const Value.absent(),
     this.globalPoint = const Value.absent(),
     this.impressionCnt = const Value.absent(),
-    this.isbl = const Value.absent(),
-    this.isgl = const Value.absent(),
-    this.isr15 = const Value.absent(),
-    this.isstop = const Value.absent(),
-    this.istenni = const Value.absent(),
-    this.istensei = const Value.absent(),
-    this.iszankoku = const Value.absent(),
+    this.isBl = const Value.absent(),
+    this.isEnd = const Value.absent(),
+    this.isGl = const Value.absent(),
+    this.isR15 = const Value.absent(),
+    this.isStop = const Value.absent(),
+    this.isTenni = const Value.absent(),
+    this.isTensei = const Value.absent(),
+    this.isZankoku = const Value.absent(),
     this.kaiwaritu = const Value.absent(),
     this.keyword = const Value.absent(),
     this.length = const Value.absent(),
@@ -1072,7 +1096,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     required int allPoint,
     required int biggenre,
     required int dailyPoint,
-    required int end,
     required int favNovelCnt,
     required int generalAllNo,
     required DateTime generalFirstup,
@@ -1081,13 +1104,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     required String gensaku,
     required int globalPoint,
     required int impressionCnt,
-    required int isbl,
-    required int isgl,
-    required int isr15,
-    required int isstop,
-    required int istenni,
-    required int istensei,
-    required int iszankoku,
+    required bool isBl,
+    required bool isEnd,
+    required bool isGl,
+    required bool isR15,
+    required bool isStop,
+    required bool isTenni,
+    required bool isTensei,
+    required bool isZankoku,
     required int kaiwaritu,
     required String keyword,
     required int length,
@@ -1111,7 +1135,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
         allPoint = Value(allPoint),
         biggenre = Value(biggenre),
         dailyPoint = Value(dailyPoint),
-        end = Value(end),
         favNovelCnt = Value(favNovelCnt),
         generalAllNo = Value(generalAllNo),
         generalFirstup = Value(generalFirstup),
@@ -1120,13 +1143,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
         gensaku = Value(gensaku),
         globalPoint = Value(globalPoint),
         impressionCnt = Value(impressionCnt),
-        isbl = Value(isbl),
-        isgl = Value(isgl),
-        isr15 = Value(isr15),
-        isstop = Value(isstop),
-        istenni = Value(istenni),
-        istensei = Value(istensei),
-        iszankoku = Value(iszankoku),
+        isBl = Value(isBl),
+        isEnd = Value(isEnd),
+        isGl = Value(isGl),
+        isR15 = Value(isR15),
+        isStop = Value(isStop),
+        isTenni = Value(isTenni),
+        isTensei = Value(isTensei),
+        isZankoku = Value(isZankoku),
         kaiwaritu = Value(kaiwaritu),
         keyword = Value(keyword),
         length = Value(length),
@@ -1150,7 +1174,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     Expression<int>? allPoint,
     Expression<int>? biggenre,
     Expression<int>? dailyPoint,
-    Expression<int>? end,
     Expression<int>? favNovelCnt,
     Expression<int>? generalAllNo,
     Expression<DateTime>? generalFirstup,
@@ -1159,13 +1182,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     Expression<String>? gensaku,
     Expression<int>? globalPoint,
     Expression<int>? impressionCnt,
-    Expression<int>? isbl,
-    Expression<int>? isgl,
-    Expression<int>? isr15,
-    Expression<int>? isstop,
-    Expression<int>? istenni,
-    Expression<int>? istensei,
-    Expression<int>? iszankoku,
+    Expression<bool>? isBl,
+    Expression<bool>? isEnd,
+    Expression<bool>? isGl,
+    Expression<bool>? isR15,
+    Expression<bool>? isStop,
+    Expression<bool>? isTenni,
+    Expression<bool>? isTensei,
+    Expression<bool>? isZankoku,
     Expression<int>? kaiwaritu,
     Expression<String>? keyword,
     Expression<int>? length,
@@ -1191,7 +1215,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       if (allPoint != null) 'all_point': allPoint,
       if (biggenre != null) 'biggenre': biggenre,
       if (dailyPoint != null) 'daily_point': dailyPoint,
-      if (end != null) 'end': end,
       if (favNovelCnt != null) 'fav_novel_cnt': favNovelCnt,
       if (generalAllNo != null) 'general_all_no': generalAllNo,
       if (generalFirstup != null) 'general_firstup': generalFirstup,
@@ -1200,13 +1223,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       if (gensaku != null) 'gensaku': gensaku,
       if (globalPoint != null) 'global_point': globalPoint,
       if (impressionCnt != null) 'impression_cnt': impressionCnt,
-      if (isbl != null) 'isbl': isbl,
-      if (isgl != null) 'isgl': isgl,
-      if (isr15 != null) 'isr15': isr15,
-      if (isstop != null) 'isstop': isstop,
-      if (istenni != null) 'istenni': istenni,
-      if (istensei != null) 'istensei': istensei,
-      if (iszankoku != null) 'iszankoku': iszankoku,
+      if (isBl != null) 'is_bl': isBl,
+      if (isEnd != null) 'is_end': isEnd,
+      if (isGl != null) 'is_gl': isGl,
+      if (isR15 != null) 'is_r15': isR15,
+      if (isStop != null) 'is_stop': isStop,
+      if (isTenni != null) 'is_tenni': isTenni,
+      if (isTensei != null) 'is_tensei': isTensei,
+      if (isZankoku != null) 'is_zankoku': isZankoku,
       if (kaiwaritu != null) 'kaiwaritu': kaiwaritu,
       if (keyword != null) 'keyword': keyword,
       if (length != null) 'length': length,
@@ -1234,7 +1258,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       Value<int>? allPoint,
       Value<int>? biggenre,
       Value<int>? dailyPoint,
-      Value<int>? end,
       Value<int>? favNovelCnt,
       Value<int>? generalAllNo,
       Value<DateTime>? generalFirstup,
@@ -1243,13 +1266,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       Value<String>? gensaku,
       Value<int>? globalPoint,
       Value<int>? impressionCnt,
-      Value<int>? isbl,
-      Value<int>? isgl,
-      Value<int>? isr15,
-      Value<int>? isstop,
-      Value<int>? istenni,
-      Value<int>? istensei,
-      Value<int>? iszankoku,
+      Value<bool>? isBl,
+      Value<bool>? isEnd,
+      Value<bool>? isGl,
+      Value<bool>? isR15,
+      Value<bool>? isStop,
+      Value<bool>? isTenni,
+      Value<bool>? isTensei,
+      Value<bool>? isZankoku,
       Value<int>? kaiwaritu,
       Value<String>? keyword,
       Value<int>? length,
@@ -1274,7 +1298,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       allPoint: allPoint ?? this.allPoint,
       biggenre: biggenre ?? this.biggenre,
       dailyPoint: dailyPoint ?? this.dailyPoint,
-      end: end ?? this.end,
       favNovelCnt: favNovelCnt ?? this.favNovelCnt,
       generalAllNo: generalAllNo ?? this.generalAllNo,
       generalFirstup: generalFirstup ?? this.generalFirstup,
@@ -1283,13 +1306,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
       gensaku: gensaku ?? this.gensaku,
       globalPoint: globalPoint ?? this.globalPoint,
       impressionCnt: impressionCnt ?? this.impressionCnt,
-      isbl: isbl ?? this.isbl,
-      isgl: isgl ?? this.isgl,
-      isr15: isr15 ?? this.isr15,
-      isstop: isstop ?? this.isstop,
-      istenni: istenni ?? this.istenni,
-      istensei: istensei ?? this.istensei,
-      iszankoku: iszankoku ?? this.iszankoku,
+      isBl: isBl ?? this.isBl,
+      isEnd: isEnd ?? this.isEnd,
+      isGl: isGl ?? this.isGl,
+      isR15: isR15 ?? this.isR15,
+      isStop: isStop ?? this.isStop,
+      isTenni: isTenni ?? this.isTenni,
+      isTensei: isTensei ?? this.isTensei,
+      isZankoku: isZankoku ?? this.isZankoku,
       kaiwaritu: kaiwaritu ?? this.kaiwaritu,
       keyword: keyword ?? this.keyword,
       length: length ?? this.length,
@@ -1327,9 +1351,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     if (dailyPoint.present) {
       map['daily_point'] = Variable<int>(dailyPoint.value);
     }
-    if (end.present) {
-      map['end'] = Variable<int>(end.value);
-    }
     if (favNovelCnt.present) {
       map['fav_novel_cnt'] = Variable<int>(favNovelCnt.value);
     }
@@ -1354,26 +1375,29 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
     if (impressionCnt.present) {
       map['impression_cnt'] = Variable<int>(impressionCnt.value);
     }
-    if (isbl.present) {
-      map['isbl'] = Variable<int>(isbl.value);
+    if (isBl.present) {
+      map['is_bl'] = Variable<bool>(isBl.value);
     }
-    if (isgl.present) {
-      map['isgl'] = Variable<int>(isgl.value);
+    if (isEnd.present) {
+      map['is_end'] = Variable<bool>(isEnd.value);
     }
-    if (isr15.present) {
-      map['isr15'] = Variable<int>(isr15.value);
+    if (isGl.present) {
+      map['is_gl'] = Variable<bool>(isGl.value);
     }
-    if (isstop.present) {
-      map['isstop'] = Variable<int>(isstop.value);
+    if (isR15.present) {
+      map['is_r15'] = Variable<bool>(isR15.value);
     }
-    if (istenni.present) {
-      map['istenni'] = Variable<int>(istenni.value);
+    if (isStop.present) {
+      map['is_stop'] = Variable<bool>(isStop.value);
     }
-    if (istensei.present) {
-      map['istensei'] = Variable<int>(istensei.value);
+    if (isTenni.present) {
+      map['is_tenni'] = Variable<bool>(isTenni.value);
     }
-    if (iszankoku.present) {
-      map['iszankoku'] = Variable<int>(iszankoku.value);
+    if (isTensei.present) {
+      map['is_tensei'] = Variable<bool>(isTensei.value);
+    }
+    if (isZankoku.present) {
+      map['is_zankoku'] = Variable<bool>(isZankoku.value);
     }
     if (kaiwaritu.present) {
       map['kaiwaritu'] = Variable<int>(kaiwaritu.value);
@@ -1442,7 +1466,6 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
           ..write('allPoint: $allPoint, ')
           ..write('biggenre: $biggenre, ')
           ..write('dailyPoint: $dailyPoint, ')
-          ..write('end: $end, ')
           ..write('favNovelCnt: $favNovelCnt, ')
           ..write('generalAllNo: $generalAllNo, ')
           ..write('generalFirstup: $generalFirstup, ')
@@ -1451,13 +1474,14 @@ class NarouNovelInfosCompanion extends UpdateCompanion<NarouNovelInfo> {
           ..write('gensaku: $gensaku, ')
           ..write('globalPoint: $globalPoint, ')
           ..write('impressionCnt: $impressionCnt, ')
-          ..write('isbl: $isbl, ')
-          ..write('isgl: $isgl, ')
-          ..write('isr15: $isr15, ')
-          ..write('isstop: $isstop, ')
-          ..write('istenni: $istenni, ')
-          ..write('istensei: $istensei, ')
-          ..write('iszankoku: $iszankoku, ')
+          ..write('isBl: $isBl, ')
+          ..write('isEnd: $isEnd, ')
+          ..write('isGl: $isGl, ')
+          ..write('isR15: $isR15, ')
+          ..write('isStop: $isStop, ')
+          ..write('isTenni: $isTenni, ')
+          ..write('isTensei: $isTensei, ')
+          ..write('isZankoku: $isZankoku, ')
           ..write('kaiwaritu: $kaiwaritu, ')
           ..write('keyword: $keyword, ')
           ..write('length: $length, ')
@@ -1820,7 +1844,6 @@ typedef $$NarouNovelInfosTableCreateCompanionBuilder = NarouNovelInfosCompanion
   required int allPoint,
   required int biggenre,
   required int dailyPoint,
-  required int end,
   required int favNovelCnt,
   required int generalAllNo,
   required DateTime generalFirstup,
@@ -1829,13 +1852,14 @@ typedef $$NarouNovelInfosTableCreateCompanionBuilder = NarouNovelInfosCompanion
   required String gensaku,
   required int globalPoint,
   required int impressionCnt,
-  required int isbl,
-  required int isgl,
-  required int isr15,
-  required int isstop,
-  required int istenni,
-  required int istensei,
-  required int iszankoku,
+  required bool isBl,
+  required bool isEnd,
+  required bool isGl,
+  required bool isR15,
+  required bool isStop,
+  required bool isTenni,
+  required bool isTensei,
+  required bool isZankoku,
   required int kaiwaritu,
   required String keyword,
   required int length,
@@ -1862,7 +1886,6 @@ typedef $$NarouNovelInfosTableUpdateCompanionBuilder = NarouNovelInfosCompanion
   Value<int> allPoint,
   Value<int> biggenre,
   Value<int> dailyPoint,
-  Value<int> end,
   Value<int> favNovelCnt,
   Value<int> generalAllNo,
   Value<DateTime> generalFirstup,
@@ -1871,13 +1894,14 @@ typedef $$NarouNovelInfosTableUpdateCompanionBuilder = NarouNovelInfosCompanion
   Value<String> gensaku,
   Value<int> globalPoint,
   Value<int> impressionCnt,
-  Value<int> isbl,
-  Value<int> isgl,
-  Value<int> isr15,
-  Value<int> isstop,
-  Value<int> istenni,
-  Value<int> istensei,
-  Value<int> iszankoku,
+  Value<bool> isBl,
+  Value<bool> isEnd,
+  Value<bool> isGl,
+  Value<bool> isR15,
+  Value<bool> isStop,
+  Value<bool> isTenni,
+  Value<bool> isTensei,
+  Value<bool> isZankoku,
   Value<int> kaiwaritu,
   Value<String> keyword,
   Value<int> length,
@@ -1920,9 +1944,6 @@ class $$NarouNovelInfosTableFilterComposer
   ColumnFilters<int> get dailyPoint => $composableBuilder(
       column: $table.dailyPoint, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get end => $composableBuilder(
-      column: $table.end, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<int> get favNovelCnt => $composableBuilder(
       column: $table.favNovelCnt, builder: (column) => ColumnFilters(column));
 
@@ -1948,26 +1969,29 @@ class $$NarouNovelInfosTableFilterComposer
   ColumnFilters<int> get impressionCnt => $composableBuilder(
       column: $table.impressionCnt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get isbl => $composableBuilder(
-      column: $table.isbl, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isBl => $composableBuilder(
+      column: $table.isBl, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get isgl => $composableBuilder(
-      column: $table.isgl, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isEnd => $composableBuilder(
+      column: $table.isEnd, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get isr15 => $composableBuilder(
-      column: $table.isr15, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isGl => $composableBuilder(
+      column: $table.isGl, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get isstop => $composableBuilder(
-      column: $table.isstop, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isR15 => $composableBuilder(
+      column: $table.isR15, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get istenni => $composableBuilder(
-      column: $table.istenni, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isStop => $composableBuilder(
+      column: $table.isStop, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get istensei => $composableBuilder(
-      column: $table.istensei, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isTenni => $composableBuilder(
+      column: $table.isTenni, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get iszankoku => $composableBuilder(
-      column: $table.iszankoku, builder: (column) => ColumnFilters(column));
+  ColumnFilters<bool> get isTensei => $composableBuilder(
+      column: $table.isTensei, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isZankoku => $composableBuilder(
+      column: $table.isZankoku, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get kaiwaritu => $composableBuilder(
       column: $table.kaiwaritu, builder: (column) => ColumnFilters(column));
@@ -2046,9 +2070,6 @@ class $$NarouNovelInfosTableOrderingComposer
   ColumnOrderings<int> get dailyPoint => $composableBuilder(
       column: $table.dailyPoint, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get end => $composableBuilder(
-      column: $table.end, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<int> get favNovelCnt => $composableBuilder(
       column: $table.favNovelCnt, builder: (column) => ColumnOrderings(column));
 
@@ -2077,26 +2098,29 @@ class $$NarouNovelInfosTableOrderingComposer
       column: $table.impressionCnt,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get isbl => $composableBuilder(
-      column: $table.isbl, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isBl => $composableBuilder(
+      column: $table.isBl, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get isgl => $composableBuilder(
-      column: $table.isgl, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isEnd => $composableBuilder(
+      column: $table.isEnd, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get isr15 => $composableBuilder(
-      column: $table.isr15, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isGl => $composableBuilder(
+      column: $table.isGl, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get isstop => $composableBuilder(
-      column: $table.isstop, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isR15 => $composableBuilder(
+      column: $table.isR15, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get istenni => $composableBuilder(
-      column: $table.istenni, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isStop => $composableBuilder(
+      column: $table.isStop, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get istensei => $composableBuilder(
-      column: $table.istensei, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isTenni => $composableBuilder(
+      column: $table.isTenni, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get iszankoku => $composableBuilder(
-      column: $table.iszankoku, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<bool> get isTensei => $composableBuilder(
+      column: $table.isTensei, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isZankoku => $composableBuilder(
+      column: $table.isZankoku, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<int> get kaiwaritu => $composableBuilder(
       column: $table.kaiwaritu, builder: (column) => ColumnOrderings(column));
@@ -2177,9 +2201,6 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<int> get dailyPoint => $composableBuilder(
       column: $table.dailyPoint, builder: (column) => column);
 
-  GeneratedColumn<int> get end =>
-      $composableBuilder(column: $table.end, builder: (column) => column);
-
   GeneratedColumn<int> get favNovelCnt => $composableBuilder(
       column: $table.favNovelCnt, builder: (column) => column);
 
@@ -2204,26 +2225,29 @@ class $$NarouNovelInfosTableAnnotationComposer
   GeneratedColumn<int> get impressionCnt => $composableBuilder(
       column: $table.impressionCnt, builder: (column) => column);
 
-  GeneratedColumn<int> get isbl =>
-      $composableBuilder(column: $table.isbl, builder: (column) => column);
+  GeneratedColumn<bool> get isBl =>
+      $composableBuilder(column: $table.isBl, builder: (column) => column);
 
-  GeneratedColumn<int> get isgl =>
-      $composableBuilder(column: $table.isgl, builder: (column) => column);
+  GeneratedColumn<bool> get isEnd =>
+      $composableBuilder(column: $table.isEnd, builder: (column) => column);
 
-  GeneratedColumn<int> get isr15 =>
-      $composableBuilder(column: $table.isr15, builder: (column) => column);
+  GeneratedColumn<bool> get isGl =>
+      $composableBuilder(column: $table.isGl, builder: (column) => column);
 
-  GeneratedColumn<int> get isstop =>
-      $composableBuilder(column: $table.isstop, builder: (column) => column);
+  GeneratedColumn<bool> get isR15 =>
+      $composableBuilder(column: $table.isR15, builder: (column) => column);
 
-  GeneratedColumn<int> get istenni =>
-      $composableBuilder(column: $table.istenni, builder: (column) => column);
+  GeneratedColumn<bool> get isStop =>
+      $composableBuilder(column: $table.isStop, builder: (column) => column);
 
-  GeneratedColumn<int> get istensei =>
-      $composableBuilder(column: $table.istensei, builder: (column) => column);
+  GeneratedColumn<bool> get isTenni =>
+      $composableBuilder(column: $table.isTenni, builder: (column) => column);
 
-  GeneratedColumn<int> get iszankoku =>
-      $composableBuilder(column: $table.iszankoku, builder: (column) => column);
+  GeneratedColumn<bool> get isTensei =>
+      $composableBuilder(column: $table.isTensei, builder: (column) => column);
+
+  GeneratedColumn<bool> get isZankoku =>
+      $composableBuilder(column: $table.isZankoku, builder: (column) => column);
 
   GeneratedColumn<int> get kaiwaritu =>
       $composableBuilder(column: $table.kaiwaritu, builder: (column) => column);
@@ -2311,7 +2335,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             Value<int> allPoint = const Value.absent(),
             Value<int> biggenre = const Value.absent(),
             Value<int> dailyPoint = const Value.absent(),
-            Value<int> end = const Value.absent(),
             Value<int> favNovelCnt = const Value.absent(),
             Value<int> generalAllNo = const Value.absent(),
             Value<DateTime> generalFirstup = const Value.absent(),
@@ -2320,13 +2343,14 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             Value<String> gensaku = const Value.absent(),
             Value<int> globalPoint = const Value.absent(),
             Value<int> impressionCnt = const Value.absent(),
-            Value<int> isbl = const Value.absent(),
-            Value<int> isgl = const Value.absent(),
-            Value<int> isr15 = const Value.absent(),
-            Value<int> isstop = const Value.absent(),
-            Value<int> istenni = const Value.absent(),
-            Value<int> istensei = const Value.absent(),
-            Value<int> iszankoku = const Value.absent(),
+            Value<bool> isBl = const Value.absent(),
+            Value<bool> isEnd = const Value.absent(),
+            Value<bool> isGl = const Value.absent(),
+            Value<bool> isR15 = const Value.absent(),
+            Value<bool> isStop = const Value.absent(),
+            Value<bool> isTenni = const Value.absent(),
+            Value<bool> isTensei = const Value.absent(),
+            Value<bool> isZankoku = const Value.absent(),
             Value<int> kaiwaritu = const Value.absent(),
             Value<String> keyword = const Value.absent(),
             Value<int> length = const Value.absent(),
@@ -2352,7 +2376,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             allPoint: allPoint,
             biggenre: biggenre,
             dailyPoint: dailyPoint,
-            end: end,
             favNovelCnt: favNovelCnt,
             generalAllNo: generalAllNo,
             generalFirstup: generalFirstup,
@@ -2361,13 +2384,14 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             gensaku: gensaku,
             globalPoint: globalPoint,
             impressionCnt: impressionCnt,
-            isbl: isbl,
-            isgl: isgl,
-            isr15: isr15,
-            isstop: isstop,
-            istenni: istenni,
-            istensei: istensei,
-            iszankoku: iszankoku,
+            isBl: isBl,
+            isEnd: isEnd,
+            isGl: isGl,
+            isR15: isR15,
+            isStop: isStop,
+            isTenni: isTenni,
+            isTensei: isTensei,
+            isZankoku: isZankoku,
             kaiwaritu: kaiwaritu,
             keyword: keyword,
             length: length,
@@ -2393,7 +2417,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             required int allPoint,
             required int biggenre,
             required int dailyPoint,
-            required int end,
             required int favNovelCnt,
             required int generalAllNo,
             required DateTime generalFirstup,
@@ -2402,13 +2425,14 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             required String gensaku,
             required int globalPoint,
             required int impressionCnt,
-            required int isbl,
-            required int isgl,
-            required int isr15,
-            required int isstop,
-            required int istenni,
-            required int istensei,
-            required int iszankoku,
+            required bool isBl,
+            required bool isEnd,
+            required bool isGl,
+            required bool isR15,
+            required bool isStop,
+            required bool isTenni,
+            required bool isTensei,
+            required bool isZankoku,
             required int kaiwaritu,
             required String keyword,
             required int length,
@@ -2434,7 +2458,6 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             allPoint: allPoint,
             biggenre: biggenre,
             dailyPoint: dailyPoint,
-            end: end,
             favNovelCnt: favNovelCnt,
             generalAllNo: generalAllNo,
             generalFirstup: generalFirstup,
@@ -2443,13 +2466,14 @@ class $$NarouNovelInfosTableTableManager extends RootTableManager<
             gensaku: gensaku,
             globalPoint: globalPoint,
             impressionCnt: impressionCnt,
-            isbl: isbl,
-            isgl: isgl,
-            isr15: isr15,
-            isstop: isstop,
-            istenni: istenni,
-            istensei: istensei,
-            iszankoku: iszankoku,
+            isBl: isBl,
+            isEnd: isEnd,
+            isGl: isGl,
+            isR15: isR15,
+            isStop: isStop,
+            isTenni: isTenni,
+            isTensei: isTensei,
+            isZankoku: isZankoku,
             kaiwaritu: kaiwaritu,
             keyword: keyword,
             length: length,

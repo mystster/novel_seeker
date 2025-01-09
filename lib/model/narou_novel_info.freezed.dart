@@ -57,7 +57,8 @@ mixin _$NarouNovelInfo {
   int get novelType => throw _privateConstructorUsedError;
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
-  int get end => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  bool get isEnd => throw _privateConstructorUsedError;
 
   /// 全掲載エピソード数です。短編の場合は1です。
   int get generalAllNo => throw _privateConstructorUsedError;
@@ -68,26 +69,33 @@ mixin _$NarouNovelInfo {
   /// 読了時間(分単位)です。読了時間は作品文字数÷500を切り上げした数値です。
   int get time => throw _privateConstructorUsedError;
 
-  /// 長期連載停止中なら1、それ以外は0です。
-  int get isstop => throw _privateConstructorUsedError;
+  /// 長期連載停止中ならTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  bool get isStop => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
-  int get isr15 => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  bool get isR15 => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
-  int get isbl => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  bool get isBl => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
-  int get isgl => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  bool get isGl => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
-  int get iszankoku => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  bool get isZankoku => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
-  int get istensei => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  bool get isTensei => throw _privateConstructorUsedError;
 
-  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
-  int get istenni => throw _privateConstructorUsedError;
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  bool get isTenni => throw _privateConstructorUsedError;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   int get globalPoint => throw _privateConstructorUsedError;
@@ -163,17 +171,25 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       DateTime generalFirstup,
       DateTime generalLastup,
       int novelType,
-      int end,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      bool isEnd,
       int generalAllNo,
       int length,
       int time,
-      int isstop,
-      int isr15,
-      int isbl,
-      int isgl,
-      int iszankoku,
-      int istensei,
-      int istenni,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      bool isStop,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      bool isR15,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      bool isBl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      bool isGl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      bool isZankoku,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      bool isTensei,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      bool isTenni,
       int globalPoint,
       int dailyPoint,
       int weeklyPoint,
@@ -218,17 +234,17 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
     Object? generalFirstup = null,
     Object? generalLastup = null,
     Object? novelType = null,
-    Object? end = null,
+    Object? isEnd = null,
     Object? generalAllNo = null,
     Object? length = null,
     Object? time = null,
-    Object? isstop = null,
-    Object? isr15 = null,
-    Object? isbl = null,
-    Object? isgl = null,
-    Object? iszankoku = null,
-    Object? istensei = null,
-    Object? istenni = null,
+    Object? isStop = null,
+    Object? isR15 = null,
+    Object? isBl = null,
+    Object? isGl = null,
+    Object? isZankoku = null,
+    Object? isTensei = null,
+    Object? isTenni = null,
     Object? globalPoint = null,
     Object? dailyPoint = null,
     Object? weeklyPoint = null,
@@ -294,10 +310,10 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
               as int,
-      end: null == end
-          ? _value.end
-          : end // ignore: cast_nullable_to_non_nullable
-              as int,
+      isEnd: null == isEnd
+          ? _value.isEnd
+          : isEnd // ignore: cast_nullable_to_non_nullable
+              as bool,
       generalAllNo: null == generalAllNo
           ? _value.generalAllNo
           : generalAllNo // ignore: cast_nullable_to_non_nullable
@@ -310,34 +326,34 @@ class _$NarouNovelInfoCopyWithImpl<$Res, $Val extends NarouNovelInfo>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int,
-      isstop: null == isstop
-          ? _value.isstop
-          : isstop // ignore: cast_nullable_to_non_nullable
-              as int,
-      isr15: null == isr15
-          ? _value.isr15
-          : isr15 // ignore: cast_nullable_to_non_nullable
-              as int,
-      isbl: null == isbl
-          ? _value.isbl
-          : isbl // ignore: cast_nullable_to_non_nullable
-              as int,
-      isgl: null == isgl
-          ? _value.isgl
-          : isgl // ignore: cast_nullable_to_non_nullable
-              as int,
-      iszankoku: null == iszankoku
-          ? _value.iszankoku
-          : iszankoku // ignore: cast_nullable_to_non_nullable
-              as int,
-      istensei: null == istensei
-          ? _value.istensei
-          : istensei // ignore: cast_nullable_to_non_nullable
-              as int,
-      istenni: null == istenni
-          ? _value.istenni
-          : istenni // ignore: cast_nullable_to_non_nullable
-              as int,
+      isStop: null == isStop
+          ? _value.isStop
+          : isStop // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isR15: null == isR15
+          ? _value.isR15
+          : isR15 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBl: null == isBl
+          ? _value.isBl
+          : isBl // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGl: null == isGl
+          ? _value.isGl
+          : isGl // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isZankoku: null == isZankoku
+          ? _value.isZankoku
+          : isZankoku // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTensei: null == isTensei
+          ? _value.isTensei
+          : isTensei // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTenni: null == isTenni
+          ? _value.isTenni
+          : isTenni // ignore: cast_nullable_to_non_nullable
+              as bool,
       globalPoint: null == globalPoint
           ? _value.globalPoint
           : globalPoint // ignore: cast_nullable_to_non_nullable
@@ -423,17 +439,25 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
       DateTime generalFirstup,
       DateTime generalLastup,
       int novelType,
-      int end,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      bool isEnd,
       int generalAllNo,
       int length,
       int time,
-      int isstop,
-      int isr15,
-      int isbl,
-      int isgl,
-      int iszankoku,
-      int istensei,
-      int istenni,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      bool isStop,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      bool isR15,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      bool isBl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      bool isGl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      bool isZankoku,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      bool isTensei,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      bool isTenni,
       int globalPoint,
       int dailyPoint,
       int weeklyPoint,
@@ -476,17 +500,17 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
     Object? generalFirstup = null,
     Object? generalLastup = null,
     Object? novelType = null,
-    Object? end = null,
+    Object? isEnd = null,
     Object? generalAllNo = null,
     Object? length = null,
     Object? time = null,
-    Object? isstop = null,
-    Object? isr15 = null,
-    Object? isbl = null,
-    Object? isgl = null,
-    Object? iszankoku = null,
-    Object? istensei = null,
-    Object? istenni = null,
+    Object? isStop = null,
+    Object? isR15 = null,
+    Object? isBl = null,
+    Object? isGl = null,
+    Object? isZankoku = null,
+    Object? isTensei = null,
+    Object? isTenni = null,
     Object? globalPoint = null,
     Object? dailyPoint = null,
     Object? weeklyPoint = null,
@@ -552,10 +576,10 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
           ? _value.novelType
           : novelType // ignore: cast_nullable_to_non_nullable
               as int,
-      end: null == end
-          ? _value.end
-          : end // ignore: cast_nullable_to_non_nullable
-              as int,
+      isEnd: null == isEnd
+          ? _value.isEnd
+          : isEnd // ignore: cast_nullable_to_non_nullable
+              as bool,
       generalAllNo: null == generalAllNo
           ? _value.generalAllNo
           : generalAllNo // ignore: cast_nullable_to_non_nullable
@@ -568,34 +592,34 @@ class __$$NarouNovelInfoImplCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int,
-      isstop: null == isstop
-          ? _value.isstop
-          : isstop // ignore: cast_nullable_to_non_nullable
-              as int,
-      isr15: null == isr15
-          ? _value.isr15
-          : isr15 // ignore: cast_nullable_to_non_nullable
-              as int,
-      isbl: null == isbl
-          ? _value.isbl
-          : isbl // ignore: cast_nullable_to_non_nullable
-              as int,
-      isgl: null == isgl
-          ? _value.isgl
-          : isgl // ignore: cast_nullable_to_non_nullable
-              as int,
-      iszankoku: null == iszankoku
-          ? _value.iszankoku
-          : iszankoku // ignore: cast_nullable_to_non_nullable
-              as int,
-      istensei: null == istensei
-          ? _value.istensei
-          : istensei // ignore: cast_nullable_to_non_nullable
-              as int,
-      istenni: null == istenni
-          ? _value.istenni
-          : istenni // ignore: cast_nullable_to_non_nullable
-              as int,
+      isStop: null == isStop
+          ? _value.isStop
+          : isStop // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isR15: null == isR15
+          ? _value.isR15
+          : isR15 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBl: null == isBl
+          ? _value.isBl
+          : isBl // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGl: null == isGl
+          ? _value.isGl
+          : isGl // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isZankoku: null == isZankoku
+          ? _value.isZankoku
+          : isZankoku // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTensei: null == isTensei
+          ? _value.isTensei
+          : isTensei // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTenni: null == isTenni
+          ? _value.isTenni
+          : isTenni // ignore: cast_nullable_to_non_nullable
+              as bool,
       globalPoint: null == globalPoint
           ? _value.globalPoint
           : globalPoint // ignore: cast_nullable_to_non_nullable
@@ -677,17 +701,25 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       required this.generalFirstup,
       required this.generalLastup,
       required this.novelType,
-      required this.end,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      required this.isEnd,
       required this.generalAllNo,
       required this.length,
       required this.time,
-      required this.isstop,
-      this.isr15 = 0,
-      required this.isbl,
-      required this.isgl,
-      required this.iszankoku,
-      required this.istensei,
-      required this.istenni,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      required this.isStop,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      this.isR15 = false,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      required this.isBl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      required this.isGl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      required this.isZankoku,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      required this.isTensei,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      required this.isTenni,
       required this.globalPoint,
       required this.dailyPoint,
       required this.weeklyPoint,
@@ -761,7 +793,8 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
-  final int end;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  final bool isEnd;
 
   /// 全掲載エピソード数です。短編の場合は1です。
   @override
@@ -775,34 +808,40 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
   @override
   final int time;
 
-  /// 長期連載停止中なら1、それ以外は0です。
+  /// 長期連載停止中ならTrue、それ以外はFalseです。
   @override
-  final int isstop;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  final bool isStop;
 
-  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  @JsonKey()
-  final int isr15;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  final bool isR15;
 
-  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  final int isbl;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  final bool isBl;
 
-  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  final int isgl;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  final bool isGl;
 
-  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  final int iszankoku;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  final bool isZankoku;
 
-  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  final int istensei;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  final bool isTensei;
 
-  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  final int istenni;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  final bool isTenni;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   @override
@@ -866,7 +905,7 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, end: $end, generalAllNo: $generalAllNo, length: $length, time: $time, isstop: $isstop, isr15: $isr15, isbl: $isbl, isgl: $isgl, iszankoku: $iszankoku, istensei: $istensei, istenni: $istenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
+    return 'NarouNovelInfo(title: $title, ncode: $ncode, userid: $userid, writer: $writer, story: $story, biggenre: $biggenre, genre: $genre, gensaku: $gensaku, keyword: $keyword, generalFirstup: $generalFirstup, generalLastup: $generalLastup, novelType: $novelType, isEnd: $isEnd, generalAllNo: $generalAllNo, length: $length, time: $time, isStop: $isStop, isR15: $isR15, isBl: $isBl, isGl: $isGl, isZankoku: $isZankoku, isTensei: $isTensei, isTenni: $isTenni, globalPoint: $globalPoint, dailyPoint: $dailyPoint, weeklyPoint: $weeklyPoint, monthlyPoint: $monthlyPoint, quarterPoint: $quarterPoint, yearlyPoint: $yearlyPoint, favNovelCnt: $favNovelCnt, impressionCnt: $impressionCnt, reviewCnt: $reviewCnt, allPoint: $allPoint, allHyokaCnt: $allHyokaCnt, sasieCnt: $sasieCnt, kaiwaritu: $kaiwaritu, novelupdatedAt: $novelupdatedAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -886,17 +925,17 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       ..add(DiagnosticsProperty('generalFirstup', generalFirstup))
       ..add(DiagnosticsProperty('generalLastup', generalLastup))
       ..add(DiagnosticsProperty('novelType', novelType))
-      ..add(DiagnosticsProperty('end', end))
+      ..add(DiagnosticsProperty('isEnd', isEnd))
       ..add(DiagnosticsProperty('generalAllNo', generalAllNo))
       ..add(DiagnosticsProperty('length', length))
       ..add(DiagnosticsProperty('time', time))
-      ..add(DiagnosticsProperty('isstop', isstop))
-      ..add(DiagnosticsProperty('isr15', isr15))
-      ..add(DiagnosticsProperty('isbl', isbl))
-      ..add(DiagnosticsProperty('isgl', isgl))
-      ..add(DiagnosticsProperty('iszankoku', iszankoku))
-      ..add(DiagnosticsProperty('istensei', istensei))
-      ..add(DiagnosticsProperty('istenni', istenni))
+      ..add(DiagnosticsProperty('isStop', isStop))
+      ..add(DiagnosticsProperty('isR15', isR15))
+      ..add(DiagnosticsProperty('isBl', isBl))
+      ..add(DiagnosticsProperty('isGl', isGl))
+      ..add(DiagnosticsProperty('isZankoku', isZankoku))
+      ..add(DiagnosticsProperty('isTensei', isTensei))
+      ..add(DiagnosticsProperty('isTenni', isTenni))
       ..add(DiagnosticsProperty('globalPoint', globalPoint))
       ..add(DiagnosticsProperty('dailyPoint', dailyPoint))
       ..add(DiagnosticsProperty('weeklyPoint', weeklyPoint))
@@ -935,20 +974,20 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
                 other.generalLastup == generalLastup) &&
             (identical(other.novelType, novelType) ||
                 other.novelType == novelType) &&
-            (identical(other.end, end) || other.end == end) &&
+            (identical(other.isEnd, isEnd) || other.isEnd == isEnd) &&
             (identical(other.generalAllNo, generalAllNo) ||
                 other.generalAllNo == generalAllNo) &&
             (identical(other.length, length) || other.length == length) &&
             (identical(other.time, time) || other.time == time) &&
-            (identical(other.isstop, isstop) || other.isstop == isstop) &&
-            (identical(other.isr15, isr15) || other.isr15 == isr15) &&
-            (identical(other.isbl, isbl) || other.isbl == isbl) &&
-            (identical(other.isgl, isgl) || other.isgl == isgl) &&
-            (identical(other.iszankoku, iszankoku) ||
-                other.iszankoku == iszankoku) &&
-            (identical(other.istensei, istensei) ||
-                other.istensei == istensei) &&
-            (identical(other.istenni, istenni) || other.istenni == istenni) &&
+            (identical(other.isStop, isStop) || other.isStop == isStop) &&
+            (identical(other.isR15, isR15) || other.isR15 == isR15) &&
+            (identical(other.isBl, isBl) || other.isBl == isBl) &&
+            (identical(other.isGl, isGl) || other.isGl == isGl) &&
+            (identical(other.isZankoku, isZankoku) ||
+                other.isZankoku == isZankoku) &&
+            (identical(other.isTensei, isTensei) ||
+                other.isTensei == isTensei) &&
+            (identical(other.isTenni, isTenni) || other.isTenni == isTenni) &&
             (identical(other.globalPoint, globalPoint) ||
                 other.globalPoint == globalPoint) &&
             (identical(other.dailyPoint, dailyPoint) ||
@@ -997,17 +1036,17 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
         generalFirstup,
         generalLastup,
         novelType,
-        end,
+        isEnd,
         generalAllNo,
         length,
         time,
-        isstop,
-        isr15,
-        isbl,
-        isgl,
-        iszankoku,
-        istensei,
-        istenni,
+        isStop,
+        isR15,
+        isBl,
+        isGl,
+        isZankoku,
+        isTensei,
+        isTenni,
         globalPoint,
         dailyPoint,
         weeklyPoint,
@@ -1056,17 +1095,25 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
       required final DateTime generalFirstup,
       required final DateTime generalLastup,
       required final int novelType,
-      required final int end,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+      required final bool isEnd,
       required final int generalAllNo,
       required final int length,
       required final int time,
-      required final int isstop,
-      final int isr15,
-      required final int isbl,
-      required final int isgl,
-      required final int iszankoku,
-      required final int istensei,
-      required final int istenni,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+      required final bool isStop,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+      final bool isR15,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+      required final bool isBl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+      required final bool isGl,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+      required final bool isZankoku,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+      required final bool isTensei,
+      @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+      required final bool isTenni,
       required final int globalPoint,
       required final int dailyPoint,
       required final int weeklyPoint,
@@ -1137,7 +1184,8 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 短編作品と完結済作品は0となっています。連載中は1です
   @override
-  int get end;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'end')
+  bool get isEnd;
 
   /// 全掲載エピソード数です。短編の場合は1です。
   @override
@@ -1151,33 +1199,40 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
   @override
   int get time;
 
-  /// 長期連載停止中なら1、それ以外は0です。
+  /// 長期連載停止中ならTrue、それ以外はFalseです。
   @override
-  int get isstop;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isstop')
+  bool get isStop;
 
-  /// 作品に含まれる要素に「R15」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「R15」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get isr15;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isr15')
+  bool get isR15;
 
-  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「ボーイズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get isbl;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isbl')
+  bool get isBl;
 
-  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「ガールズラブ」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get isgl;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'isgl')
+  bool get isGl;
 
-  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「残酷な描写あり」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get iszankoku;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'iszankoku')
+  bool get isZankoku;
 
-  /// 作品に含まれる要素に「異世界転生」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「異世界転生」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get istensei;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istensei')
+  bool get isTensei;
 
-  /// 作品に含まれる要素に「異世界転移」が含まれる場合は1、それ以外は0です。
+  /// 作品に含まれる要素に「異世界転移」が含まれる場合はTrue、それ以外はFalseです。
   @override
-  int get istenni;
+  @JsonKey(fromJson: _intToBool, toJson: _boolToInt, name: 'istenni')
+  bool get isTenni;
 
   /// 総合評価ポイント(ブックマーク数×2)+評価ポイント
   @override
