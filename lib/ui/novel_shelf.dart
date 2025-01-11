@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
@@ -108,30 +107,39 @@ class NovelShelf extends HookConsumerWidget {
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(novelInfo.novelInfo?.title ?? '',
-                    style: Theme.of(context).textTheme.headlineSmall),
-                Row(
-                  children: [
-                    textWithIcon(
-                        Icons.person, novelInfo.novelInfo?.writer ?? ''),
-                    const SizedBox(width: 8),
-                    textWithIcon(Icons.book,
-                        novelInfo.novelInfo?.generalAllNo.toString() ?? ''),
-                  ],
-                ),
-                Row(
-                  children: [
-                    tag(context, novelInfo.novelInfo?.isStop, '停止中'),
-                    tag(context, novelInfo.novelInfo?.isR15, 'R15'),
-                    tag(context, novelInfo.novelInfo?.isTensei, '転生'),
-                    tag(context, novelInfo.novelInfo?.isBl, 'BL'),
-                  ],
-                ),
-              ],
+            Flexible(
+              fit: FlexFit.loose,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(novelInfo.novelInfo?.title ?? '',
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      textWithIcon(
+                          Icons.person, novelInfo.novelInfo?.writer ?? ''),
+                      const SizedBox(width: 8),
+                      textWithIcon(Icons.book,
+                          novelInfo.novelInfo?.generalAllNo.toString() ?? ''),
+                      const SizedBox(width: 8),
+                      Flexible(fit: FlexFit.loose,child: textWithIcon(Icons.key, novelInfo.novelInfo?.genre.toString() ?? '')),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      tag(context, novelInfo.novelInfo?.isStop, '停止中'),
+                      tag(context, novelInfo.novelInfo?.isR15, 'R15'),
+                      tag(context, novelInfo.novelInfo?.isTensei, '転生'),
+                      tag(context, novelInfo.novelInfo?.isBl, 'BL'),
+                    ],
+                  ),
+                ],
+              ),
             ),
             PopupMenuButton<String>(
               onSelected: (String result) {
@@ -171,10 +179,11 @@ class NovelShelf extends HookConsumerWidget {
 
   Widget textWithIcon(IconData icon, String text, {double mergin = 4.0}) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon),
         SizedBox(width: mergin),
-        Text(text),
+        Flexible(child: Text(text, overflow: TextOverflow.ellipsis)),
       ],
     );
   }
