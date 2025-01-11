@@ -26,8 +26,10 @@ class NarouNovelInfo
     /// あらすじ
     required String story,
     /// 大ジャンル
+    @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
     @Default(Biggenre.unselected) Biggenre biggenre,
     /// ジャンル
+    @JsonKey(fromJson: intToGenre, toJson: generaToInt)
     @Default(Genre.unselected) Genre genre,
     /// 原作（常に空文字列）
     required String gensaku,
@@ -38,6 +40,7 @@ class NarouNovelInfo
     /// 最終掲載日
     required DateTime generalLastup,
     /// 連載の場合はserial、短編の場合はshortStory
+    @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
     @Default(NovelType.unselected) NovelType novelType,
     /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
     @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
