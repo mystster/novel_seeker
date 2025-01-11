@@ -113,7 +113,6 @@ class NovelShelf extends HookConsumerWidget {
               fit: FlexFit.loose,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(novelInfo.novelInfo?.title ?? '',
                       style: Theme.of(context).textTheme.headlineSmall),
