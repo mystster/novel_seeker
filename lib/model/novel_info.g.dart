@@ -14,8 +14,10 @@ _$NovelInfoImpl _$$NovelInfoImplFromJson(Map<String, dynamic> json) =>
           : NarouNovelInfo.fromJson(json['novel_info'] as Map<String, dynamic>),
       registrationDate: DateTime.parse(json['registration_date'] as String),
       contents: (json['contents'] as List<dynamic>?)
-          ?.map((e) => NarouNovelContent.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map(
+                  (e) => NarouNovelContent.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       scrollPosition: (json['scroll_position'] as num?)?.toInt() ?? 0,
       currentChapter: (json['current_chapter'] as num?)?.toInt() ?? 0,
     );

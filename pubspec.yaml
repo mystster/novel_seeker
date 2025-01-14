@@ -43,6 +43,8 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   logger: ^2.5.0
+  http: ^1.2.2
+  html: ^0.15.5
 
 dev_dependencies:
   flutter_test:

@@ -26,7 +26,7 @@ final _novelInfosProvider = AutoDisposeFutureProvider<List<NovelInfo>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _NovelInfosRef = AutoDisposeFutureProviderRef<List<NovelInfo>>;
-String _$narouNovelHash() => r'630f461b17cc1a2ec07c7d8713d072ce6b4bef26';
+String _$narouNovelHash() => r'aabeb1f678a729fcd514181dca2e3067656a5717';
 
 /// See also [NarouNovel].
 @ProviderFor(NarouNovel)

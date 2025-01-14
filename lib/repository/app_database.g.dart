@@ -12,8 +12,8 @@ class $NarouNovelContentsTable extends NarouNovelContents
   static const VerificationMeta _bodyMeta = const VerificationMeta('body');
   @override
   late final GeneratedColumn<String> body = GeneratedColumn<String>(
-      'body', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'body', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _chapterMeta =
       const VerificationMeta('chapter');
   @override
@@ -45,8 +45,6 @@ class $NarouNovelContentsTable extends NarouNovelContents
     if (data.containsKey('body')) {
       context.handle(
           _bodyMeta, body.isAcceptableOrUnknown(data['body']!, _bodyMeta));
-    } else if (isInserting) {
-      context.missing(_bodyMeta);
     }
     if (data.containsKey('chapter')) {
       context.handle(_chapterMeta,
@@ -80,7 +78,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
       ncode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}ncode'])!,
       body: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}body']),
       chapter: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}chapter'])!,
     );
@@ -93,7 +91,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
 }
 
 class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
-  final Value<String> body;
+  final Value<String?> body;
   final Value<int> chapter;
   final Value<String> ncode;
   final Value<String> title;
@@ -106,13 +104,12 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.rowid = const Value.absent(),
   });
   NarouNovelContentsCompanion.insert({
-    required String body,
+    this.body = const Value.absent(),
     required int chapter,
     required String ncode,
     required String title,
     this.rowid = const Value.absent(),
-  })  : body = Value(body),
-        chapter = Value(chapter),
+  })  : chapter = Value(chapter),
         ncode = Value(ncode),
         title = Value(title);
   static Insertable<NarouNovelContent> custom({
@@ -132,7 +129,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   }
 
   NarouNovelContentsCompanion copyWith(
-      {Value<String>? body,
+      {Value<String?>? body,
       Value<int>? chapter,
       Value<String>? ncode,
       Value<String>? title,
@@ -1525,7 +1522,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$NarouNovelContentsTableCreateCompanionBuilder
     = NarouNovelContentsCompanion Function({
-  required String body,
+  Value<String?> body,
   required int chapter,
   required String ncode,
   required String title,
@@ -1533,7 +1530,7 @@ typedef $$NarouNovelContentsTableCreateCompanionBuilder
 });
 typedef $$NarouNovelContentsTableUpdateCompanionBuilder
     = NarouNovelContentsCompanion Function({
-  Value<String> body,
+  Value<String?> body,
   Value<int> chapter,
   Value<String> ncode,
   Value<String> title,
@@ -1634,7 +1631,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
               $$NarouNovelContentsTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
-            Value<String> body = const Value.absent(),
+            Value<String?> body = const Value.absent(),
             Value<int> chapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
             Value<String> title = const Value.absent(),
@@ -1648,7 +1645,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required String body,
+            Value<String?> body = const Value.absent(),
             required int chapter,
             required String ncode,
             required String title,

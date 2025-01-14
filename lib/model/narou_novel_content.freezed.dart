@@ -22,7 +22,7 @@ NarouNovelContent _$NarouNovelContentFromJson(Map<String, dynamic> json) {
 mixin _$NarouNovelContent {
   String get title => throw _privateConstructorUsedError;
   String get ncode => throw _privateConstructorUsedError;
-  String get body => throw _privateConstructorUsedError;
+  String? get body => throw _privateConstructorUsedError;
   int get chapter => throw _privateConstructorUsedError;
 
   /// Serializes this NarouNovelContent to a JSON map.
@@ -41,7 +41,7 @@ abstract class $NarouNovelContentCopyWith<$Res> {
           NarouNovelContent value, $Res Function(NarouNovelContent) then) =
       _$NarouNovelContentCopyWithImpl<$Res, NarouNovelContent>;
   @useResult
-  $Res call({String title, String ncode, String body, int chapter});
+  $Res call({String title, String ncode, String? body, int chapter});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
   $Res call({
     Object? title = null,
     Object? ncode = null,
-    Object? body = null,
+    Object? body = freezed,
     Object? chapter = null,
   }) {
     return _then(_value.copyWith(
@@ -73,10 +73,10 @@ class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
           ? _value.ncode
           : ncode // ignore: cast_nullable_to_non_nullable
               as String,
-      body: null == body
+      body: freezed == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       chapter: null == chapter
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
@@ -93,7 +93,7 @@ abstract class _$$NarouNovelContentImplCopyWith<$Res>
       __$$NarouNovelContentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String ncode, String body, int chapter});
+  $Res call({String title, String ncode, String? body, int chapter});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? ncode = null,
-    Object? body = null,
+    Object? body = freezed,
     Object? chapter = null,
   }) {
     return _then(_$NarouNovelContentImpl(
@@ -123,10 +123,10 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
           ? _value.ncode
           : ncode // ignore: cast_nullable_to_non_nullable
               as String,
-      body: null == body
+      body: freezed == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       chapter: null == chapter
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   @override
   final String ncode;
   @override
-  final String body;
+  final String? body;
   @override
   final int chapter;
 
@@ -198,7 +198,7 @@ abstract class _NarouNovelContent extends NarouNovelContent {
   const factory _NarouNovelContent(
       {required final String title,
       required final String ncode,
-      required final String body,
+      required final String? body,
       required final int chapter}) = _$NarouNovelContentImpl;
   const _NarouNovelContent._() : super._();
 
@@ -210,7 +210,7 @@ abstract class _NarouNovelContent extends NarouNovelContent {
   @override
   String get ncode;
   @override
-  String get body;
+  String? get body;
   @override
   int get chapter;
 

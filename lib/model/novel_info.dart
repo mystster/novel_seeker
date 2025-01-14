@@ -15,7 +15,7 @@ class NovelInfo with _$NovelInfo implements Insertable<NovelInfo> {
     required String ncode,
     NarouNovelInfo? novelInfo,
     required DateTime registrationDate,
-    List<NarouNovelContent>? contents,
+    @Default([])List<NarouNovelContent> contents,
     @Default(0) int scrollPosition,
     @Default(0) int currentChapter,
   }) = _NovelInfo;

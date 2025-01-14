@@ -14,7 +14,7 @@ class NarouNovelContent
   const factory NarouNovelContent(
       {required String title,
       required String ncode,
-      required String body,
+      required String? body,
       required int chapter}) = _NarouNovelContent;
   factory NarouNovelContent.fromJson(Map<String, dynamic> json) =>
       _$NarouNovelContentFromJson(json);

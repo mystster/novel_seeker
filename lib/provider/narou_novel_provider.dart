@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:html/parser.dart' as html_parser;
+import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:novel_seeker/model/narou_novel_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/narou_enum.dart';
+import '../model/narou_novel_content.dart';
 import '../model/novel_info.dart';
 import '../repository/app_database.dart';
 
@@ -37,6 +42,78 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 
 @riverpod
 class NarouNovel extends _$NarouNovel {
+  Future<void> addNarouToC(NovelInfo info) async {
+    if (info.novelInfo == null) {
+      logger.d('NovelInfo has no novelInfo');
+      return;
+    }
+    final novelInfo = info.novelInfo!;
+    if (novelInfo.novelType == NovelType.shortStory) {
+      logger.d('${novelInfo.title} is short story, no contents');
+      return;
+    }
+    if (novelInfo.generalAllNo == 0) {
+      logger.d('${novelInfo.title} has no contents');
+      return;
+    }
+    final List<NarouNovelContent> contents = [];
+    for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
+      final response = await http.get(
+          Uri.parse('https://ncode.syosetu.com/${info.ncode.toLowerCase()}/?p=$i'),
+          headers: {
+            'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
+          });
+      final htmlDom = html_parser.parse(response.body);
+      htmlDom.querySelectorAll('.p-eplist__subtitle').forEach((element) {
+        final content = NarouNovelContent(
+          ncode: info.ncode,
+          chapter:
+              int.parse(element.attributes['href']?.split('/').reversed.skip(1).first ?? '0'),
+          title: element.text.trim(),
+          body: null,
+        );
+        contents.add(content);
+      });
+    }
+    await db.batch((b) {
+      b.insertAll(db.narouNovelContents, contents);
+    });
+    ref.invalidate(_novelInfosProvider);
+    ref.invalidateSelf();
+  }
+
+  Future<void> addNovel(String ncode) async {
+    // すでに登録されているか確認
+    final response = await http.get(Uri.parse(
+        'https://api.syosetu.com/novelapi/api/?out=json&ncode=$ncode'));
+    final json = jsonDecode(response.body) as List<dynamic>;
+    final novel = NarouNovelInfoCollection.fromJson(json).data?.firstOrNull;
+    if (novel == null) {
+      logger.d('Novel with ncode: $ncode not found');
+      return;
+    }
+    final count = await (db.select(db.narouNovelInfos)
+          ..where((r) => r.ncode.equals(novel.ncode)))
+        .get();
+    if (count.isNotEmpty) {
+      logger.d('Novel with ncode: ${novel.ncode} already exists');
+      return;
+    }
+    final NovelInfo info = NovelInfo(
+      ncode: novel.ncode,
+      registrationDate: DateTime.now(),
+      novelInfo: novel,
+      scrollPosition: 0,
+      currentChapter: 0,
+    );
+    await db.into(db.novelInfos).insert(info);
+    await db.into(db.narouNovelInfos).insert(novel);
+    ref.invalidate(_novelInfosProvider);
+    ref.invalidateSelf();
+    await addNarouToC(info);
+  }
+
   void addNovelPoc(String ncode) {
     logger.d('Adding novel with ncode: $ncode');
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
@@ -96,9 +173,9 @@ class NarouNovel extends _$NarouNovel {
       final c = await (db.select(db.narouNovelContents)
             ..where((row) => row.ncode.equals(element.ncode)))
           .get();
-      if (element.contents != null && c.isNotEmpty) {
-        element.contents?.removeRange(0, element.contents!.length);
-        element.contents?.addAll(c);
+      if (c.isNotEmpty) {
+        element.contents.removeRange(0, element.contents.length);
+        element.contents.addAll(c);
       }
     }
     return infos;

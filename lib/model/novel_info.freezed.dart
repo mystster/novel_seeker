@@ -23,7 +23,7 @@ mixin _$NovelInfo {
   String get ncode => throw _privateConstructorUsedError;
   NarouNovelInfo? get novelInfo => throw _privateConstructorUsedError;
   DateTime get registrationDate => throw _privateConstructorUsedError;
-  List<NarouNovelContent>? get contents => throw _privateConstructorUsedError;
+  List<NarouNovelContent> get contents => throw _privateConstructorUsedError;
   int get scrollPosition => throw _privateConstructorUsedError;
   int get currentChapter => throw _privateConstructorUsedError;
 
@@ -46,7 +46,7 @@ abstract class $NovelInfoCopyWith<$Res> {
       {String ncode,
       NarouNovelInfo? novelInfo,
       DateTime registrationDate,
-      List<NarouNovelContent>? contents,
+      List<NarouNovelContent> contents,
       int scrollPosition,
       int currentChapter});
 
@@ -71,7 +71,7 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
     Object? ncode = null,
     Object? novelInfo = freezed,
     Object? registrationDate = null,
-    Object? contents = freezed,
+    Object? contents = null,
     Object? scrollPosition = null,
     Object? currentChapter = null,
   }) {
@@ -88,10 +88,10 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
           ? _value.registrationDate
           : registrationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      contents: freezed == contents
+      contents: null == contents
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
-              as List<NarouNovelContent>?,
+              as List<NarouNovelContent>,
       scrollPosition: null == scrollPosition
           ? _value.scrollPosition
           : scrollPosition // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ abstract class _$$NovelInfoImplCopyWith<$Res>
       {String ncode,
       NarouNovelInfo? novelInfo,
       DateTime registrationDate,
-      List<NarouNovelContent>? contents,
+      List<NarouNovelContent> contents,
       int scrollPosition,
       int currentChapter});
 
@@ -154,7 +154,7 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
     Object? ncode = null,
     Object? novelInfo = freezed,
     Object? registrationDate = null,
-    Object? contents = freezed,
+    Object? contents = null,
     Object? scrollPosition = null,
     Object? currentChapter = null,
   }) {
@@ -171,10 +171,10 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
           ? _value.registrationDate
           : registrationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      contents: freezed == contents
+      contents: null == contents
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
-              as List<NarouNovelContent>?,
+              as List<NarouNovelContent>,
       scrollPosition: null == scrollPosition
           ? _value.scrollPosition
           : scrollPosition // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ class _$NovelInfoImpl extends _NovelInfo {
       {required this.ncode,
       this.novelInfo,
       required this.registrationDate,
-      this.contents,
+      this.contents = const [],
       this.scrollPosition = 0,
       this.currentChapter = 0})
       : super._();
@@ -209,7 +209,8 @@ class _$NovelInfoImpl extends _NovelInfo {
   @override
   final DateTime registrationDate;
   @override
-  final List<NarouNovelContent>? contents;
+  @JsonKey()
+  final List<NarouNovelContent> contents;
   @override
   @JsonKey()
   final int scrollPosition;
@@ -271,7 +272,7 @@ abstract class _NovelInfo extends NovelInfo {
       {required final String ncode,
       final NarouNovelInfo? novelInfo,
       required final DateTime registrationDate,
-      final List<NarouNovelContent>? contents,
+      final List<NarouNovelContent> contents,
       final int scrollPosition,
       final int currentChapter}) = _$NovelInfoImpl;
   const _NovelInfo._() : super._();
@@ -286,7 +287,7 @@ abstract class _NovelInfo extends NovelInfo {
   @override
   DateTime get registrationDate;
   @override
-  List<NarouNovelContent>? get contents;
+  List<NarouNovelContent> get contents;
   @override
   int get scrollPosition;
   @override

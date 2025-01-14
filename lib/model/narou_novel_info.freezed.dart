@@ -36,9 +36,11 @@ mixin _$NarouNovelInfo {
   String get story => throw _privateConstructorUsedError;
 
   /// 大ジャンル
+  @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
   Biggenre get biggenre => throw _privateConstructorUsedError;
 
   /// ジャンル
+  @JsonKey(fromJson: intToGenre, toJson: generaToInt)
   Genre get genre => throw _privateConstructorUsedError;
 
   /// 原作（常に空文字列）
@@ -54,6 +56,7 @@ mixin _$NarouNovelInfo {
   DateTime get generalLastup => throw _privateConstructorUsedError;
 
   /// 連載の場合はserial、短編の場合はshortStory
+  @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
   NovelType get novelType => throw _privateConstructorUsedError;
 
   /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
@@ -164,12 +167,14 @@ abstract class $NarouNovelInfoCopyWith<$Res> {
       int userid,
       String writer,
       String story,
+      @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
       Biggenre biggenre,
-      Genre genre,
+      @JsonKey(fromJson: intToGenre, toJson: generaToInt) Genre genre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
       DateTime generalLastup,
+      @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
       NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
@@ -429,12 +434,14 @@ abstract class _$$NarouNovelInfoImplCopyWith<$Res>
       int userid,
       String writer,
       String story,
+      @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
       Biggenre biggenre,
-      Genre genre,
+      @JsonKey(fromJson: intToGenre, toJson: generaToInt) Genre genre,
       String gensaku,
       String keyword,
       DateTime generalFirstup,
       DateTime generalLastup,
+      @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
       NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end') bool isEnd,
       int generalAllNo,
@@ -688,12 +695,15 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
       this.userid = 0,
       required this.writer,
       required this.story,
+      @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
       this.biggenre = Biggenre.unselected,
+      @JsonKey(fromJson: intToGenre, toJson: generaToInt)
       this.genre = Genre.unselected,
       required this.gensaku,
       required this.keyword,
       required this.generalFirstup,
       required this.generalLastup,
+      @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
       this.novelType = NovelType.unselected,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required this.isEnd,
@@ -757,12 +767,12 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   /// 大ジャンル
   @override
-  @JsonKey()
+  @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
   final Biggenre biggenre;
 
   /// ジャンル
   @override
-  @JsonKey()
+  @JsonKey(fromJson: intToGenre, toJson: generaToInt)
   final Genre genre;
 
   /// 原作（常に空文字列）
@@ -783,7 +793,7 @@ class _$NarouNovelInfoImpl extends _NarouNovelInfo
 
   /// 連載の場合はserial、短編の場合はshortStory
   @override
-  @JsonKey()
+  @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
   final NovelType novelType;
 
   /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです
@@ -1083,12 +1093,14 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
       final int userid,
       required final String writer,
       required final String story,
+      @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
       final Biggenre biggenre,
-      final Genre genre,
+      @JsonKey(fromJson: intToGenre, toJson: generaToInt) final Genre genre,
       required final String gensaku,
       required final String keyword,
       required final DateTime generalFirstup,
       required final DateTime generalLastup,
+      @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
       final NovelType novelType,
       @JsonKey(fromJson: intToBool, toJson: boolToInt, name: 'end')
       required final bool isEnd,
@@ -1151,10 +1163,12 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 大ジャンル
   @override
+  @JsonKey(fromJson: intToBiggenre, toJson: biggenreToInt)
   Biggenre get biggenre;
 
   /// ジャンル
   @override
+  @JsonKey(fromJson: intToGenre, toJson: generaToInt)
   Genre get genre;
 
   /// 原作（常に空文字列）
@@ -1175,6 +1189,7 @@ abstract class _NarouNovelInfo extends NarouNovelInfo {
 
   /// 連載の場合はserial、短編の場合はshortStory
   @override
+  @JsonKey(fromJson: intToNovelType, toJson: novelTypeToInt)
   NovelType get novelType;
 
   /// 短編作品と完結済作品はTrueとなっています。連載中はFalseです

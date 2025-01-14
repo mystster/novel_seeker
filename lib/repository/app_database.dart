@@ -28,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
 
 @UseRowClass(NarouNovelContent)
 class NarouNovelContents extends Table {
-  TextColumn get body => text()();
+  TextColumn get body => text().nullable()();
   IntColumn get chapter => integer()();
   TextColumn get ncode => text()();
   @override

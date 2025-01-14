@@ -58,7 +58,7 @@ class NovelShelf extends HookConsumerWidget {
                       actions: <Widget>[
                         TextButton(
                           child: const Text('add'),
-                          onPressed: () {
+                          onPressed: () async {
                             ref
                                 .read(narouNovelProvider.notifier)
                                 .addNovel(addNcode.text);

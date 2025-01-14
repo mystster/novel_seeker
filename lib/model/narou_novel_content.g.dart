@@ -11,7 +11,7 @@ _$NarouNovelContentImpl _$$NarouNovelContentImplFromJson(
     _$NarouNovelContentImpl(
       title: json['title'] as String,
       ncode: json['ncode'] as String,
-      body: json['body'] as String,
+      body: json['body'] as String?,
       chapter: (json['chapter'] as num).toInt(),
     );
 
