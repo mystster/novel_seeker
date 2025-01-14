@@ -37,7 +37,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 
 @riverpod
 class NarouNovel extends _$NarouNovel {
-  void addNovel(String ncode) {
+  void addNovelPoc(String ncode) {
     logger.d('Adding novel with ncode: $ncode');
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
           ncode: ncode,

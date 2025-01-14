@@ -72,6 +72,39 @@ class NovelShelf extends HookConsumerWidget {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.add),
+              title: const Text('Add Novel Random'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Add Novel Random'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            const Text('ncodeを入れてください'),
+                            TextField(controller: addNcode),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('add'),
+                          onPressed: () {
+                            ref
+                                .read(narouNovelProvider.notifier)
+                                .addNovelPoc(addNcode.text);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.delete_forever),
               title: const Text('delete all novel'),
               onTap: () async {
