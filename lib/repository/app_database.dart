@@ -29,11 +29,11 @@ class AppDatabase extends _$AppDatabase {
 @UseRowClass(NarouNovelContent)
 class NarouNovelContents extends Table {
   TextColumn get body => text().nullable()();
+  IntColumn get cacheStatus => integer().map(const CacheStatusConverter())();
   IntColumn get chapter => integer()();
   TextColumn get ncode => text()();
   @override
   Set<Column> get primaryKey => {ncode, chapter};
-
   TextColumn get title => text()();
 }
 

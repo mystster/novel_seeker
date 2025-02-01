@@ -13,6 +13,9 @@ _$NarouNovelContentImpl _$$NarouNovelContentImplFromJson(
       ncode: json['ncode'] as String,
       body: json['body'] as String?,
       chapter: (json['chapter'] as num).toInt(),
+      cacheStatus: json['cache_status'] == null
+          ? CacheStatus.noCache
+          : intToCacheStatus((json['cache_status'] as num).toInt()),
     );
 
 Map<String, dynamic> _$$NarouNovelContentImplToJson(
@@ -22,4 +25,5 @@ Map<String, dynamic> _$$NarouNovelContentImplToJson(
       'ncode': instance.ncode,
       'body': instance.body,
       'chapter': instance.chapter,
+      'cache_status': cacheStatusToInt(instance.cacheStatus),
     };
