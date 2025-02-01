@@ -71,6 +71,7 @@ class NarouNovel extends _$NarouNovel {
           chapter:
               int.parse(element.attributes['href']?.split('/').reversed.skip(1).first ?? '0'),
           title: element.text.trim(),
+          cacheStatus: CacheStatus.noCache,
           body: null,
         );
         contents.add(content);
