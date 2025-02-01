@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:html/parser.dart' as html_parser;
@@ -56,30 +57,41 @@ class NarouNovel extends _$NarouNovel {
       logger.d('${novelInfo.title} has no contents');
       return;
     }
-    final List<NarouNovelContent> contents = [];
+    final List<NarouNovelContent> contents = info.contents;
     for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
       final response = await http.get(
-          Uri.parse('https://ncode.syosetu.com/${info.ncode.toLowerCase()}/?p=$i'),
+          Uri.parse(
+              'https://ncode.syosetu.com/${info.ncode.toLowerCase()}/?p=$i'),
           headers: {
             'User-Agent':
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
           });
       final htmlDom = html_parser.parse(response.body);
       htmlDom.querySelectorAll('.p-eplist__subtitle').forEach((element) {
+        final int chapterNumber = int.parse(
+            element.attributes['href']?.split('/').reversed.skip(1).first ??
+                '0');
+        final oldContentInfo = contents.firstWhereOrNull(
+            (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
           ncode: info.ncode,
-          chapter:
-              int.parse(element.attributes['href']?.split('/').reversed.skip(1).first ?? '0'),
-          title: element.text.trim(),
-          cacheStatus: CacheStatus.noCache,
-          body: null,
-          cacheUpdatedAt: null,
+          chapter: chapterNumber,
+          title: oldContentInfo?.title ?? element.text.trim(),
+          cacheStatus: oldContentInfo == null ||
+                  oldContentInfo.cacheStatus == CacheStatus.noCache
+              ? CacheStatus.noCache
+              : (oldContentInfo.cacheUpdatedAt!
+                      .isBefore(DateTime.parse(element.text /*TODO:正しい日付に*/))
+                  ? CacheStatus.stale
+                  : oldContentInfo.cacheStatus),
+          body: oldContentInfo?.body,
+          cacheUpdatedAt: oldContentInfo?.cacheUpdatedAt,
         );
         contents.add(content);
       });
     }
     await db.batch((b) {
-      b.insertAll(db.narouNovelContents, contents);
+      b.insertAllOnConflictUpdate(db.narouNovelContents, contents);
     });
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
