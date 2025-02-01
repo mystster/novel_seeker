@@ -58,6 +58,8 @@ class NarouNovel extends _$NarouNovel {
       return;
     }
     final List<NarouNovelContent> contents = info.contents;
+    final dateTimeRegex = RegExp(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}');
+    
     for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
       final response = await http.get(
           Uri.parse(
@@ -67,21 +69,27 @@ class NarouNovel extends _$NarouNovel {
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
           });
       final htmlDom = html_parser.parse(response.body);
-      htmlDom.querySelectorAll('.p-eplist__subtitle').forEach((element) {
-        final int chapterNumber = int.parse(
-            element.attributes['href']?.split('/').reversed.skip(1).first ??
-                '0');
+      htmlDom.querySelectorAll('.p-eplist__sublist').forEach((element) {
+        final titleElement = element.querySelector('.p-eplist__subtitle')!;
+        final dateTimeElement = element.querySelector('.p-eplist__update')!;
+        final int chapterNumber = int.parse(titleElement.attributes['href']
+                ?.split('/')
+                .reversed
+                .skip(1)
+                .first ??
+            '0');
+        final updateDateTime = dateTimeRegex.firstMatch(dateTimeElement.querySelector('span')?.attributes['title'] ?? dateTimeElement.text)?.group(0);
         final oldContentInfo = contents.firstWhereOrNull(
             (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
           ncode: info.ncode,
           chapter: chapterNumber,
-          title: oldContentInfo?.title ?? element.text.trim(),
+          title: oldContentInfo?.title ?? titleElement.text.trim() ,
           cacheStatus: oldContentInfo == null ||
                   oldContentInfo.cacheStatus == CacheStatus.noCache
               ? CacheStatus.noCache
               : (oldContentInfo.cacheUpdatedAt!
-                      .isBefore(DateTime.parse(element.text /*TODO:正しい日付に*/))
+                      .isBefore(DateTime.parse(updateDateTime ?? ''))
                   ? CacheStatus.stale
                   : oldContentInfo.cacheStatus),
           body: oldContentInfo?.body,
