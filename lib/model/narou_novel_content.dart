@@ -19,7 +19,8 @@ class NarouNovelContent
       required String? body,
       required int chapter,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
-      @Default(CacheStatus.noCache) CacheStatus cacheStatus}) = _NarouNovelContent;
+      @Default(CacheStatus.noCache) CacheStatus cacheStatus,
+      @Default(null) DateTime? cacheUpdatedAt}) = _NarouNovelContent;
   factory NarouNovelContent.fromJson(Map<String, dynamic> json) =>
       _$NarouNovelContentFromJson(json);
   const NarouNovelContent._();
@@ -32,6 +33,7 @@ class NarouNovelContent
       chapter: Value(chapter),
       ncode: Value(ncode),
       cacheStatus: Value(cacheStatus),
+      cacheUpdatedAt: Value(cacheUpdatedAt),
     ).toColumns(nullToAbsent);
   }
 }

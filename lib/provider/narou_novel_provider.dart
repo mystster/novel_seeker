@@ -73,6 +73,7 @@ class NarouNovel extends _$NarouNovel {
           title: element.text.trim(),
           cacheStatus: CacheStatus.noCache,
           body: null,
+          cacheUpdatedAt: null,
         );
         contents.add(content);
       });

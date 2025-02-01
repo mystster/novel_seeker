@@ -30,6 +30,7 @@ class AppDatabase extends _$AppDatabase {
 class NarouNovelContents extends Table {
   TextColumn get body => text().nullable()();
   IntColumn get cacheStatus => integer().map(const CacheStatusConverter())();
+  DateTimeColumn get cacheUpdatedAt => dateTime().nullable()();
   IntColumn get chapter => integer()();
   TextColumn get ncode => text()();
   @override
