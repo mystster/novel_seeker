@@ -57,7 +57,7 @@ class NarouNovel extends _$NarouNovel {
       logger.d('${novelInfo.title} has no contents');
       return;
     }
-    final List<NarouNovelContent> contents = info.contents;
+    final List<NarouNovelContent> contents = [];
     final dateTimeRegex = RegExp(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}');
     
     for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
@@ -79,7 +79,7 @@ class NarouNovel extends _$NarouNovel {
                 .first ??
             '0');
         final updateDateTime = dateTimeRegex.firstMatch(dateTimeElement.querySelector('span')?.attributes['title'] ?? dateTimeElement.text)?.group(0);
-        final oldContentInfo = contents.firstWhereOrNull(
+        final oldContentInfo = info.contents.firstWhereOrNull(
             (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
           ncode: info.ncode,
