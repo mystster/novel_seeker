@@ -137,7 +137,7 @@ class NovelShelf extends HookConsumerWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NovelContents(novelInfo: novelInfo),
+          builder: (context) => NovelContents(ncode: novelInfo.ncode),
         ));
       },
       child: Card(

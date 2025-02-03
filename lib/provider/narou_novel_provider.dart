@@ -216,4 +216,43 @@ class NarouNovel extends _$NarouNovel {
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
   }
+
+  Future<void> downloadContent(String ncode, int chapter) async {
+    if (state.value == null) {
+      logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      logger.d('ncode not found');
+      return;
+    }
+    final chapterIndex = state.value![ncodeIndex].contents
+        .indexWhere((element) => element.chapter == chapter);
+    if (chapterIndex == -1) {
+      logger.d('chapter not found');
+      return;
+    }
+    final response = await http.get(
+        Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/$chapter'),
+        headers: {
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
+        });
+    final htmlDom = html_parser.parse(response.body);
+    final body = htmlDom.querySelector('.p-novel__text')?.text;
+    if (body == null) {
+      logger.d('body is null');
+      return;
+    }
+    final newContent = state.value![ncodeIndex].contents[chapterIndex].copyWith(
+        body: body,
+        cacheStatus: CacheStatus.cached,
+        cacheUpdatedAt: DateTime.now());
+    final prevState = await future;
+    prevState[ncodeIndex].contents[chapterIndex] = newContent;
+    state = AsyncData(prevState);
+    await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
+  }
 }
