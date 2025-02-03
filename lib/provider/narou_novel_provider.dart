@@ -41,6 +41,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
   return result;
 }
 
+//TODO: 1つのnovelInfoのみを持つプロバイダーを用意したい。novel_contents用。
 @riverpod
 class NarouNovel extends _$NarouNovel {
   Future<void> addNarouToC(NovelInfo info) async {
