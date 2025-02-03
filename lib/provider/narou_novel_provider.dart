@@ -22,7 +22,7 @@ var logger = Logger();
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
-///そのため、contentsを取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
+///そのため、contents以外を取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
 @riverpod
 Future<List<NovelInfo>> _novelInfos(Ref ref) async {
   final result = db.select(db.novelInfos).join([
@@ -59,7 +59,7 @@ class NarouNovel extends _$NarouNovel {
     }
     final List<NarouNovelContent> contents = [];
     final dateTimeRegex = RegExp(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}');
-    
+
     for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
       final response = await http.get(
           Uri.parse(
@@ -78,13 +78,17 @@ class NarouNovel extends _$NarouNovel {
                 .skip(1)
                 .first ??
             '0');
-        final updateDateTime = dateTimeRegex.firstMatch(dateTimeElement.querySelector('span')?.attributes['title'] ?? dateTimeElement.text)?.group(0);
+        final updateDateTime = dateTimeRegex
+            .firstMatch(
+                dateTimeElement.querySelector('span')?.attributes['title'] ??
+                    dateTimeElement.text)
+            ?.group(0);
         final oldContentInfo = info.contents.firstWhereOrNull(
             (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
           ncode: info.ncode,
           chapter: chapterNumber,
-          title: oldContentInfo?.title ?? titleElement.text.trim() ,
+          title: oldContentInfo?.title ?? titleElement.text.trim(),
           cacheStatus: oldContentInfo == null ||
                   oldContentInfo.cacheStatus == CacheStatus.noCache
               ? CacheStatus.noCache
