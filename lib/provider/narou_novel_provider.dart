@@ -132,7 +132,7 @@ class NarouNovel extends _$NarouNovel {
       registrationDate: DateTime.now(),
       novelInfo: novel,
       scrollPosition: 0,
-      currentChapter: 0,
+      currentChapter: 1,
     );
     await db.into(db.novelInfos).insert(info);
     await db.into(db.narouNovelInfos).insert(novel);
