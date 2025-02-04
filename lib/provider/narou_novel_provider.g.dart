@@ -10,7 +10,7 @@ String _$novelInfosHash() => r'95550d255a093ffee5e13a6ebbe20895444306f2';
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
-///そのため、contentsを取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
+///そのため、contents以外を取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
 ///
 /// Copied from [_novelInfos].
 @ProviderFor(_novelInfos)
@@ -26,7 +26,7 @@ final _novelInfosProvider = AutoDisposeFutureProvider<List<NovelInfo>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _NovelInfosRef = AutoDisposeFutureProviderRef<List<NovelInfo>>;
-String _$narouNovelHash() => r'48d9645b71ba0ca5c493050306f46d6e84ec72b2';
+String _$narouNovelHash() => r'3783a0022366876414a200feed4ab4454a227220';
 
 /// See also [NarouNovel].
 @ProviderFor(NarouNovel)

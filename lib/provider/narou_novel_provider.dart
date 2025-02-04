@@ -255,4 +255,23 @@ class NarouNovel extends _$NarouNovel {
     state = AsyncData(prevState);
     await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
+
+  Future<void> updateCurrentChapter(String ncode, int chapter) async {
+    if (state.value == null) {
+      logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      logger.d('ncode not found');
+      return;
+    }
+    final newNarouInfo =
+        state.value![ncodeIndex].copyWith(currentChapter: chapter);
+    final prevState = await future;
+    prevState[ncodeIndex] = newNarouInfo;
+    state = AsyncData(prevState);
+    await db.into(db.novelInfos).insertOnConflictUpdate(newNarouInfo);
+  }
 }

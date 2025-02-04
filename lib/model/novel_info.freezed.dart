@@ -23,7 +23,9 @@ mixin _$NovelInfo {
   String get ncode => throw _privateConstructorUsedError;
   NarouNovelInfo? get novelInfo => throw _privateConstructorUsedError;
   DateTime get registrationDate => throw _privateConstructorUsedError;
-  List<NarouNovelContent> get contents => throw _privateConstructorUsedError;
+  List<NarouNovelContent> get contents =>
+      throw _privateConstructorUsedError; //TODO: scrollPositionは各contentごとに用意したい
+//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   int get scrollPosition => throw _privateConstructorUsedError;
   int get currentChapter => throw _privateConstructorUsedError;
 
@@ -211,6 +213,8 @@ class _$NovelInfoImpl extends _NovelInfo {
   @override
   @JsonKey()
   final List<NarouNovelContent> contents;
+//TODO: scrollPositionは各contentごとに用意したい
+//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   @JsonKey()
   final int scrollPosition;
@@ -287,7 +291,8 @@ abstract class _NovelInfo extends NovelInfo {
   @override
   DateTime get registrationDate;
   @override
-  List<NarouNovelContent> get contents;
+  List<NarouNovelContent> get contents; //TODO: scrollPositionは各contentごとに用意したい
+//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   int get scrollPosition;
   @override
