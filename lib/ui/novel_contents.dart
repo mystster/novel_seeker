@@ -66,38 +66,68 @@ class NovelContents extends HookConsumerWidget {
                   }),
             ),
           ),
-          body: GestureDetector(
-            child: Center(
-              //TODO: useScrollControllerを使ってスクロール位置を調整したい
-              child: novelInfo.contents
-                          .firstWhereOrNull(
-                              (e) => e.chapter == currentChapter.value)
-                          ?.body !=
-                      null
-                  ? Scrollbar(
+          body: Center(
+            //TODO: useScrollControllerを使ってスクロール位置を調整したい
+            child: novelInfo.contents
+                        .firstWhereOrNull(
+                            (e) => e.chapter == currentChapter.value)
+                        ?.body !=
+                    null
+                ? Scrollbar(
                     thumbVisibility: false,
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(novelInfo.contents
-                              .firstWhereOrNull(
-                                  (e) => e.chapter == currentChapter.value)
-                              ?.body ??
-                          ''),
+                    child: GestureDetector(
+                      onHorizontalDragEnd: (details) {
+                        logger.d(
+                            'details: ${details.primaryVelocity}, currentChapter: ${currentChapter.value}');
+                        if (details.primaryVelocity! > 0 &&
+                            currentChapter.value > 1) {
+                          currentChapter.value--;
+                        } else if (details.primaryVelocity! < 0 &&
+                            currentChapter.value <
+                                novelInfo.contents.length - 1) {
+                          currentChapter.value++;
+                        }
+                      },
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(novelInfo.contents
+                                .firstWhereOrNull(
+                                    (e) => e.chapter == currentChapter.value)
+                                ?.body ??
+                            ''),
+                      ),
                     ),
                   )
-                  : TextButton(
-                      onPressed: () async {
-                        if (currentChapter.value == 0) {
-                          return;
-                        }
-                        await ref
-                            .read(narouNovelProvider.notifier)
-                            .downloadContent(ncode, currentChapter.value);
-                      },
-                      style: TextButton.styleFrom(side: const BorderSide(width: 1)),
-                      child: const Text('Load'),
+                : GestureDetector(
+                    onHorizontalDragEnd: (details) {
+                      logger.d(
+                          'details: ${details.primaryVelocity}, currentChapter: ${currentChapter.value}');
+                      if (details.primaryVelocity! > 0 &&
+                          currentChapter.value > 1) {
+                        currentChapter.value--;
+                      } else if (details.primaryVelocity! < 0 &&
+                          currentChapter.value <
+                              novelInfo.contents.length - 1) {
+                        currentChapter.value++;
+                      }
+                    },
+                    behavior: HitTestBehavior.translucent,
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () async {
+                          if (currentChapter.value == 0) {
+                            return;
+                          }
+                          await ref
+                              .read(narouNovelProvider.notifier)
+                              .downloadContent(ncode, currentChapter.value);
+                        },
+                        style: TextButton.styleFrom(
+                            side: const BorderSide(width: 1)),
+                        child: const Text('Load'),
+                      ),
                     ),
-            ),
+                  ),
           ),
         );
       },
