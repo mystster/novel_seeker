@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
+import 'novel_contents.dart';
 
 class NovelShelf extends HookConsumerWidget {
   const NovelShelf({super.key});
@@ -135,7 +136,9 @@ class NovelShelf extends HookConsumerWidget {
   Widget novelInfo(BuildContext context, NovelInfo novelInfo) {
     return InkWell(
       onTap: () {
-        //Navigator.of(context).push('/novel', arguments: novelInfo.novelInfo?.ncode);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => NovelContents(ncode: novelInfo.ncode),
+        ));
       },
       child: Card(
         child: Row(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:html/parser.dart' as html_parser;
@@ -21,7 +22,7 @@ var logger = Logger();
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
-///そのため、contentsを取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
+///そのため、contents以外を取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
 @riverpod
 Future<List<NovelInfo>> _novelInfos(Ref ref) async {
   final result = db.select(db.novelInfos).join([
@@ -40,6 +41,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
   return result;
 }
 
+//TODO: 1つのnovelInfoのみを持つプロバイダーを用意したい。novel_contents用。
 @riverpod
 class NarouNovel extends _$NarouNovel {
   Future<void> addNarouToC(NovelInfo info) async {
@@ -57,27 +59,52 @@ class NarouNovel extends _$NarouNovel {
       return;
     }
     final List<NarouNovelContent> contents = [];
+    final dateTimeRegex = RegExp(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}');
+
     for (var i = 1; i <= (novelInfo.generalAllNo ~/ 100) + 1; i++) {
       final response = await http.get(
-          Uri.parse('https://ncode.syosetu.com/${info.ncode.toLowerCase()}/?p=$i'),
+          Uri.parse(
+              'https://ncode.syosetu.com/${info.ncode.toLowerCase()}/?p=$i'),
           headers: {
             'User-Agent':
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
           });
       final htmlDom = html_parser.parse(response.body);
-      htmlDom.querySelectorAll('.p-eplist__subtitle').forEach((element) {
+      htmlDom.querySelectorAll('.p-eplist__sublist').forEach((element) {
+        final titleElement = element.querySelector('.p-eplist__subtitle')!;
+        final dateTimeElement = element.querySelector('.p-eplist__update')!;
+        final int chapterNumber = int.parse(titleElement.attributes['href']
+                ?.split('/')
+                .reversed
+                .skip(1)
+                .first ??
+            '0');
+        final updateDateTime = dateTimeRegex
+            .firstMatch(
+                dateTimeElement.querySelector('span')?.attributes['title'] ??
+                    dateTimeElement.text)
+            ?.group(0);
+        final oldContentInfo = info.contents.firstWhereOrNull(
+            (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
           ncode: info.ncode,
-          chapter:
-              int.parse(element.attributes['href']?.split('/').reversed.skip(1).first ?? '0'),
-          title: element.text.trim(),
-          body: null,
+          chapter: chapterNumber,
+          title: oldContentInfo?.title ?? titleElement.text.trim(),
+          cacheStatus: oldContentInfo == null ||
+                  oldContentInfo.cacheStatus == CacheStatus.noCache
+              ? CacheStatus.noCache
+              : (oldContentInfo.cacheUpdatedAt!
+                      .isBefore(DateTime.parse(updateDateTime ?? ''))
+                  ? CacheStatus.stale
+                  : oldContentInfo.cacheStatus),
+          body: oldContentInfo?.body,
+          cacheUpdatedAt: oldContentInfo?.cacheUpdatedAt,
         );
         contents.add(content);
       });
     }
     await db.batch((b) {
-      b.insertAll(db.narouNovelContents, contents);
+      b.insertAllOnConflictUpdate(db.narouNovelContents, contents);
     });
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
@@ -105,7 +132,7 @@ class NarouNovel extends _$NarouNovel {
       registrationDate: DateTime.now(),
       novelInfo: novel,
       scrollPosition: 0,
-      currentChapter: 0,
+      currentChapter: 1,
     );
     await db.into(db.novelInfos).insert(info);
     await db.into(db.narouNovelInfos).insert(novel);
@@ -188,5 +215,44 @@ class NarouNovel extends _$NarouNovel {
     logger.d('Removed $r narouNovelInfos');
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
+  }
+
+  Future<void> downloadContent(String ncode, int chapter) async {
+    if (state.value == null) {
+      logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      logger.d('ncode not found');
+      return;
+    }
+    final chapterIndex = state.value![ncodeIndex].contents
+        .indexWhere((element) => element.chapter == chapter);
+    if (chapterIndex == -1) {
+      logger.d('chapter not found');
+      return;
+    }
+    final response = await http.get(
+        Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/$chapter'),
+        headers: {
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
+        });
+    final htmlDom = html_parser.parse(response.body);
+    final body = htmlDom.querySelector('.p-novel__text')?.text;
+    if (body == null) {
+      logger.d('body is null');
+      return;
+    }
+    final newContent = state.value![ncodeIndex].contents[chapterIndex].copyWith(
+        body: body,
+        cacheStatus: CacheStatus.cached,
+        cacheUpdatedAt: DateTime.now());
+    final prevState = await future;
+    prevState[ncodeIndex].contents[chapterIndex] = newContent;
+    state = AsyncData(prevState);
+    await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
 }

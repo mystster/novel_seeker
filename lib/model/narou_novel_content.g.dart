@@ -13,6 +13,12 @@ _$NarouNovelContentImpl _$$NarouNovelContentImplFromJson(
       ncode: json['ncode'] as String,
       body: json['body'] as String?,
       chapter: (json['chapter'] as num).toInt(),
+      cacheStatus: json['cache_status'] == null
+          ? CacheStatus.noCache
+          : intToCacheStatus((json['cache_status'] as num).toInt()),
+      cacheUpdatedAt: json['cache_updated_at'] == null
+          ? null
+          : DateTime.parse(json['cache_updated_at'] as String),
     );
 
 Map<String, dynamic> _$$NarouNovelContentImplToJson(
@@ -22,4 +28,6 @@ Map<String, dynamic> _$$NarouNovelContentImplToJson(
       'ncode': instance.ncode,
       'body': instance.body,
       'chapter': instance.chapter,
+      'cache_status': cacheStatusToInt(instance.cacheStatus),
+      'cache_updated_at': instance.cacheUpdatedAt?.toIso8601String(),
     };

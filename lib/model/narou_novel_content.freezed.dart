@@ -24,6 +24,9 @@ mixin _$NarouNovelContent {
   String get ncode => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
   int get chapter => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+  CacheStatus get cacheStatus => throw _privateConstructorUsedError;
+  DateTime? get cacheUpdatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this NarouNovelContent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +44,14 @@ abstract class $NarouNovelContentCopyWith<$Res> {
           NarouNovelContent value, $Res Function(NarouNovelContent) then) =
       _$NarouNovelContentCopyWithImpl<$Res, NarouNovelContent>;
   @useResult
-  $Res call({String title, String ncode, String? body, int chapter});
+  $Res call(
+      {String title,
+      String ncode,
+      String? body,
+      int chapter,
+      @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+      CacheStatus cacheStatus,
+      DateTime? cacheUpdatedAt});
 }
 
 /// @nodoc
@@ -63,6 +73,8 @@ class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
     Object? ncode = null,
     Object? body = freezed,
     Object? chapter = null,
+    Object? cacheStatus = null,
+    Object? cacheUpdatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -81,6 +93,14 @@ class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as int,
+      cacheStatus: null == cacheStatus
+          ? _value.cacheStatus
+          : cacheStatus // ignore: cast_nullable_to_non_nullable
+              as CacheStatus,
+      cacheUpdatedAt: freezed == cacheUpdatedAt
+          ? _value.cacheUpdatedAt
+          : cacheUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -93,7 +113,14 @@ abstract class _$$NarouNovelContentImplCopyWith<$Res>
       __$$NarouNovelContentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String ncode, String? body, int chapter});
+  $Res call(
+      {String title,
+      String ncode,
+      String? body,
+      int chapter,
+      @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+      CacheStatus cacheStatus,
+      DateTime? cacheUpdatedAt});
 }
 
 /// @nodoc
@@ -113,6 +140,8 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
     Object? ncode = null,
     Object? body = freezed,
     Object? chapter = null,
+    Object? cacheStatus = null,
+    Object? cacheUpdatedAt = freezed,
   }) {
     return _then(_$NarouNovelContentImpl(
       title: null == title
@@ -131,6 +160,14 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as int,
+      cacheStatus: null == cacheStatus
+          ? _value.cacheStatus
+          : cacheStatus // ignore: cast_nullable_to_non_nullable
+              as CacheStatus,
+      cacheUpdatedAt: freezed == cacheUpdatedAt
+          ? _value.cacheUpdatedAt
+          : cacheUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -142,7 +179,10 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
       {required this.title,
       required this.ncode,
       required this.body,
-      required this.chapter})
+      required this.chapter,
+      @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+      this.cacheStatus = CacheStatus.noCache,
+      this.cacheUpdatedAt = null})
       : super._();
 
   factory _$NarouNovelContentImpl.fromJson(Map<String, dynamic> json) =>
@@ -156,10 +196,16 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   final String? body;
   @override
   final int chapter;
+  @override
+  @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+  final CacheStatus cacheStatus;
+  @override
+  @JsonKey()
+  final DateTime? cacheUpdatedAt;
 
   @override
   String toString() {
-    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter)';
+    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, cacheStatus: $cacheStatus, cacheUpdatedAt: $cacheUpdatedAt)';
   }
 
   @override
@@ -170,12 +216,17 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.ncode, ncode) || other.ncode == ncode) &&
             (identical(other.body, body) || other.body == body) &&
-            (identical(other.chapter, chapter) || other.chapter == chapter));
+            (identical(other.chapter, chapter) || other.chapter == chapter) &&
+            (identical(other.cacheStatus, cacheStatus) ||
+                other.cacheStatus == cacheStatus) &&
+            (identical(other.cacheUpdatedAt, cacheUpdatedAt) ||
+                other.cacheUpdatedAt == cacheUpdatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, ncode, body, chapter);
+  int get hashCode => Object.hash(
+      runtimeType, title, ncode, body, chapter, cacheStatus, cacheUpdatedAt);
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.
@@ -199,7 +250,10 @@ abstract class _NarouNovelContent extends NarouNovelContent {
       {required final String title,
       required final String ncode,
       required final String? body,
-      required final int chapter}) = _$NarouNovelContentImpl;
+      required final int chapter,
+      @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+      final CacheStatus cacheStatus,
+      final DateTime? cacheUpdatedAt}) = _$NarouNovelContentImpl;
   const _NarouNovelContent._() : super._();
 
   factory _NarouNovelContent.fromJson(Map<String, dynamic> json) =
@@ -213,6 +267,11 @@ abstract class _NarouNovelContent extends NarouNovelContent {
   String? get body;
   @override
   int get chapter;
+  @override
+  @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+  CacheStatus get cacheStatus;
+  @override
+  DateTime? get cacheUpdatedAt;
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.

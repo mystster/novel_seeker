@@ -15,6 +15,19 @@ enum Biggenre {
   String toString() => displayName;
 }
 
+enum CacheStatus {
+  noCache('未キャッシュ', 0),
+  cached('キャッシュ済み', 1),
+  stale('古いキャッシュ', 2);
+
+  final String displayName;
+  final int id;
+  const CacheStatus (this.displayName, this.id);
+  int toId() => id;
+  @override
+  String toString() => displayName;
+}
+
 enum Genre {
   unselected('未選択〔未選択〕', 0),
   isekaiRomance('異世界〔恋愛〕', 101),
