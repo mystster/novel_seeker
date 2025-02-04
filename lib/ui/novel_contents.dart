@@ -25,6 +25,7 @@ class NovelContents extends HookConsumerWidget {
         final pageController = usePageController(
             initialPage: novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value));
+        final scrollController = useScrollController();
         return Scaffold(
           appBar: AppBar(
             title: Text(novelInfo.contents
@@ -73,16 +74,21 @@ class NovelContents extends HookConsumerWidget {
           body: PageView.builder(
             itemCount: novelInfo.contents.length,
             controller: pageController,
-            onPageChanged: (value) =>
-                currentChapter.value = novelInfo.contents[value].chapter,
+            onPageChanged: (value) async {
+              currentChapter.value = novelInfo.contents[value].chapter;
+              await ref
+                  .read(narouNovelProvider.notifier)
+                  .updateCurrentChapter(ncode, currentChapter.value);
+            },
             itemBuilder: (context, index) =>
                 novelInfo.contents[index].body != null
                     ? Scrollbar(
-                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: SingleChildScrollView(
                           padding: const EdgeInsets.all(8),
                           child: Text(novelInfo.contents[index].body ?? ''),
                         ),
-                    )
+                      )
                     : MaterialButton(
                         onPressed: () async {
                           if (currentChapter.value == 0) {
