@@ -35,6 +35,7 @@ class NarouNovelContents extends Table {
   TextColumn get ncode => text()();
   @override
   Set<Column> get primaryKey => {ncode, chapter};
+  RealColumn get scrollPosition => real()();
   TextColumn get title => text()();
 }
 
@@ -90,5 +91,4 @@ class NovelInfos extends Table {
   @override
   Set<Column> get primaryKey => {ncode};
   DateTimeColumn get registrationDate => dateTime()();
-  IntColumn get scrollPosition => integer()();
 }

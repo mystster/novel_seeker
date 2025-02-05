@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
 
@@ -12,6 +13,7 @@ class NovelContents extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final narouProvider = ref.watch(narouNovelProvider);
+
     return narouProvider.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, s) => Center(child: Text('Error: $e')),
@@ -21,6 +23,53 @@ class NovelContents extends HookConsumerWidget {
           return const Center(child: Text('No data'));
         }
         final currentChapter = useState(novelInfo.currentChapter);
+        final scrollController = useScrollController();
+        final pageController = usePageController(
+            initialPage: novelInfo.contents
+                .indexWhere((e) => e.chapter == currentChapter.value));
+        useEffect(() {
+          double lastPage = novelInfo.contents
+              .indexWhere((e) => e.chapter == currentChapter.value)
+              .toDouble();
+          bool pageChanging = false;
+          void onPageChaged() {
+            if (pageController.page == null) {
+              logger.d('pageController.page is null');
+              return;
+            }
+            double nowPage = pageController.page!;
+            if (pageChanging == false && lastPage != nowPage) {
+              logger.d('page change start!');
+              if (scrollController.hasClients) {
+                logger.d(
+                    'chapter: ${currentChapter.value}, scroll pos: ${scrollController.position.pixels}');
+                ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                    ncode,
+                    currentChapter.value,
+                    scrollController.position.pixels);
+              }
+              pageChanging = true;
+            }
+            if (pageChanging == true && lastPage == nowPage) {
+              // ページ切り替えをキャンセルした
+              logger.d('page change cancelled');
+              pageChanging = false;
+            }
+            if (nowPage == nowPage.roundToDouble() && lastPage != nowPage) {
+              logger.d(
+                  'page change finish! last page: $lastPage, new page: $nowPage');
+              if (scrollController.hasClients) {
+                scrollController.jumpTo(novelInfo.contents.firstWhere((e) => e.chapter == currentChapter.value).scrollPosition);
+              }
+              lastPage = nowPage;
+              pageChanging = false;
+            }
+          }
+          pageController.addListener(onPageChaged);
+          return () {
+            pageController.removeListener(onPageChaged);
+          };
+        }, [pageController]);
         return Scaffold(
           appBar: AppBar(
             title: Text(novelInfo.contents
@@ -66,54 +115,26 @@ class NovelContents extends HookConsumerWidget {
                   }),
             ),
           ),
-          body: Center(
-            //TODO: useScrollControllerを使ってスクロール位置を調整したい
-            child: novelInfo.contents
-                        .firstWhereOrNull(
-                            (e) => e.chapter == currentChapter.value)
-                        ?.body !=
-                    null
-                ? Scrollbar(
-                    thumbVisibility: false,
-                    child: GestureDetector(
-                      onHorizontalDragEnd: (details) {
-                        logger.d(
-                            'details: ${details.primaryVelocity}, currentChapter: ${currentChapter.value}');
-                        if (details.primaryVelocity! > 0 &&
-                            currentChapter.value > 1) {
-                          currentChapter.value--;
-                        } else if (details.primaryVelocity! < 0 &&
-                            currentChapter.value <
-                                novelInfo.contents.length - 1) {
-                          currentChapter.value++;
-                        }
-                      },
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(novelInfo.contents
-                                .firstWhereOrNull(
-                                    (e) => e.chapter == currentChapter.value)
-                                ?.body ??
-                            ''),
-                      ),
-                    ),
-                  )
-                : GestureDetector(
-                    onHorizontalDragEnd: (details) {
-                      logger.d(
-                          'details: ${details.primaryVelocity}, currentChapter: ${currentChapter.value}');
-                      if (details.primaryVelocity! > 0 &&
-                          currentChapter.value > 1) {
-                        currentChapter.value--;
-                      } else if (details.primaryVelocity! < 0 &&
-                          currentChapter.value <
-                              novelInfo.contents.length - 1) {
-                        currentChapter.value++;
-                      }
-                    },
-                    behavior: HitTestBehavior.translucent,
-                    child: Center(
-                      child: TextButton(
+          body: PageView.builder(
+            itemCount: novelInfo.contents.length,
+            controller: pageController,
+            onPageChanged: (value) async {
+              logger.d('onPageChaged is fire!');
+              currentChapter.value = novelInfo.contents[value].chapter;
+              await ref
+                  .read(narouNovelProvider.notifier)
+                  .updateCurrentChapter(ncode, currentChapter.value);
+            },
+            itemBuilder: (context, index) =>
+                novelInfo.contents[index].body != null
+                    ? Scrollbar(
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          padding: const EdgeInsets.all(8),
+                          child: Text(novelInfo.contents[index].body ?? ''),
+                        ),
+                      )
+                    : MaterialButton(
                         onPressed: () async {
                           if (currentChapter.value == 0) {
                             return;
@@ -122,12 +143,8 @@ class NovelContents extends HookConsumerWidget {
                               .read(narouNovelProvider.notifier)
                               .downloadContent(ncode, currentChapter.value);
                         },
-                        style: TextButton.styleFrom(
-                            side: const BorderSide(width: 1)),
                         child: const Text('Load'),
                       ),
-                    ),
-                  ),
           ),
         );
       },

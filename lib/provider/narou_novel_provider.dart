@@ -34,7 +34,6 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
       novelInfo: row.readTableOrNull(db.narouNovelInfos),
       registrationDate: row.readTable(db.novelInfos).registrationDate,
       contents: [],
-      scrollPosition: row.readTable(db.novelInfos).scrollPosition,
       currentChapter: row.readTable(db.novelInfos).currentChapter,
     );
   }).get();
@@ -131,7 +130,6 @@ class NarouNovel extends _$NarouNovel {
       ncode: novel.ncode,
       registrationDate: DateTime.now(),
       novelInfo: novel,
-      scrollPosition: 0,
       currentChapter: 1,
     );
     await db.into(db.novelInfos).insert(info);
@@ -146,7 +144,6 @@ class NarouNovel extends _$NarouNovel {
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
           ncode: ncode,
           registrationDate: DateTime.now(),
-          scrollPosition: 0,
           currentChapter: 0,
         ));
     db.into(db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(
@@ -250,6 +247,51 @@ class NarouNovel extends _$NarouNovel {
         body: body,
         cacheStatus: CacheStatus.cached,
         cacheUpdatedAt: DateTime.now());
+    final prevState = await future;
+    prevState[ncodeIndex].contents[chapterIndex] = newContent;
+    state = AsyncData(prevState);
+    await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
+  }
+
+  Future<void> updateCurrentChapter(String ncode, int chapter) async {
+    if (state.value == null) {
+      logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      logger.d('ncode not found');
+      return;
+    }
+    final newNarouInfo =
+        state.value![ncodeIndex].copyWith(currentChapter: chapter);
+    final prevState = await future;
+    prevState[ncodeIndex] = newNarouInfo;
+    state = AsyncData(prevState);
+    await db.into(db.novelInfos).insertOnConflictUpdate(newNarouInfo);
+  }
+
+  Future<void> updateScrollPosition(
+      String ncode, int chapter, double scrollPosition) async {
+    if (state.value == null) {
+      logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      logger.d('ncode not found');
+      return;
+    }
+    final chapterIndex = state.value![ncodeIndex].contents
+        .indexWhere((element) => element.chapter == chapter);
+    if (chapterIndex == -1) {
+      logger.d('chapter not found');
+      return;
+    }
+    final newContent = state.value![ncodeIndex].contents[chapterIndex]
+        .copyWith(scrollPosition: scrollPosition);
     final prevState = await future;
     prevState[ncodeIndex].contents[chapterIndex] = newContent;
     state = AsyncData(prevState);

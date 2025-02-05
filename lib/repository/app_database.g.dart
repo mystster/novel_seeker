@@ -39,14 +39,27 @@ class $NarouNovelContentsTable extends NarouNovelContents
   late final GeneratedColumn<String> ncode = GeneratedColumn<String>(
       'ncode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _scrollPositionMeta =
+      const VerificationMeta('scrollPosition');
+  @override
+  late final GeneratedColumn<double> scrollPosition = GeneratedColumn<double>(
+      'scroll_position', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns =>
-      [body, cacheStatus, cacheUpdatedAt, chapter, ncode, title];
+  List<GeneratedColumn> get $columns => [
+        body,
+        cacheStatus,
+        cacheUpdatedAt,
+        chapter,
+        ncode,
+        scrollPosition,
+        title
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -80,6 +93,14 @@ class $NarouNovelContentsTable extends NarouNovelContents
     } else if (isInserting) {
       context.missing(_ncodeMeta);
     }
+    if (data.containsKey('scroll_position')) {
+      context.handle(
+          _scrollPositionMeta,
+          scrollPosition.isAcceptableOrUnknown(
+              data['scroll_position']!, _scrollPositionMeta));
+    } else if (isInserting) {
+      context.missing(_scrollPositionMeta);
+    }
     if (data.containsKey('title')) {
       context.handle(
           _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
@@ -103,6 +124,8 @@ class $NarouNovelContentsTable extends NarouNovelContents
           .read(DriftSqlType.string, data['${effectivePrefix}body']),
       chapter: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}chapter'])!,
+      scrollPosition: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}scroll_position'])!,
       cacheStatus: $NarouNovelContentsTable.$convertercacheStatus.fromSql(
           attachedDatabase.typeMapping
               .read(DriftSqlType.int, data['${effectivePrefix}cache_status'])!),
@@ -126,6 +149,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   final Value<DateTime?> cacheUpdatedAt;
   final Value<int> chapter;
   final Value<String> ncode;
+  final Value<double> scrollPosition;
   final Value<String> title;
   final Value<int> rowid;
   const NarouNovelContentsCompanion({
@@ -134,6 +158,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.cacheUpdatedAt = const Value.absent(),
     this.chapter = const Value.absent(),
     this.ncode = const Value.absent(),
+    this.scrollPosition = const Value.absent(),
     this.title = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -143,11 +168,13 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.cacheUpdatedAt = const Value.absent(),
     required int chapter,
     required String ncode,
+    required double scrollPosition,
     required String title,
     this.rowid = const Value.absent(),
   })  : cacheStatus = Value(cacheStatus),
         chapter = Value(chapter),
         ncode = Value(ncode),
+        scrollPosition = Value(scrollPosition),
         title = Value(title);
   static Insertable<NarouNovelContent> custom({
     Expression<String>? body,
@@ -155,6 +182,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     Expression<DateTime>? cacheUpdatedAt,
     Expression<int>? chapter,
     Expression<String>? ncode,
+    Expression<double>? scrollPosition,
     Expression<String>? title,
     Expression<int>? rowid,
   }) {
@@ -164,6 +192,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       if (cacheUpdatedAt != null) 'cache_updated_at': cacheUpdatedAt,
       if (chapter != null) 'chapter': chapter,
       if (ncode != null) 'ncode': ncode,
+      if (scrollPosition != null) 'scroll_position': scrollPosition,
       if (title != null) 'title': title,
       if (rowid != null) 'rowid': rowid,
     });
@@ -175,6 +204,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       Value<DateTime?>? cacheUpdatedAt,
       Value<int>? chapter,
       Value<String>? ncode,
+      Value<double>? scrollPosition,
       Value<String>? title,
       Value<int>? rowid}) {
     return NarouNovelContentsCompanion(
@@ -183,6 +213,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       cacheUpdatedAt: cacheUpdatedAt ?? this.cacheUpdatedAt,
       chapter: chapter ?? this.chapter,
       ncode: ncode ?? this.ncode,
+      scrollPosition: scrollPosition ?? this.scrollPosition,
       title: title ?? this.title,
       rowid: rowid ?? this.rowid,
     );
@@ -208,6 +239,9 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     if (ncode.present) {
       map['ncode'] = Variable<String>(ncode.value);
     }
+    if (scrollPosition.present) {
+      map['scroll_position'] = Variable<double>(scrollPosition.value);
+    }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
@@ -225,6 +259,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
           ..write('cacheUpdatedAt: $cacheUpdatedAt, ')
           ..write('chapter: $chapter, ')
           ..write('ncode: $ncode, ')
+          ..write('scrollPosition: $scrollPosition, ')
           ..write('title: $title, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -255,15 +290,9 @@ class $NovelInfosTable extends NovelInfos
   late final GeneratedColumn<DateTime> registrationDate =
       GeneratedColumn<DateTime>('registration_date', aliasedName, false,
           type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _scrollPositionMeta =
-      const VerificationMeta('scrollPosition');
-  @override
-  late final GeneratedColumn<int> scrollPosition = GeneratedColumn<int>(
-      'scroll_position', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [currentChapter, ncode, registrationDate, scrollPosition];
+      [currentChapter, ncode, registrationDate];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -296,14 +325,6 @@ class $NovelInfosTable extends NovelInfos
     } else if (isInserting) {
       context.missing(_registrationDateMeta);
     }
-    if (data.containsKey('scroll_position')) {
-      context.handle(
-          _scrollPositionMeta,
-          scrollPosition.isAcceptableOrUnknown(
-              data['scroll_position']!, _scrollPositionMeta));
-    } else if (isInserting) {
-      context.missing(_scrollPositionMeta);
-    }
     return context;
   }
 
@@ -317,8 +338,6 @@ class $NovelInfosTable extends NovelInfos
           .read(DriftSqlType.string, data['${effectivePrefix}ncode'])!,
       registrationDate: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}registration_date'])!,
-      scrollPosition: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}scroll_position'])!,
       currentChapter: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}current_chapter'])!,
     );
@@ -334,37 +353,31 @@ class NovelInfosCompanion extends UpdateCompanion<NovelInfo> {
   final Value<int> currentChapter;
   final Value<String> ncode;
   final Value<DateTime> registrationDate;
-  final Value<int> scrollPosition;
   final Value<int> rowid;
   const NovelInfosCompanion({
     this.currentChapter = const Value.absent(),
     this.ncode = const Value.absent(),
     this.registrationDate = const Value.absent(),
-    this.scrollPosition = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   NovelInfosCompanion.insert({
     required int currentChapter,
     required String ncode,
     required DateTime registrationDate,
-    required int scrollPosition,
     this.rowid = const Value.absent(),
   })  : currentChapter = Value(currentChapter),
         ncode = Value(ncode),
-        registrationDate = Value(registrationDate),
-        scrollPosition = Value(scrollPosition);
+        registrationDate = Value(registrationDate);
   static Insertable<NovelInfo> custom({
     Expression<int>? currentChapter,
     Expression<String>? ncode,
     Expression<DateTime>? registrationDate,
-    Expression<int>? scrollPosition,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (currentChapter != null) 'current_chapter': currentChapter,
       if (ncode != null) 'ncode': ncode,
       if (registrationDate != null) 'registration_date': registrationDate,
-      if (scrollPosition != null) 'scroll_position': scrollPosition,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -373,13 +386,11 @@ class NovelInfosCompanion extends UpdateCompanion<NovelInfo> {
       {Value<int>? currentChapter,
       Value<String>? ncode,
       Value<DateTime>? registrationDate,
-      Value<int>? scrollPosition,
       Value<int>? rowid}) {
     return NovelInfosCompanion(
       currentChapter: currentChapter ?? this.currentChapter,
       ncode: ncode ?? this.ncode,
       registrationDate: registrationDate ?? this.registrationDate,
-      scrollPosition: scrollPosition ?? this.scrollPosition,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -396,9 +407,6 @@ class NovelInfosCompanion extends UpdateCompanion<NovelInfo> {
     if (registrationDate.present) {
       map['registration_date'] = Variable<DateTime>(registrationDate.value);
     }
-    if (scrollPosition.present) {
-      map['scroll_position'] = Variable<int>(scrollPosition.value);
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -411,7 +419,6 @@ class NovelInfosCompanion extends UpdateCompanion<NovelInfo> {
           ..write('currentChapter: $currentChapter, ')
           ..write('ncode: $ncode, ')
           ..write('registrationDate: $registrationDate, ')
-          ..write('scrollPosition: $scrollPosition, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1582,6 +1589,7 @@ typedef $$NarouNovelContentsTableCreateCompanionBuilder
   Value<DateTime?> cacheUpdatedAt,
   required int chapter,
   required String ncode,
+  required double scrollPosition,
   required String title,
   Value<int> rowid,
 });
@@ -1592,6 +1600,7 @@ typedef $$NarouNovelContentsTableUpdateCompanionBuilder
   Value<DateTime?> cacheUpdatedAt,
   Value<int> chapter,
   Value<String> ncode,
+  Value<double> scrollPosition,
   Value<String> title,
   Value<int> rowid,
 });
@@ -1623,6 +1632,10 @@ class $$NarouNovelContentsTableFilterComposer
   ColumnFilters<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<double> get scrollPosition => $composableBuilder(
+      column: $table.scrollPosition,
+      builder: (column) => ColumnFilters(column));
+
   ColumnFilters<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnFilters(column));
 }
@@ -1652,6 +1665,10 @@ class $$NarouNovelContentsTableOrderingComposer
   ColumnOrderings<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<double> get scrollPosition => $composableBuilder(
+      column: $table.scrollPosition,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnOrderings(column));
 }
@@ -1680,6 +1697,9 @@ class $$NarouNovelContentsTableAnnotationComposer
 
   GeneratedColumn<String> get ncode =>
       $composableBuilder(column: $table.ncode, builder: (column) => column);
+
+  GeneratedColumn<double> get scrollPosition => $composableBuilder(
+      column: $table.scrollPosition, builder: (column) => column);
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
@@ -1718,6 +1738,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             Value<DateTime?> cacheUpdatedAt = const Value.absent(),
             Value<int> chapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
+            Value<double> scrollPosition = const Value.absent(),
             Value<String> title = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -1727,6 +1748,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             cacheUpdatedAt: cacheUpdatedAt,
             chapter: chapter,
             ncode: ncode,
+            scrollPosition: scrollPosition,
             title: title,
             rowid: rowid,
           ),
@@ -1736,6 +1758,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             Value<DateTime?> cacheUpdatedAt = const Value.absent(),
             required int chapter,
             required String ncode,
+            required double scrollPosition,
             required String title,
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -1745,6 +1768,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             cacheUpdatedAt: cacheUpdatedAt,
             chapter: chapter,
             ncode: ncode,
+            scrollPosition: scrollPosition,
             title: title,
             rowid: rowid,
           ),
@@ -1774,14 +1798,12 @@ typedef $$NovelInfosTableCreateCompanionBuilder = NovelInfosCompanion Function({
   required int currentChapter,
   required String ncode,
   required DateTime registrationDate,
-  required int scrollPosition,
   Value<int> rowid,
 });
 typedef $$NovelInfosTableUpdateCompanionBuilder = NovelInfosCompanion Function({
   Value<int> currentChapter,
   Value<String> ncode,
   Value<DateTime> registrationDate,
-  Value<int> scrollPosition,
   Value<int> rowid,
 });
 
@@ -1804,10 +1826,6 @@ class $$NovelInfosTableFilterComposer
   ColumnFilters<DateTime> get registrationDate => $composableBuilder(
       column: $table.registrationDate,
       builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition,
-      builder: (column) => ColumnFilters(column));
 }
 
 class $$NovelInfosTableOrderingComposer
@@ -1829,10 +1847,6 @@ class $$NovelInfosTableOrderingComposer
   ColumnOrderings<DateTime> get registrationDate => $composableBuilder(
       column: $table.registrationDate,
       builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition,
-      builder: (column) => ColumnOrderings(column));
 }
 
 class $$NovelInfosTableAnnotationComposer
@@ -1852,9 +1866,6 @@ class $$NovelInfosTableAnnotationComposer
 
   GeneratedColumn<DateTime> get registrationDate => $composableBuilder(
       column: $table.registrationDate, builder: (column) => column);
-
-  GeneratedColumn<int> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition, builder: (column) => column);
 }
 
 class $$NovelInfosTableTableManager extends RootTableManager<
@@ -1883,28 +1894,24 @@ class $$NovelInfosTableTableManager extends RootTableManager<
             Value<int> currentChapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
             Value<DateTime> registrationDate = const Value.absent(),
-            Value<int> scrollPosition = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               NovelInfosCompanion(
             currentChapter: currentChapter,
             ncode: ncode,
             registrationDate: registrationDate,
-            scrollPosition: scrollPosition,
             rowid: rowid,
           ),
           createCompanionCallback: ({
             required int currentChapter,
             required String ncode,
             required DateTime registrationDate,
-            required int scrollPosition,
             Value<int> rowid = const Value.absent(),
           }) =>
               NovelInfosCompanion.insert(
             currentChapter: currentChapter,
             ncode: ncode,
             registrationDate: registrationDate,
-            scrollPosition: scrollPosition,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
