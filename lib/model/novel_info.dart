@@ -16,9 +16,7 @@ class NovelInfo with _$NovelInfo implements Insertable<NovelInfo> {
     NarouNovelInfo? novelInfo,
     required DateTime registrationDate,
     @Default([])List<NarouNovelContent> contents,
-    //TODO: scrollPositionは各contentごとに用意したい
     //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-    @Default(0) int scrollPosition,
     @Default(0) int currentChapter,
   }) = _NovelInfo;
 
@@ -32,8 +30,7 @@ class NovelInfo with _$NovelInfo implements Insertable<NovelInfo> {
     return NovelInfosCompanion(
             currentChapter: Value(currentChapter),
             ncode: Value(ncode),
-            registrationDate: Value(registrationDate),
-            scrollPosition: Value(scrollPosition))
+            registrationDate: Value(registrationDate))
         .toColumns(nullToAbsent);
   }
 }

@@ -13,6 +13,7 @@ _$NarouNovelContentImpl _$$NarouNovelContentImplFromJson(
       ncode: json['ncode'] as String,
       body: json['body'] as String?,
       chapter: (json['chapter'] as num).toInt(),
+      scrollPosition: (json['scroll_position'] as num?)?.toDouble() ?? 0.0,
       cacheStatus: json['cache_status'] == null
           ? CacheStatus.noCache
           : intToCacheStatus((json['cache_status'] as num).toInt()),
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$NarouNovelContentImplToJson(
       'ncode': instance.ncode,
       'body': instance.body,
       'chapter': instance.chapter,
+      'scroll_position': instance.scrollPosition,
       'cache_status': cacheStatusToInt(instance.cacheStatus),
       'cache_updated_at': instance.cacheUpdatedAt?.toIso8601String(),
     };

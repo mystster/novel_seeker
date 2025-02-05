@@ -18,6 +18,7 @@ class NarouNovelContent
       required String ncode,
       required String? body,
       required int chapter,
+      @Default(0.0) double scrollPosition,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       @Default(CacheStatus.noCache) CacheStatus cacheStatus,
       @Default(null) DateTime? cacheUpdatedAt}) = _NarouNovelContent;
@@ -32,6 +33,7 @@ class NarouNovelContent
       body: Value(body),
       chapter: Value(chapter),
       ncode: Value(ncode),
+      scrollPosition: Value(scrollPosition),
       cacheStatus: Value(cacheStatus),
       cacheUpdatedAt: Value(cacheUpdatedAt),
     ).toColumns(nullToAbsent);

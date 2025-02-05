@@ -34,7 +34,6 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
       novelInfo: row.readTableOrNull(db.narouNovelInfos),
       registrationDate: row.readTable(db.novelInfos).registrationDate,
       contents: [],
-      scrollPosition: row.readTable(db.novelInfos).scrollPosition,
       currentChapter: row.readTable(db.novelInfos).currentChapter,
     );
   }).get();
@@ -131,7 +130,6 @@ class NarouNovel extends _$NarouNovel {
       ncode: novel.ncode,
       registrationDate: DateTime.now(),
       novelInfo: novel,
-      scrollPosition: 0,
       currentChapter: 1,
     );
     await db.into(db.novelInfos).insert(info);
@@ -146,7 +144,6 @@ class NarouNovel extends _$NarouNovel {
     db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
           ncode: ncode,
           registrationDate: DateTime.now(),
-          scrollPosition: 0,
           currentChapter: 0,
         ));
     db.into(db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(

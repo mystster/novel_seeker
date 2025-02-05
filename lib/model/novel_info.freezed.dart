@@ -24,9 +24,7 @@ mixin _$NovelInfo {
   NarouNovelInfo? get novelInfo => throw _privateConstructorUsedError;
   DateTime get registrationDate => throw _privateConstructorUsedError;
   List<NarouNovelContent> get contents =>
-      throw _privateConstructorUsedError; //TODO: scrollPositionは各contentごとに用意したい
-//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-  int get scrollPosition => throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   int get currentChapter => throw _privateConstructorUsedError;
 
   /// Serializes this NovelInfo to a JSON map.
@@ -49,7 +47,6 @@ abstract class $NovelInfoCopyWith<$Res> {
       NarouNovelInfo? novelInfo,
       DateTime registrationDate,
       List<NarouNovelContent> contents,
-      int scrollPosition,
       int currentChapter});
 
   $NarouNovelInfoCopyWith<$Res>? get novelInfo;
@@ -74,7 +71,6 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
     Object? novelInfo = freezed,
     Object? registrationDate = null,
     Object? contents = null,
-    Object? scrollPosition = null,
     Object? currentChapter = null,
   }) {
     return _then(_value.copyWith(
@@ -94,10 +90,6 @@ class _$NovelInfoCopyWithImpl<$Res, $Val extends NovelInfo>
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
               as List<NarouNovelContent>,
-      scrollPosition: null == scrollPosition
-          ? _value.scrollPosition
-          : scrollPosition // ignore: cast_nullable_to_non_nullable
-              as int,
       currentChapter: null == currentChapter
           ? _value.currentChapter
           : currentChapter // ignore: cast_nullable_to_non_nullable
@@ -133,7 +125,6 @@ abstract class _$$NovelInfoImplCopyWith<$Res>
       NarouNovelInfo? novelInfo,
       DateTime registrationDate,
       List<NarouNovelContent> contents,
-      int scrollPosition,
       int currentChapter});
 
   @override
@@ -157,7 +148,6 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
     Object? novelInfo = freezed,
     Object? registrationDate = null,
     Object? contents = null,
-    Object? scrollPosition = null,
     Object? currentChapter = null,
   }) {
     return _then(_$NovelInfoImpl(
@@ -177,10 +167,6 @@ class __$$NovelInfoImplCopyWithImpl<$Res>
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
               as List<NarouNovelContent>,
-      scrollPosition: null == scrollPosition
-          ? _value.scrollPosition
-          : scrollPosition // ignore: cast_nullable_to_non_nullable
-              as int,
       currentChapter: null == currentChapter
           ? _value.currentChapter
           : currentChapter // ignore: cast_nullable_to_non_nullable
@@ -197,7 +183,6 @@ class _$NovelInfoImpl extends _NovelInfo {
       this.novelInfo,
       required this.registrationDate,
       this.contents = const [],
-      this.scrollPosition = 0,
       this.currentChapter = 0})
       : super._();
 
@@ -213,18 +198,14 @@ class _$NovelInfoImpl extends _NovelInfo {
   @override
   @JsonKey()
   final List<NarouNovelContent> contents;
-//TODO: scrollPositionは各contentごとに用意したい
 //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-  @override
-  @JsonKey()
-  final int scrollPosition;
   @override
   @JsonKey()
   final int currentChapter;
 
   @override
   String toString() {
-    return 'NovelInfo(ncode: $ncode, novelInfo: $novelInfo, registrationDate: $registrationDate, contents: $contents, scrollPosition: $scrollPosition, currentChapter: $currentChapter)';
+    return 'NovelInfo(ncode: $ncode, novelInfo: $novelInfo, registrationDate: $registrationDate, contents: $contents, currentChapter: $currentChapter)';
   }
 
   @override
@@ -238,8 +219,6 @@ class _$NovelInfoImpl extends _NovelInfo {
             (identical(other.registrationDate, registrationDate) ||
                 other.registrationDate == registrationDate) &&
             const DeepCollectionEquality().equals(other.contents, contents) &&
-            (identical(other.scrollPosition, scrollPosition) ||
-                other.scrollPosition == scrollPosition) &&
             (identical(other.currentChapter, currentChapter) ||
                 other.currentChapter == currentChapter));
   }
@@ -252,7 +231,6 @@ class _$NovelInfoImpl extends _NovelInfo {
       novelInfo,
       registrationDate,
       const DeepCollectionEquality().hash(contents),
-      scrollPosition,
       currentChapter);
 
   /// Create a copy of NovelInfo
@@ -277,7 +255,6 @@ abstract class _NovelInfo extends NovelInfo {
       final NarouNovelInfo? novelInfo,
       required final DateTime registrationDate,
       final List<NarouNovelContent> contents,
-      final int scrollPosition,
       final int currentChapter}) = _$NovelInfoImpl;
   const _NovelInfo._() : super._();
 
@@ -291,10 +268,8 @@ abstract class _NovelInfo extends NovelInfo {
   @override
   DateTime get registrationDate;
   @override
-  List<NarouNovelContent> get contents; //TODO: scrollPositionは各contentごとに用意したい
-//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-  @override
-  int get scrollPosition;
+  List<NarouNovelContent>
+      get contents; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   int get currentChapter;
 
