@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
 
@@ -22,10 +23,53 @@ class NovelContents extends HookConsumerWidget {
           return const Center(child: Text('No data'));
         }
         final currentChapter = useState(novelInfo.currentChapter);
+        final scrollController = useScrollController();
         final pageController = usePageController(
             initialPage: novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value));
-        final scrollController = useScrollController();
+        useEffect(() {
+          double lastPage = novelInfo.contents
+              .indexWhere((e) => e.chapter == currentChapter.value)
+              .toDouble();
+          bool pageChanging = false;
+          void onPageChaged() {
+            if (pageController.page == null) {
+              logger.d('pageController.page is null');
+              return;
+            }
+            double nowPage = pageController.page!;
+            if (pageChanging == false && lastPage != nowPage) {
+              logger.d('page change start!');
+              if (scrollController.hasClients) {
+                logger.d(
+                    'chapter: ${currentChapter.value}, scroll pos: ${scrollController.position.pixels}');
+                ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                    ncode,
+                    currentChapter.value,
+                    scrollController.position.pixels);
+              }
+              pageChanging = true;
+            }
+            if (pageChanging == true && lastPage == nowPage) {
+              // ページ切り替えをキャンセルした
+              logger.d('page change cancelled');
+              pageChanging = false;
+            }
+            if (nowPage == nowPage.roundToDouble() && lastPage != nowPage) {
+              logger.d(
+                  'page change finish! last page: $lastPage, new page: $nowPage');
+              if (scrollController.hasClients) {
+                scrollController.jumpTo(novelInfo.contents.firstWhere((e) => e.chapter == currentChapter.value).scrollPosition);
+              }
+              lastPage = nowPage;
+              pageChanging = false;
+            }
+          }
+          pageController.addListener(onPageChaged);
+          return () {
+            pageController.removeListener(onPageChaged);
+          };
+        }, [pageController]);
         return Scaffold(
           appBar: AppBar(
             title: Text(novelInfo.contents
@@ -75,6 +119,7 @@ class NovelContents extends HookConsumerWidget {
             itemCount: novelInfo.contents.length,
             controller: pageController,
             onPageChanged: (value) async {
+              logger.d('onPageChaged is fire!');
               currentChapter.value = novelInfo.contents[value].chapter;
               await ref
                   .read(narouNovelProvider.notifier)
