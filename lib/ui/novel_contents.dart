@@ -83,8 +83,8 @@ class NovelContents extends HookConsumerWidget {
             itemBuilder: (context, index) =>
                 novelInfo.contents[index].body != null
                     ? Scrollbar(
-                        controller: scrollController,
                         child: SingleChildScrollView(
+                          controller: scrollController,
                           padding: const EdgeInsets.all(8),
                           child: Text(novelInfo.contents[index].body ?? ''),
                         ),
