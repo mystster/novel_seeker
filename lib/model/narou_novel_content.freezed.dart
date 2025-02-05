@@ -23,7 +23,8 @@ mixin _$NarouNovelContent {
   String get title => throw _privateConstructorUsedError;
   String get ncode => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
-  int get chapter => throw _privateConstructorUsedError;
+  int get chapter =>
+      throw _privateConstructorUsedError; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   double get scrollPosition => throw _privateConstructorUsedError;
   @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
   CacheStatus get cacheStatus => throw _privateConstructorUsedError;
@@ -210,6 +211,7 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   final String? body;
   @override
   final int chapter;
+//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   @JsonKey()
   final double scrollPosition;
@@ -286,7 +288,7 @@ abstract class _NarouNovelContent extends NarouNovelContent {
   @override
   String? get body;
   @override
-  int get chapter;
+  int get chapter; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   double get scrollPosition;
   @override
