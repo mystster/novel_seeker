@@ -17,24 +17,24 @@ import '../repository/app_database.dart';
 
 part 'narou_novel_provider.g.dart';
 
-final db = AppDatabase();
-var logger = Logger();
+final _db = AppDatabase();
+final _logger = Logger();
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
 ///そのため、contents以外を取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
 @riverpod
 Future<List<NovelInfo>> _novelInfos(Ref ref) async {
-  final result = db.select(db.novelInfos).join([
-    leftOuterJoin(db.narouNovelInfos,
-        db.narouNovelInfos.ncode.equalsExp(db.novelInfos.ncode))
+  final result = _db.select(_db.novelInfos).join([
+    leftOuterJoin(_db.narouNovelInfos,
+        _db.narouNovelInfos.ncode.equalsExp(_db.novelInfos.ncode))
   ]).map((row) {
     return NovelInfo(
-      ncode: row.readTable(db.novelInfos).ncode,
-      novelInfo: row.readTableOrNull(db.narouNovelInfos),
-      registrationDate: row.readTable(db.novelInfos).registrationDate,
+      ncode: row.readTable(_db.novelInfos).ncode,
+      novelInfo: row.readTableOrNull(_db.narouNovelInfos),
+      registrationDate: row.readTable(_db.novelInfos).registrationDate,
       contents: [],
-      currentChapter: row.readTable(db.novelInfos).currentChapter,
+      currentChapter: row.readTable(_db.novelInfos).currentChapter,
     );
   }).get();
   return result;
@@ -44,16 +44,16 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 class NarouNovel extends _$NarouNovel {
   Future<void> addNarouToC(NovelInfo info) async {
     if (info.novelInfo == null) {
-      logger.d('NovelInfo has no novelInfo');
+      _logger.d('NovelInfo has no novelInfo');
       return;
     }
     final novelInfo = info.novelInfo!;
     if (novelInfo.novelType == NovelType.shortStory) {
-      logger.d('${novelInfo.title} is short story, no contents');
+      _logger.d('${novelInfo.title} is short story, no contents');
       return;
     }
     if (novelInfo.generalAllNo == 0) {
-      logger.d('${novelInfo.title} has no contents');
+      _logger.d('${novelInfo.title} has no contents');
       return;
     }
     final List<NarouNovelContent> contents = [];
@@ -101,8 +101,8 @@ class NarouNovel extends _$NarouNovel {
         contents.add(content);
       });
     }
-    await db.batch((b) {
-      b.insertAllOnConflictUpdate(db.narouNovelContents, contents);
+    await _db.batch((b) {
+      b.insertAllOnConflictUpdate(_db.narouNovelContents, contents);
     });
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
@@ -115,14 +115,14 @@ class NarouNovel extends _$NarouNovel {
     final json = jsonDecode(response.body) as List<dynamic>;
     final novel = NarouNovelInfoCollection.fromJson(json).data?.firstOrNull;
     if (novel == null) {
-      logger.d('Novel with ncode: $ncode not found');
+      _logger.d('Novel with ncode: $ncode not found');
       return;
     }
-    final count = await (db.select(db.narouNovelInfos)
+    final count = await (_db.select(_db.narouNovelInfos)
           ..where((r) => r.ncode.equals(novel.ncode)))
         .get();
     if (count.isNotEmpty) {
-      logger.d('Novel with ncode: ${novel.ncode} already exists');
+      _logger.d('Novel with ncode: ${novel.ncode} already exists');
       return;
     }
     final NovelInfo info = NovelInfo(
@@ -131,21 +131,21 @@ class NarouNovel extends _$NarouNovel {
       novelInfo: novel,
       currentChapter: 1,
     );
-    await db.into(db.novelInfos).insert(info);
-    await db.into(db.narouNovelInfos).insert(novel);
+    await _db.into(_db.novelInfos).insert(info);
+    await _db.into(_db.narouNovelInfos).insert(novel);
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
     await addNarouToC(info);
   }
 
   void addNovelPoc(String ncode) {
-    logger.d('Adding novel with ncode: $ncode');
-    db.into(db.novelInfos).insert(NovelInfosCompanion.insert(
+    _logger.d('Adding novel with ncode: $ncode');
+    _db.into(_db.novelInfos).insert(NovelInfosCompanion.insert(
           ncode: ncode,
           registrationDate: DateTime.now(),
           currentChapter: 0,
         ));
-    db.into(db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(
+    _db.into(_db.narouNovelInfos).insert(NarouNovelInfosCompanion.insert(
           ncode: ncode,
           allHyokaCnt: 0,
           allPoint: math.Random().nextInt(100) + 1,
@@ -193,7 +193,7 @@ class NarouNovel extends _$NarouNovel {
   Future<List<NovelInfo>> build() async {
     final infos = await ref.watch(_novelInfosProvider.future);
     for (final element in infos) {
-      final c = await (db.select(db.narouNovelContents)
+      final c = await (_db.select(_db.narouNovelContents)
             ..where((row) => row.ncode.equals(element.ncode)))
           .get();
       if (c.isNotEmpty) {
@@ -205,29 +205,29 @@ class NarouNovel extends _$NarouNovel {
   }
 
   Future<void> deleteAllNovel() async {
-    var r = await db.delete(db.novelInfos).go();
-    logger.d('Removed ${r.toString()} novelInfos');
-    r = await db.delete(db.narouNovelInfos).go();
-    logger.d('Removed $r narouNovelInfos');
+    var r = await _db.delete(_db.novelInfos).go();
+    _logger.d('Removed ${r.toString()} novelInfos');
+    r = await _db.delete(_db.narouNovelInfos).go();
+    _logger.d('Removed $r narouNovelInfos');
     ref.invalidate(_novelInfosProvider);
     ref.invalidateSelf();
   }
 
   Future<void> downloadContent(String ncode, int chapter) async {
     if (state.value == null) {
-      logger.d('state.value is null');
+      _logger.d('state.value is null');
       return;
     }
     final ncodeIndex =
         state.value!.indexWhere((element) => element.ncode == ncode);
     if (ncodeIndex == -1) {
-      logger.d('ncode not found');
+      _logger.d('ncode not found');
       return;
     }
     final chapterIndex = state.value![ncodeIndex].contents
         .indexWhere((element) => element.chapter == chapter);
     if (chapterIndex == -1) {
-      logger.d('chapter not found');
+      _logger.d('chapter not found');
       return;
     }
     final response = await http.get(
@@ -239,7 +239,7 @@ class NarouNovel extends _$NarouNovel {
     final htmlDom = html_parser.parse(response.body);
     final body = htmlDom.querySelector('.p-novel__text')?.text;
     if (body == null) {
-      logger.d('body is null');
+      _logger.d('body is null');
       return;
     }
     final newContent = state.value![ncodeIndex].contents[chapterIndex].copyWith(
@@ -249,18 +249,18 @@ class NarouNovel extends _$NarouNovel {
     final prevState = await future;
     prevState[ncodeIndex].contents[chapterIndex] = newContent;
     state = AsyncData(prevState);
-    await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
+    await _db.into(_db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
 
   Future<void> updateCurrentChapter(String ncode, int chapter) async {
     if (state.value == null) {
-      logger.d('state.value is null');
+      _logger.d('state.value is null');
       return;
     }
     final ncodeIndex =
         state.value!.indexWhere((element) => element.ncode == ncode);
     if (ncodeIndex == -1) {
-      logger.d('ncode not found');
+      _logger.d('ncode not found');
       return;
     }
     final newNarouInfo =
@@ -268,25 +268,25 @@ class NarouNovel extends _$NarouNovel {
     final prevState = await future;
     prevState[ncodeIndex] = newNarouInfo;
     state = AsyncData(prevState);
-    await db.into(db.novelInfos).insertOnConflictUpdate(newNarouInfo);
+    await _db.into(_db.novelInfos).insertOnConflictUpdate(newNarouInfo);
   }
 
   Future<void> updateScrollPosition(
       String ncode, int chapter, double scrollPosition) async {
     if (state.value == null) {
-      logger.d('state.value is null');
+      _logger.d('state.value is null');
       return;
     }
     final ncodeIndex =
         state.value!.indexWhere((element) => element.ncode == ncode);
     if (ncodeIndex == -1) {
-      logger.d('ncode not found');
+      _logger.d('ncode not found');
       return;
     }
     final chapterIndex = state.value![ncodeIndex].contents
         .indexWhere((element) => element.chapter == chapter);
     if (chapterIndex == -1) {
-      logger.d('chapter not found');
+      _logger.d('chapter not found');
       return;
     }
     final newContent = state.value![ncodeIndex].contents[chapterIndex]
@@ -294,6 +294,6 @@ class NarouNovel extends _$NarouNovel {
     final prevState = await future;
     prevState[ncodeIndex].contents[chapterIndex] = newContent;
     state = AsyncData(prevState);
-    await db.into(db.narouNovelContents).insertOnConflictUpdate(newContent);
+    await _db.into(_db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
 }
