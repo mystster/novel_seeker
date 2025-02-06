@@ -17,7 +17,6 @@ import '../repository/app_database.dart';
 
 part 'narou_novel_provider.g.dart';
 
-final _db = AppDatabase();
 final _logger = Logger();
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
@@ -25,16 +24,18 @@ final _logger = Logger();
 ///そのため、contents以外を取得するためのProviderを作成し、そのProviderを参照することでcontentsを取得する。
 @riverpod
 Future<List<NovelInfo>> _novelInfos(Ref ref) async {
-  final result = _db.select(_db.novelInfos).join([
-    leftOuterJoin(_db.narouNovelInfos,
-        _db.narouNovelInfos.ncode.equalsExp(_db.novelInfos.ncode))
+  final db = ref.read(databaseProvider());
+
+  final result = db.select(db.novelInfos).join([
+    leftOuterJoin(db.narouNovelInfos,
+        db.narouNovelInfos.ncode.equalsExp(db.novelInfos.ncode))
   ]).map((row) {
     return NovelInfo(
-      ncode: row.readTable(_db.novelInfos).ncode,
-      novelInfo: row.readTableOrNull(_db.narouNovelInfos),
-      registrationDate: row.readTable(_db.novelInfos).registrationDate,
+      ncode: row.readTable(db.novelInfos).ncode,
+      novelInfo: row.readTableOrNull(db.narouNovelInfos),
+      registrationDate: row.readTable(db.novelInfos).registrationDate,
       contents: [],
-      currentChapter: row.readTable(_db.novelInfos).currentChapter,
+      currentChapter: row.readTable(db.novelInfos).currentChapter,
     );
   }).get();
   return result;
@@ -42,6 +43,8 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 
 @riverpod
 class NarouNovel extends _$NarouNovel {
+  late final AppDatabase _db;
+
   Future<void> addNarouToC(NovelInfo info) async {
     if (info.novelInfo == null) {
       _logger.d('NovelInfo has no novelInfo');
@@ -191,6 +194,8 @@ class NarouNovel extends _$NarouNovel {
 
   @override
   Future<List<NovelInfo>> build() async {
+    _db = ref.read(databaseProvider());
+
     final infos = await ref.watch(_novelInfosProvider.future);
     for (final element in infos) {
       final c = await (_db.select(_db.narouNovelContents)

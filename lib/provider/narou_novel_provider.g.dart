@@ -6,7 +6,7 @@ part of 'narou_novel_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$novelInfosHash() => r'ce22e6794e87620c7b8329ce4862cd4a9381f639';
+String _$novelInfosHash() => r'189b14fc908e226619437a53090d9b3d69a0f409';
 
 ///contentsに内容を入れたいが、そのためにはcontentsを取得する必要がある。
 ///map内ではawaitが使えないので直接contentsをmapの中で取得できない。
@@ -26,7 +26,7 @@ final _novelInfosProvider = AutoDisposeFutureProvider<List<NovelInfo>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _NovelInfosRef = AutoDisposeFutureProviderRef<List<NovelInfo>>;
-String _$narouNovelHash() => r'556b4678ac7e0deecbe9790fa9e7d5159d502baf';
+String _$narouNovelHash() => r'f1131fb2034b21866d30400c183cfb9b2b128390';
 
 /// See also [NarouNovel].
 @ProviderFor(NarouNovel)
