@@ -25,7 +25,23 @@ class NovelContents extends HookConsumerWidget {
           return const Center(child: Text('No data'));
         }
         final currentChapter = useState(novelInfo.currentChapter);
-        final scrollController = useScrollController();
+        final scrollControllers = List.generate(
+            novelInfo.contents.length, (i) => useScrollController());
+        useEffect(() {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            // 画面が初回表示されたときのスクロール位置を適切な値にする。
+            // initialScrollOffsetを使用すると、PageViewを切り替えて戻したときに
+            // サイドinitialScrollOffset野市になってしまうため不採用。
+            for (var i = 0; i < novelInfo.contents.length; i++) {
+              if (scrollControllers[i].hasClients) {
+                _logger.d('scrollController[$i] is fire');
+                scrollControllers[i]
+                    .jumpTo(novelInfo.contents[i].scrollPosition);
+              }
+            }
+          });
+          return null;
+        }, const []);
         final pageController = usePageController(
             initialPage: novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value));
@@ -33,40 +49,60 @@ class NovelContents extends HookConsumerWidget {
           double lastPage = novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value)
               .toDouble();
-          bool pageChanging = false;
+          bool isPageChanging = false;
+          bool isDestinationScrollPositionRestore = true;
           void onPageChaged() {
             if (pageController.page == null) {
               _logger.d('pageController.page is null');
               return;
             }
             double nowPage = pageController.page!;
-            if (pageChanging == false && lastPage != nowPage) {
+            if (isPageChanging == false && lastPage != nowPage) {
+              //PageView変更開始
               _logger.d('page change start!');
-              if (scrollController.hasClients) {
+              if (scrollControllers[lastPage.toInt()].hasClients) {
                 _logger.d(
-                    'chapter: ${currentChapter.value}, scroll pos: ${scrollController.position.pixels}');
+                    'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[lastPage.toInt()].position.pixels}');
                 ref.read(narouNovelProvider.notifier).updateScrollPosition(
                     ncode,
                     currentChapter.value,
-                    scrollController.position.pixels);
+                    scrollControllers[lastPage.toInt()].position.pixels);
+              } else {
+                _logger.d('no attached scrollController');
               }
-              pageChanging = true;
+              isPageChanging = true;
+              isDestinationScrollPositionRestore = false;
             }
-            if (pageChanging == true && lastPage == nowPage) {
+            if (isPageChanging == true && lastPage == nowPage) {
               // ページ切り替えをキャンセルした
               _logger.d('page change cancelled');
-              pageChanging = false;
+              isPageChanging = false;
+              isDestinationScrollPositionRestore = true;
+            }
+            if (isDestinationScrollPositionRestore == false) {
+              // 切り替え先のPageViewにあるscrollControllerのscrollPositionをセットしていない
+              final destinationIndex = nowPage > lastPage
+                  ? lastPage.toInt() + 1
+                  : lastPage.toInt() - 1;
+              if (destinationIndex < 1 ||
+                  destinationIndex > novelInfo.contents.length - 1) {
+                _logger.w('destinationIndex of PageView is out of range');
+              } else {
+                if (scrollControllers[destinationIndex].hasClients) {
+                  // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
+                  _logger.d('scrollPosition restore');
+                  scrollControllers[destinationIndex].jumpTo(
+                      novelInfo.contents[destinationIndex].scrollPosition);
+                  isDestinationScrollPositionRestore = true;
+                }
+              }
             }
             if (nowPage == nowPage.roundToDouble() && lastPage != nowPage) {
               _logger.d(
                   'page change finish! last page: $lastPage, new page: $nowPage');
-              if (scrollController.hasClients) {
-                scrollController.jumpTo(novelInfo.contents
-                    .firstWhere((e) => e.chapter == currentChapter.value)
-                    .scrollPosition);
-              }
               lastPage = nowPage;
-              pageChanging = false;
+              isPageChanging = false;
+              isDestinationScrollPositionRestore = true;
             }
           }
 
@@ -125,16 +161,29 @@ class NovelContents extends HookConsumerWidget {
             controller: pageController,
             onPageChanged: (value) async {
               _logger.d('onPageChaged is fire!');
+              final oldIndex = novelInfo.contents
+                  .indexWhere((e) => e.chapter == currentChapter.value);
+              if (scrollControllers[oldIndex].hasClients) {
+                ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                    ncode,
+                    currentChapter.value,
+                    scrollControllers[oldIndex].position.pixels);
+              }
+
               currentChapter.value = novelInfo.contents[value].chapter;
               await ref
                   .read(narouNovelProvider.notifier)
                   .updateCurrentChapter(ncode, currentChapter.value);
+              if (scrollControllers[value].hasClients) {
+                scrollControllers[value]
+                    .jumpTo(novelInfo.contents[value].scrollPosition);
+              }
             },
             itemBuilder: (context, index) =>
                 novelInfo.contents[index].body != null
                     ? Scrollbar(
                         child: SingleChildScrollView(
-                          controller: scrollController,
+                          controller: scrollControllers[index],
                           padding: const EdgeInsets.all(8),
                           child: Text(novelInfo.contents[index].body ?? ''),
                         ),
