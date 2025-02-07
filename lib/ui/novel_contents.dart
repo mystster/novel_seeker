@@ -1,11 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
 import '../provider/narou_novel_provider.dart';
 
+final _debouncer = Debouncer();
 final _logger = Logger();
 
 class NovelContents extends HookConsumerWidget {
@@ -42,9 +44,34 @@ class NovelContents extends HookConsumerWidget {
           });
           return null;
         }, const []);
+
+        for (var i = 0; i < novelInfo.contents.length; i++) {
+          useEffect(() {
+            void onScroll() {
+              if (scrollControllers[i].hasClients) {
+                // スクロールが止まって5秒後にDBにスクロール位置を保存する。
+                _debouncer.debounce(
+                    duration: const Duration(seconds: 5),
+                    onDebounce: () {
+                      _logger.d(
+                          'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
+                      ref
+                          .read(narouNovelProvider.notifier)
+                          .updateScrollPosition(ncode, currentChapter.value,
+                              scrollControllers[i].position.pixels);
+                    });
+              }
+            }
+
+            scrollControllers[i].addListener(onScroll);
+            return () => scrollControllers[i].removeListener(onScroll);
+          }, scrollControllers);
+        }
+
         final pageController = usePageController(
             initialPage: novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value));
+        // ページを切り替えたときに、スクロール位置の保存と復元を行う
         useEffect(() {
           double lastPage = novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value)
