@@ -84,7 +84,7 @@ class NovelContents extends HookConsumerWidget {
               final destinationIndex = nowPage > lastPage
                   ? lastPage.toInt() + 1
                   : lastPage.toInt() - 1;
-              if (destinationIndex < 1 ||
+              if (destinationIndex < 0 ||
                   destinationIndex > novelInfo.contents.length - 1) {
                 _logger.w('destinationIndex of PageView is out of range');
               } else {
