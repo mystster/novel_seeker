@@ -138,94 +138,110 @@ class NovelContents extends HookConsumerWidget {
             pageController.removeListener(onPageChaged);
           };
         }, [pageController]);
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(novelInfo.contents
-                    .firstWhereOrNull((e) => e.chapter == currentChapter.value)
-                    ?.title ??
-                novelInfo.novelInfo?.title ??
-                ''),
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                Flexible(
-                  child: Builder(builder: (context) {
-                    return IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () => Scaffold.of(context).openDrawer(),
-                    );
-                  }),
-                ),
-              ],
-            ),
-          ),
-          drawer: Drawer(
-            child: SafeArea(
-              child: ListView.builder(
-                  itemCount: novelInfo.contents.length,
-                  // padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        '${novelInfo.contents[index].chapter}. ${novelInfo.contents[index].title}',
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onTap: () => currentChapter.value =
-                          novelInfo.contents[index].chapter,
-                    );
-                  }),
-            ),
-          ),
-          body: PageView.builder(
-            itemCount: novelInfo.contents.length,
-            controller: pageController,
-            onPageChanged: (value) async {
-              _logger.d('onPageChaged is fire!');
-              final oldIndex = novelInfo.contents
-                  .indexWhere((e) => e.chapter == currentChapter.value);
-              if (scrollControllers[oldIndex].hasClients) {
-                ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                    ncode,
-                    currentChapter.value,
-                    scrollControllers[oldIndex].position.pixels);
-              }
 
-              currentChapter.value = novelInfo.contents[value].chapter;
-              await ref
-                  .read(narouNovelProvider.notifier)
-                  .updateCurrentChapter(ncode, currentChapter.value);
-              if (scrollControllers[value].hasClients) {
-                scrollControllers[value]
-                    .jumpTo(novelInfo.contents[value].scrollPosition);
-              }
-            },
-            itemBuilder: (context, index) =>
-                novelInfo.contents[index].body != null
-                    ? Scrollbar(
-                        child: SingleChildScrollView(
-                          controller: scrollControllers[index],
-                          padding: const EdgeInsets.all(8),
-                          child: Text(novelInfo.contents[index].body ?? ''),
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didpop, _) async {
+            _debouncer.cancel();
+            final scrollControllerIndex = novelInfo.contents
+                .indexWhere((e) => e.chapter == currentChapter.value);
+            _logger.d(
+                'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}');
+            await ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                ncode,
+                currentChapter.value,
+                scrollControllers[scrollControllerIndex].position.pixels);
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(novelInfo.contents
+                      .firstWhereOrNull(
+                          (e) => e.chapter == currentChapter.value)
+                      ?.title ??
+                  novelInfo.novelInfo?.title ??
+                  ''),
+              leading: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  Flexible(
+                    child: Builder(builder: (context) {
+                      return IconButton(
+                        icon: const Icon(Icons.menu),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            drawer: Drawer(
+              child: SafeArea(
+                child: ListView.builder(
+                    itemCount: novelInfo.contents.length,
+                    // padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          '${novelInfo.contents[index].chapter}. ${novelInfo.contents[index].title}',
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      )
-                    : MaterialButton(
-                        onPressed: () async {
-                          if (currentChapter.value == 0) {
-                            return;
-                          }
-                          await ref
-                              .read(narouNovelProvider.notifier)
-                              .downloadContent(ncode, currentChapter.value);
-                        },
-                        child: const Text('Load'),
-                      ),
+                        onTap: () => currentChapter.value =
+                            novelInfo.contents[index].chapter,
+                      );
+                    }),
+              ),
+            ),
+            body: PageView.builder(
+              itemCount: novelInfo.contents.length,
+              controller: pageController,
+              onPageChanged: (value) async {
+                _logger.d('onPageChaged is fire!');
+                final oldIndex = novelInfo.contents
+                    .indexWhere((e) => e.chapter == currentChapter.value);
+                if (scrollControllers[oldIndex].hasClients) {
+                  ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                      ncode,
+                      currentChapter.value,
+                      scrollControllers[oldIndex].position.pixels);
+                }
+
+                currentChapter.value = novelInfo.contents[value].chapter;
+                await ref
+                    .read(narouNovelProvider.notifier)
+                    .updateCurrentChapter(ncode, currentChapter.value);
+                if (scrollControllers[value].hasClients) {
+                  scrollControllers[value]
+                      .jumpTo(novelInfo.contents[value].scrollPosition);
+                }
+              },
+              itemBuilder: (context, index) =>
+                  novelInfo.contents[index].body != null
+                      ? Scrollbar(
+                          child: SingleChildScrollView(
+                            controller: scrollControllers[index],
+                            padding: const EdgeInsets.all(8),
+                            child: Text(novelInfo.contents[index].body ?? ''),
+                          ),
+                        )
+                      : MaterialButton(
+                          onPressed: () async {
+                            if (currentChapter.value == 0) {
+                              return;
+                            }
+                            await ref
+                                .read(narouNovelProvider.notifier)
+                                .downloadContent(ncode, currentChapter.value);
+                          },
+                          child: const Text('Load'),
+                        ),
+            ),
           ),
         );
       },
