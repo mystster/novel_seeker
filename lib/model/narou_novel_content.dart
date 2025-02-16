@@ -18,8 +18,10 @@ class NarouNovelContent
       required String ncode,
       required String? body,
       required int chapter,
+      //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
       @Default(0.0) double scrollPosition,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
+      //TODO: キャッシュを更新したときに、すでに読了中もしくは済みの場合は、内容が変わったことがわかるようにしたい
       @Default(CacheStatus.noCache) CacheStatus cacheStatus,
       @Default(null) DateTime? cacheUpdatedAt}) = _NarouNovelContent;
   factory NarouNovelContent.fromJson(Map<String, dynamic> json) =>

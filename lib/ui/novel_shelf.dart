@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
+
+final _logger = Logger();
 
 class NovelShelf extends HookConsumerWidget {
   const NovelShelf({super.key});
@@ -161,7 +163,10 @@ class NovelShelf extends HookConsumerWidget {
                       textWithIcon(Icons.book,
                           novelInfo.novelInfo?.generalAllNo.toString() ?? ''),
                       const SizedBox(width: 8),
-                      Flexible(fit: FlexFit.loose,child: textWithIcon(Icons.key, novelInfo.novelInfo?.genre.toString() ?? '')),
+                      Flexible(
+                          fit: FlexFit.loose,
+                          child: textWithIcon(Icons.key,
+                              novelInfo.novelInfo?.genre.toString() ?? '')),
                     ],
                   ),
                   const SizedBox(height: 2),
@@ -178,7 +183,7 @@ class NovelShelf extends HookConsumerWidget {
             ),
             PopupMenuButton<String>(
               onSelected: (String result) {
-                logger.d('$result selected');
+                _logger.d('$result selected');
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 PopupMenuItem<String>(
