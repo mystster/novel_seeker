@@ -33,7 +33,7 @@ class NovelContents extends HookConsumerWidget {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             // 画面が初回表示されたときのスクロール位置を適切な値にする。
             // initialScrollOffsetを使用すると、PageViewを切り替えて戻したときに
-            // サイドinitialScrollOffset野市になってしまうため不採用。
+            // 再度initialScrollOffsetの位置に戻ってしまうことがあるため不採用。
             for (var i = 0; i < novelInfo.contents.length; i++) {
               if (scrollControllers[i].hasClients) {
                 _logger.d('scrollController[$i] is fire');
@@ -142,6 +142,7 @@ class NovelContents extends HookConsumerWidget {
         return PopScope(
           canPop: true,
           onPopInvokedWithResult: (didpop, _) async {
+            // この画面から抜けるときにスクロール位置を保存する。
             _debouncer.cancel();
             final scrollControllerIndex = novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value);
