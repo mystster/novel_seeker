@@ -6,6 +6,7 @@ import 'package:novel_seeker/model/novel_info.dart';
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
 import 'novel_info_card.dart';
+import 'novel_search.dart';
 import 'util_ui.dart';
 
 final _logger = Logger();
@@ -42,6 +43,13 @@ class NovelShelf extends HookConsumerWidget {
                   fontSize: 24,
                 ),
               ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('検索'),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => const NovelSearch(),
+              )),
             ),
             ListTile(
               leading: const Icon(Icons.add),
