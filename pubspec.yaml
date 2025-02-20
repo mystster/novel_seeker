@@ -47,6 +47,8 @@ dependencies:
   html: ^0.15.5
   collection: ^1.18.0
   flutter_debouncer: ^2.0.0
+  flutter_form_builder: ^9.7.0
+  form_builder_validators: ^11.1.1
 
 dev_dependencies:
   flutter_test:
