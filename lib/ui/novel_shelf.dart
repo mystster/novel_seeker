@@ -5,6 +5,8 @@ import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
+import 'novel_info_card.dart';
+import 'util_ui.dart';
 
 final _logger = Logger();
 
@@ -137,94 +139,24 @@ class NovelShelf extends HookConsumerWidget {
 
   Widget novelInfo(BuildContext context, NovelInfo novelInfo) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NovelContents(ncode: novelInfo.ncode),
-        ));
-      },
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              fit: FlexFit.loose,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(novelInfo.novelInfo?.title ?? '',
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      textWithIcon(
-                          Icons.person, novelInfo.novelInfo?.writer ?? ''),
-                      const SizedBox(width: 8),
-                      textWithIcon(Icons.book,
-                          novelInfo.novelInfo?.generalAllNo.toString() ?? ''),
-                      const SizedBox(width: 8),
-                      Flexible(
-                          fit: FlexFit.loose,
-                          child: textWithIcon(Icons.key,
-                              novelInfo.novelInfo?.genre.toString() ?? '')),
-                    ],
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    children: [
-                      tag(context, novelInfo.novelInfo?.isStop, '停止中'),
-                      tag(context, novelInfo.novelInfo?.isR15, 'R15'),
-                      tag(context, novelInfo.novelInfo?.isTensei, '転生'),
-                      tag(context, novelInfo.novelInfo?.isBl, 'BL'),
-                    ],
-                  ),
-                ],
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NovelContents(ncode: novelInfo.ncode),
+          ));
+        },
+        child: NovelInfoCard(
+          info: novelInfo.novelInfo!,
+          popupMenuButton: PopupMenuButton<String>(
+            onSelected: (String result) {
+              _logger.d('$result selected');
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: 'delete',
+                child: textWithIcon(Icons.delete, 'Delete'),
               ),
-            ),
-            PopupMenuButton<String>(
-              onSelected: (String result) {
-                _logger.d('$result selected');
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
-                  value: 'delete',
-                  child: textWithIcon(Icons.delete, 'Delete'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget tag(BuildContext context, bool? enable, String text) {
-    if (enable != null && enable) {
-      return Container(
-        margin: const EdgeInsets.only(left: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.primary),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          text,
-          selectionColor: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
-
-  Widget textWithIcon(IconData icon, String text, {double mergin = 4.0}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon),
-        SizedBox(width: mergin),
-        Flexible(child: Text(text, overflow: TextOverflow.ellipsis)),
-      ],
-    );
+            ],
+          ),
+        ));
   }
 }
