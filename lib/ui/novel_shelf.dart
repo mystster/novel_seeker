@@ -137,7 +137,7 @@ class NovelShelf extends HookConsumerWidget {
             ),
           AsyncLoading() => const CircularProgressIndicator(),
           AsyncError(:final error, :final stackTrace) =>
-            Text('Error: $error, ST: $stackTrace'),
+            SingleChildScrollView(child: Text('Error: $error, ST: $stackTrace')),
           // TODO: Handle this case.
           AsyncValue<List<NovelInfo>>() => throw UnimplementedError(),
         },
