@@ -53,12 +53,14 @@ class NovelContents extends HookConsumerWidget {
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
-                      _logger.d(
-                          'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
-                      ref
-                          .read(narouNovelProvider.notifier)
-                          .updateScrollPosition(ncode, currentChapter.value,
-                              scrollControllers[i].position.pixels);
+                      if (scrollControllers[i].hasClients) {
+                        _logger.d(
+                            'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
+                        ref
+                            .read(narouNovelProvider.notifier)
+                            .updateScrollPosition(ncode, currentChapter.value,
+                                scrollControllers[i].position.pixels);
+                      }
                     });
               }
             }
