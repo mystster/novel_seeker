@@ -2633,7 +2633,7 @@ class $AppDatabaseManager {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$databaseHash() => r'bfdd5a7cf599f3fc177857a2bf0ddbb572701482';
+String _$databaseHash() => r'9929b14c06bce1cdd6bd0692131607576a334394';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -2699,7 +2699,7 @@ class DatabaseFamily extends Family<AppDatabase> {
 }
 
 /// See also [database].
-class DatabaseProvider extends AutoDisposeProvider<AppDatabase> {
+class DatabaseProvider extends Provider<AppDatabase> {
   /// See also [database].
   DatabaseProvider({
     bool isTesting = false,
@@ -2750,7 +2750,7 @@ class DatabaseProvider extends AutoDisposeProvider<AppDatabase> {
   }
 
   @override
-  AutoDisposeProviderElement<AppDatabase> createElement() {
+  ProviderElement<AppDatabase> createElement() {
     return _DatabaseProviderElement(this);
   }
 
@@ -2770,12 +2770,12 @@ class DatabaseProvider extends AutoDisposeProvider<AppDatabase> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin DatabaseRef on AutoDisposeProviderRef<AppDatabase> {
+mixin DatabaseRef on ProviderRef<AppDatabase> {
   /// The parameter `isTesting` of this provider.
   bool get isTesting;
 }
 
-class _DatabaseProviderElement extends AutoDisposeProviderElement<AppDatabase>
+class _DatabaseProviderElement extends ProviderElement<AppDatabase>
     with DatabaseRef {
   _DatabaseProviderElement(super.provider);
 

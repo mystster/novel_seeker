@@ -12,22 +12,43 @@ import '../util/converter.dart';
 
 part 'app_database.g.dart';
 
-@riverpod
-AppDatabase database(Ref ref, {bool isTesting = false}) => isTesting
-    ? AppDatabase.forTesting(DatabaseConnection(NativeDatabase.memory(),
-        closeStreamsSynchronously: true))
-    : AppDatabase();
+@Riverpod(keepAlive: true)
+AppDatabase database(Ref ref, {bool isTesting = false}) {
+  ref.onDispose(AppDatabase.dispose);
+  return AppDatabase(isTesting: isTesting);
+}
 
 @DriftDatabase(tables: [NarouNovelContents, NovelInfos, NarouNovelInfos])
 class AppDatabase extends _$AppDatabase {
+  static final AppDatabase _instance = AppDatabase._();
+  static AppDatabase? _testInstance;
+
+  factory AppDatabase({bool isTesting = false}) {
+    if (isTesting) {
+      _testInstance ??= AppDatabase._forTesting(DatabaseConnection(
+          NativeDatabase.memory(),
+          closeStreamsSynchronously: true));
+      return _testInstance!;
+    } else {
+      return _instance;
+    }
+  }
   // After generating code, this class needs to define a schemaVersion getter
   // and a constructor telling drift where the database should be stored.
   // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
-  AppDatabase() : super(_openConnection());
-  AppDatabase.forTesting(super.e);
+  AppDatabase._() : super(_openConnection());
+
+  AppDatabase._forTesting(super.e);
 
   @override
   int get schemaVersion => 1;
+
+  static void dispose() async {
+    await _instance.close();
+    if (_testInstance != null) {
+      await _testInstance!.close();
+    }
+  }
 
   static QueryExecutor _openConnection() {
     // driftDatabase from package:drift_flutter stores the database in
