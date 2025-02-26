@@ -44,6 +44,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 @riverpod
 class NarouNovel extends _$NarouNovel {
   late final AppDatabase _db;
+  bool _appDBInitialized = false;
 
   Future<void> addNarouToC(NovelInfo info) async {
     if (info.novelInfo == null) {
@@ -194,7 +195,10 @@ class NarouNovel extends _$NarouNovel {
 
   @override
   Future<List<NovelInfo>> build() async {
-    _db = ref.read(databaseProvider());
+    if (!_appDBInitialized) {
+      _db = ref.read(databaseProvider());
+      _appDBInitialized = true;
+    }
 
     final infos = await ref.watch(_novelInfosProvider.future);
     for (final element in infos) {
