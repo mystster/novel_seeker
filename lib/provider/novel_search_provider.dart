@@ -21,6 +21,7 @@ final novelSearchProvider = FutureProvider.autoDispose
     _logger.d('access url is ${accessUrl.toString()}');
     final response = await http.get(accessUrl);
     final json = jsonDecode(response.body) as List<dynamic>;
+    //TODO:これだと現在登録済みかどうかがわからない。
     return NarouNovelInfoCollection.fromJson(json).data ?? [];
   },
 );

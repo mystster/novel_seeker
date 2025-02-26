@@ -75,6 +75,7 @@ class NovelContents extends HookConsumerWidget {
                 .indexWhere((e) => e.chapter == currentChapter.value));
         // ページを切り替えたときに、スクロール位置の保存と復元を行う
         useEffect(() {
+          //TODO: lastPageが-1になることがある。たぶん初期の時とかでコンテンツがない？
           double lastPage = novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value)
               .toDouble();
