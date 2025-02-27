@@ -267,6 +267,7 @@ class NarouNovel extends _$NarouNovel {
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
         });
     final htmlDom = html_parser.parse(response.body);
+    //TODO: 小説が消えたときの処理を入れたい。.attentionと.nothingあたりを見るとわかりそう。
     final body = htmlDom.querySelector('.p-novel__text')?.text;
     if (body == null) {
       _logger.d('body is null');
