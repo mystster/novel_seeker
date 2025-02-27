@@ -261,7 +261,7 @@ class NarouNovel extends _$NarouNovel {
     }
     //TODO: dioとdio_throttleを使ってrate limitをしたい。
     final response = await http.get(
-        Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/$chapter'),
+        Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/${isShortStory ? '' : chapter}'),
         headers: {
           'User-Agent':
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
