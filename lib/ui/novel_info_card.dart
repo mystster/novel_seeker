@@ -26,16 +26,21 @@ class NovelInfoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(info.title,
-                    style: Theme.of(context).textTheme.headlineSmall),
+                    style: Theme.of(context).textTheme.titleMedium),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    textWithIcon(Icons.person, info.writer),
+                    Flexible(
+                        fit: FlexFit.tight,
+                        flex: 1,
+                        child: textWithIcon(Icons.person, info.writer)
+                    ),
                     const SizedBox(width: 8),
                     textWithIcon(Icons.book, info.generalAllNo.toString()),
                     const SizedBox(width: 8),
                     Flexible(
-                        fit: FlexFit.loose,
+                        fit: FlexFit.tight,
+                        flex: 1,
                         child: textWithIcon(Icons.key, info.genre.toString())),
                   ],
                 ),
