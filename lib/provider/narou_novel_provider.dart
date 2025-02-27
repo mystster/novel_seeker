@@ -53,7 +53,24 @@ class NarouNovel extends _$NarouNovel {
     }
     final novelInfo = info.novelInfo!;
     if (novelInfo.novelType == NovelType.shortStory) {
-      _logger.d('${novelInfo.title} is short story, no contents');
+      _logger.d('${novelInfo.title} is short story');
+      final oldContent = info.contents.firstOrNull;
+      final content = NarouNovelContent(
+          body: oldContent?.body,
+          chapter: 1,
+          ncode: info.ncode,
+          title: oldContent?.title ?? info.novelInfo?.title ?? '',
+          cacheUpdatedAt: oldContent?.cacheUpdatedAt,
+          cacheStatus: oldContent == null ||
+                  oldContent.cacheStatus == CacheStatus.noCache
+              ? CacheStatus.noCache
+              : (oldContent.cacheUpdatedAt!
+                      .isBefore(info.novelInfo!.novelupdatedAt)
+                  ? CacheStatus.stale
+                  : oldContent.cacheStatus));
+      _db.into(_db.narouNovelContents).insertOnConflictUpdate(content);
+      ref.invalidate(_novelInfosProvider);
+      ref.invalidateSelf();
       return;
     }
     if (novelInfo.generalAllNo == 0) {
@@ -222,7 +239,10 @@ class NarouNovel extends _$NarouNovel {
     ref.invalidateSelf();
   }
 
-  Future<void> downloadContent(String ncode, int chapter) async {
+  Future<void> downloadContent(
+      {required String ncode,
+      required int chapter,
+      bool isShortStory = false}) async {
     if (state.value == null) {
       _logger.d('state.value is null');
       return;

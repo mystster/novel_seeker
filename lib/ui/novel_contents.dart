@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
+import '../model/narou_enum.dart';
 import '../provider/narou_novel_provider.dart';
 
 final _debouncer = Debouncer();
@@ -75,7 +76,6 @@ class NovelContents extends HookConsumerWidget {
                 .indexWhere((e) => e.chapter == currentChapter.value));
         // ページを切り替えたときに、スクロール位置の保存と復元を行う
         useEffect(() {
-          //TODO: lastPageが-1になることがある。たぶん初期の時とかでコンテンツがない？
           double lastPage = novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value)
               .toDouble();
@@ -241,7 +241,7 @@ class NovelContents extends HookConsumerWidget {
                             }
                             await ref
                                 .read(narouNovelProvider.notifier)
-                                .downloadContent(ncode, currentChapter.value);
+                                .downloadContent(ncode: ncode, chapter: currentChapter.value, isShortStory: novelInfo.novelInfo?.novelType == NovelType.shortStory ?? false);
                           },
                           child: const Text('Load'),
                         ),

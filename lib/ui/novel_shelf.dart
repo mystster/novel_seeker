@@ -132,12 +132,13 @@ class NovelShelf extends HookConsumerWidget {
           AsyncData(:final value) => ListView.builder(
               itemCount: value.length,
               itemBuilder: (context, index) {
-                return novelInfo(context, value[index]);
+                return novelInfo(
+                    context: context, ref: ref, novelInfo: value[index]);
               },
             ),
           AsyncLoading() => const CircularProgressIndicator(),
-          AsyncError(:final error, :final stackTrace) =>
-            SingleChildScrollView(child: Text('Error: $error, ST: $stackTrace')),
+          AsyncError(:final error, :final stackTrace) => SingleChildScrollView(
+              child: Text('Error: $error, ST: $stackTrace')),
           // TODO: Handle this case.
           AsyncValue<List<NovelInfo>>() => throw UnimplementedError(),
         },
@@ -145,7 +146,10 @@ class NovelShelf extends HookConsumerWidget {
     );
   }
 
-  Widget novelInfo(BuildContext context, NovelInfo novelInfo) {
+  Widget novelInfo(
+      {required BuildContext context,
+      required WidgetRef ref,
+      required NovelInfo novelInfo}) {
     return InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -157,8 +161,22 @@ class NovelShelf extends HookConsumerWidget {
           popupMenuButton: PopupMenuButton<String>(
             onSelected: (String result) {
               _logger.d('$result selected');
+              switch (result) {
+                case 'update':
+                  ref
+                      .read(narouNovelProvider.notifier)
+                      .addNarouToC(novelInfo);
+                  break;
+                case 'delete':
+                  break;
+                default:
+              }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: 'update',
+                child: textWithIcon(Icons.update, 'Update'),
+              ),
               PopupMenuItem<String>(
                 value: 'delete',
                 child: textWithIcon(Icons.delete, 'Delete'),
