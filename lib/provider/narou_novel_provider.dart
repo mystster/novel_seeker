@@ -259,6 +259,7 @@ class NarouNovel extends _$NarouNovel {
       _logger.d('chapter not found');
       return;
     }
+    //TODO: dioとdio_throttleを使ってrate limitをしたい。
     final response = await http.get(
         Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/$chapter'),
         headers: {
