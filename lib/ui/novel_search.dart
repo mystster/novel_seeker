@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 
 import '../model/narou_novel_info.dart';
 import '../provider/novel_search_provider.dart';
+import 'novel_info_card.dart';
 
 final _logger = Logger();
 
@@ -83,7 +84,7 @@ class NovelSearch extends HookConsumerWidget {
                       actions: [
                         ElevatedButton(
                             child: const Text('検索'),
-                            onPressed: ()  {
+                            onPressed: () {
                               if (formKey.currentState?.saveAndValidate() ??
                                   false) {
                                 searchParam.value = formKey.currentState?.value;
@@ -127,7 +128,14 @@ class NovelSearch extends HookConsumerWidget {
                   ),
                   Visibility(
                     visible: value.isNotEmpty,
-                    child: Text(value.length.toString()),
+                    child: Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) => NovelInfoCard(
+                          info: value[index],
+                        ),
+                        itemCount: value.length,
+                      ),
+                    ),
                   )
                 ],
               ),
