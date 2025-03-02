@@ -241,7 +241,13 @@ class NovelContents extends HookConsumerWidget {
                             }
                             await ref
                                 .read(narouNovelProvider.notifier)
-                                .downloadContent(ncode: ncode, chapter: currentChapter.value, isShortStory: novelInfo.novelInfo?.novelType == NovelType.shortStory ?? false);
+                                .downloadContent(
+                                    ncode: ncode,
+                                    chapter: currentChapter.value,
+                                    isShortStory:
+                                        novelInfo.novelInfo?.novelType ==
+                                                NovelType.shortStory ??
+                                            false);
                           },
                           child: const Text('Load'),
                         ),

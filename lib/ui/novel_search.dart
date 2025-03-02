@@ -32,54 +32,58 @@ class NovelSearch extends HookConsumerWidget {
                       title: const Text('検索条件'),
                       content: FormBuilder(
                         key: formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            FormBuilderTextField(
-                              name: NovelSearchParam.word.name,
-                              decoration: InputDecoration(
-                                  labelText: NovelSearchParam.word.displayName),
-                              validator: FormBuilderValidators.required(
-                                  errorText: '検索条件を入れてください',
-                                  checkNullOrEmpty: true),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              // onChanged: (value) => (formKey.currentState?.validate()),
-                            ),
-                            FormBuilderTextField(
-                              name: NovelSearchParam.notword.name,
-                              decoration: InputDecoration(
-                                  labelText:
-                                      NovelSearchParam.notword.displayName),
-                            ),
-                            FormBuilderCheckboxGroup(
-                              name: NovelSearchParam.searchRange.name,
-                              decoration: InputDecoration(
-                                  labelText:
-                                      NovelSearchParam.searchRange.displayName),
-                              options: [
-                                FormBuilderFieldOption(
-                                  value: NovelSearchParam.title.name,
-                                  child:
-                                      Text(NovelSearchParam.title.displayName),
-                                ),
-                                FormBuilderFieldOption(
-                                  value: NovelSearchParam.ex.name,
-                                  child: Text(NovelSearchParam.ex.displayName),
-                                ),
-                                FormBuilderFieldOption(
-                                  value: NovelSearchParam.keyword.name,
-                                  child: Text(
-                                      NovelSearchParam.keyword.displayName),
-                                ),
-                                FormBuilderFieldOption(
-                                  value: NovelSearchParam.wname.name,
-                                  child:
-                                      Text(NovelSearchParam.wname.displayName),
-                                ),
-                              ],
-                            )
-                          ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              FormBuilderTextField(
+                                name: NovelSearchParam.word.name,
+                                decoration: InputDecoration(
+                                    labelText:
+                                        NovelSearchParam.word.displayName),
+                                validator: FormBuilderValidators.required(
+                                    errorText: '検索条件を入れてください',
+                                    checkNullOrEmpty: true),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                // onChanged: (value) => (formKey.currentState?.validate()),
+                              ),
+                              FormBuilderTextField(
+                                name: NovelSearchParam.notword.name,
+                                decoration: InputDecoration(
+                                    labelText:
+                                        NovelSearchParam.notword.displayName),
+                              ),
+                              FormBuilderCheckboxGroup(
+                                name: NovelSearchParam.searchRange.name,
+                                decoration: InputDecoration(
+                                    labelText: NovelSearchParam
+                                        .searchRange.displayName),
+                                options: [
+                                  FormBuilderFieldOption(
+                                    value: NovelSearchParam.title.name,
+                                    child: Text(
+                                        NovelSearchParam.title.displayName),
+                                  ),
+                                  FormBuilderFieldOption(
+                                    value: NovelSearchParam.ex.name,
+                                    child:
+                                        Text(NovelSearchParam.ex.displayName),
+                                  ),
+                                  FormBuilderFieldOption(
+                                    value: NovelSearchParam.keyword.name,
+                                    child: Text(
+                                        NovelSearchParam.keyword.displayName),
+                                  ),
+                                  FormBuilderFieldOption(
+                                    value: NovelSearchParam.wname.name,
+                                    child: Text(
+                                        NovelSearchParam.wname.displayName),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       actions: [
