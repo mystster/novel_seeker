@@ -283,6 +283,14 @@ class NarouNovel extends _$NarouNovel {
     await _db.into(_db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
 
+  // ncodeがstateに登録されているか確認する関数
+  bool isRegistered(String ncode) {
+    if (state.value == null) {
+      return false;
+    }
+    return state.value!.any((element) => element.ncode == ncode);
+  }
+
   Future<void> updateCurrentChapter(String ncode, int chapter) async {
     if (state.value == null) {
       _logger.d('state.value is null');

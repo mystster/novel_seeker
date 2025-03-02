@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
 import '../model/narou_novel_info.dart';
+import '../provider/narou_novel_provider.dart';
 import '../provider/novel_search_provider.dart';
 import 'novel_info_card.dart';
 
@@ -118,27 +119,38 @@ class NovelSearch extends HookConsumerWidget {
         ),
         body: Center(
           child: switch (searchResult) {
-            AsyncData(:final value) => Column(
-                children: [
-                  Visibility(
-                    visible: value.isEmpty,
-                    child: const Center(
-                      child: Text('No search result'),
-                    ),
-                  ),
-                  Visibility(
-                    visible: value.isNotEmpty,
-                    child: Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) => NovelInfoCard(
-                          info: value[index],
-                        ),
-                        itemCount: value.length,
-                      ),
-                    ),
+            AsyncData(:final value) => value.isEmpty
+                ? const Center(
+                    child: Text('No search result'),
                   )
-                ],
-              ),
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      final isRegistered = ref
+                          .read(narouNovelProvider.notifier)
+                          .isRegistered(value[index].ncode);
+                      return ListTile(
+                        horizontalTitleGap: 0,
+                        contentPadding: const EdgeInsets.all(0),
+                        minVerticalPadding: 0,
+                        leading: IconButton(
+                          icon: const Icon(Icons.bookmark_add),
+                          color: isRegistered ? Colors.grey : null,
+                          onPressed: isRegistered
+                              ? null
+                              : () async {
+                                  await ref
+                                      .read(narouNovelProvider.notifier)
+                                      .addNovel(value[index].ncode);
+                                },
+                        ),
+                        title: NovelInfoCard(
+                          info: value[index],
+                          padding: 1.0,
+                        ),
+                      );
+                    },
+                    itemCount: value.length,
+                  ),
             AsyncLoading() => const CircularProgressIndicator(),
             AsyncError(:final error, :final stackTrace) =>
               Text('Error: $error, ST: $stackTrace'),
