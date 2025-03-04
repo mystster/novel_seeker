@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
+import '../model/narou_enum.dart';
 import '../provider/narou_novel_provider.dart';
 
 final _debouncer = Debouncer();
@@ -53,12 +54,14 @@ class NovelContents extends HookConsumerWidget {
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
-                      _logger.d(
-                          'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
-                      ref
-                          .read(narouNovelProvider.notifier)
-                          .updateScrollPosition(ncode, currentChapter.value,
-                              scrollControllers[i].position.pixels);
+                      if (scrollControllers[i].hasClients) {
+                        _logger.d(
+                            'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
+                        ref
+                            .read(narouNovelProvider.notifier)
+                            .updateScrollPosition(ncode, currentChapter.value,
+                                scrollControllers[i].position.pixels);
+                      }
                     });
               }
             }
@@ -238,7 +241,13 @@ class NovelContents extends HookConsumerWidget {
                             }
                             await ref
                                 .read(narouNovelProvider.notifier)
-                                .downloadContent(ncode, currentChapter.value);
+                                .downloadContent(
+                                    ncode: ncode,
+                                    chapter: currentChapter.value,
+                                    isShortStory:
+                                        novelInfo.novelInfo?.novelType ==
+                                                NovelType.shortStory ??
+                                            false);
                           },
                           child: const Text('Load'),
                         ),

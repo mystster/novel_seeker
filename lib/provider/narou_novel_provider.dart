@@ -44,6 +44,7 @@ Future<List<NovelInfo>> _novelInfos(Ref ref) async {
 @riverpod
 class NarouNovel extends _$NarouNovel {
   late final AppDatabase _db;
+  bool _appDBInitialized = false;
 
   Future<void> addNarouToC(NovelInfo info) async {
     if (info.novelInfo == null) {
@@ -52,7 +53,24 @@ class NarouNovel extends _$NarouNovel {
     }
     final novelInfo = info.novelInfo!;
     if (novelInfo.novelType == NovelType.shortStory) {
-      _logger.d('${novelInfo.title} is short story, no contents');
+      _logger.d('${novelInfo.title} is short story');
+      final oldContent = info.contents.firstOrNull;
+      final content = NarouNovelContent(
+          body: oldContent?.body,
+          chapter: 1,
+          ncode: info.ncode,
+          title: oldContent?.title ?? info.novelInfo?.title ?? '',
+          cacheUpdatedAt: oldContent?.cacheUpdatedAt,
+          cacheStatus: oldContent == null ||
+                  oldContent.cacheStatus == CacheStatus.noCache
+              ? CacheStatus.noCache
+              : (oldContent.cacheUpdatedAt!
+                      .isBefore(info.novelInfo!.novelupdatedAt)
+                  ? CacheStatus.stale
+                  : oldContent.cacheStatus));
+      _db.into(_db.narouNovelContents).insertOnConflictUpdate(content);
+      ref.invalidate(_novelInfosProvider);
+      ref.invalidateSelf();
       return;
     }
     if (novelInfo.generalAllNo == 0) {
@@ -194,7 +212,10 @@ class NarouNovel extends _$NarouNovel {
 
   @override
   Future<List<NovelInfo>> build() async {
-    _db = ref.read(databaseProvider());
+    if (!_appDBInitialized) {
+      _db = ref.read(databaseProvider());
+      _appDBInitialized = true;
+    }
 
     final infos = await ref.watch(_novelInfosProvider.future);
     for (final element in infos) {
@@ -218,7 +239,10 @@ class NarouNovel extends _$NarouNovel {
     ref.invalidateSelf();
   }
 
-  Future<void> downloadContent(String ncode, int chapter) async {
+  Future<void> downloadContent(
+      {required String ncode,
+      required int chapter,
+      bool isShortStory = false}) async {
     if (state.value == null) {
       _logger.d('state.value is null');
       return;
@@ -235,13 +259,16 @@ class NarouNovel extends _$NarouNovel {
       _logger.d('chapter not found');
       return;
     }
+    //TODO: dioとdio_throttleを使ってrate limitをしたい。
     final response = await http.get(
-        Uri.parse('https://ncode.syosetu.com/${ncode.toLowerCase()}/$chapter'),
+        Uri.parse(
+            'https://ncode.syosetu.com/${ncode.toLowerCase()}/${isShortStory ? '' : chapter}'),
         headers: {
           'User-Agent':
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
         });
     final htmlDom = html_parser.parse(response.body);
+    //TODO: 小説が消えたときの処理を入れたい。.attentionと.nothingあたりを見るとわかりそう。
     final body = htmlDom.querySelector('.p-novel__text')?.text;
     if (body == null) {
       _logger.d('body is null');
@@ -255,6 +282,14 @@ class NarouNovel extends _$NarouNovel {
     prevState[ncodeIndex].contents[chapterIndex] = newContent;
     state = AsyncData(prevState);
     await _db.into(_db.narouNovelContents).insertOnConflictUpdate(newContent);
+  }
+
+  // ncodeがstateに登録されているか確認する関数
+  bool isRegistered(String ncode) {
+    if (state.value == null) {
+      return false;
+    }
+    return state.value!.any((element) => element.ncode == ncode);
   }
 
   Future<void> updateCurrentChapter(String ncode, int chapter) async {

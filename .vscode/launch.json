@@ -4,12 +4,11 @@
     // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "novel_seeker",
             "request": "launch",
             "type": "dart",
-            // "flutterPlatform": "android-x64",
-            "deviceId": "emulator-5554",
             "flutterMode": "debug",
             "program": "lib/main.dart"
 
