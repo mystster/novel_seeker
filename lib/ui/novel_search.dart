@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:novel_seeker/ui/novel_detail_info_widget.dart';
 
 import '../model/narou_novel_info.dart';
 import '../provider/narou_novel_provider.dart';
@@ -133,25 +134,74 @@ class NovelSearch extends HookConsumerWidget {
                           .read(narouNovelProvider.notifier)
                           .isRegistered(value[index].ncode);
                       return ListTile(
-                        horizontalTitleGap: 0,
-                        contentPadding: const EdgeInsets.all(0),
-                        minVerticalPadding: 0,
-                        leading: IconButton(
-                          icon: const Icon(Icons.bookmark_add),
-                          color: isRegistered ? Colors.grey : null,
-                          onPressed: isRegistered
-                              ? null
-                              : () async {
-                                  await ref
-                                      .read(narouNovelProvider.notifier)
-                                      .addNovel(value[index].ncode);
-                                },
-                        ),
-                        title: NovelInfoCard(
-                          info: value[index],
-                          padding: 1.0,
-                        ),
-                      );
+                          horizontalTitleGap: 0,
+                          contentPadding: const EdgeInsets.all(0),
+                          minVerticalPadding: 0,
+                          leading: IconButton(
+                            icon: const Icon(Icons.bookmark_add),
+                            color: isRegistered ? Colors.grey : null,
+                            onPressed: isRegistered
+                                ? null
+                                : () async {
+                                    await ref
+                                        .read(narouNovelProvider.notifier)
+                                        .addNovel(value[index].ncode);
+                                  },
+                          ),
+                          title: InkWell(
+                              child: NovelInfoCard(
+                                info: value[index],
+                                padding: 1.0,
+                              ),
+                              onTap: () {
+                                final mediaQuery = MediaQuery.of(context);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      insetPadding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              mediaQuery.size.width * 0.025,
+                                              vertical: mediaQuery.size.height * 0.025,),
+                                      
+                                      child: LayoutBuilder(
+                                        builder: (BuildContext context,
+                                            BoxConstraints constraints) {
+                                          return SizedBox(
+                                              width: constraints.maxWidth,
+                                              height: constraints.maxHeight,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(bottom: 6, left: 10, right: 10, top: 10),
+                                                      child: NovelDetailInfoWidget(
+                                                        info: value[index],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                      ElevatedButton(child: const Text('閉じる'), onPressed: () => (Navigator.of(context).pop()),)
+                                                    ],),
+                                                  )
+                                                ],
+                                              ));
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ).then(
+                                  (value) => {
+                                    // ignore: avoid_print
+                                    print('dialog closed')
+                                  },
+                                );
+                              }));
                     },
                     itemCount: value.length,
                   ),
