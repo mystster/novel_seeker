@@ -102,7 +102,7 @@ class NarouNovel extends _$NarouNovel {
             .firstMatch(
                 dateTimeElement.querySelector('span')?.attributes['title'] ??
                     dateTimeElement.text)
-            ?.group(0);
+            ?.group(0)?.replaceAll('/', '-');
         final oldContentInfo = info.contents.firstWhereOrNull(
             (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
