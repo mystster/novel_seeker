@@ -13,7 +13,7 @@ class NovelInfoCard extends StatelessWidget {
     super.key,
     required this.info,
     this.popupMenuButton,
-    this.padding = 8.0,
+    this.padding = 4.0,
   });
 
   @override
