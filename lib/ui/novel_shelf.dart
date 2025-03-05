@@ -5,6 +5,7 @@ import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
+import 'novel_detail_info_widget.dart';
 import 'novel_info_card.dart';
 import 'novel_search.dart';
 import 'util_ui.dart';
@@ -163,9 +164,10 @@ class NovelShelf extends HookConsumerWidget {
               _logger.d('$result selected');
               switch (result) {
                 case 'update':
-                  ref
-                      .read(narouNovelProvider.notifier)
-                      .addNarouToC(novelInfo);
+                  ref.read(narouNovelProvider.notifier).addNarouToC(novelInfo);
+                  break;
+                case 'detail':
+                  showNovelDetail(context: context, info: novelInfo.novelInfo!);
                   break;
                 case 'delete':
                   break;
@@ -177,6 +179,9 @@ class NovelShelf extends HookConsumerWidget {
                 value: 'update',
                 child: textWithIcon(Icons.update, 'Update'),
               ),
+              PopupMenuItem<String>(
+                  value: 'detail',
+                  child: textWithIcon(Icons.details, 'show detail')),
               PopupMenuItem<String>(
                 value: 'delete',
                 child: textWithIcon(Icons.delete, 'Delete'),
