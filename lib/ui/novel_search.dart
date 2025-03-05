@@ -154,53 +154,16 @@ class NovelSearch extends HookConsumerWidget {
                                 padding: 1.0,
                               ),
                               onTap: () {
-                                final mediaQuery = MediaQuery.of(context);
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Dialog(
-                                      insetPadding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              mediaQuery.size.width * 0.025,
-                                              vertical: mediaQuery.size.height * 0.025,),
-                                      
-                                      child: LayoutBuilder(
-                                        builder: (BuildContext context,
-                                            BoxConstraints constraints) {
-                                          return SizedBox(
-                                              width: constraints.maxWidth,
-                                              height: constraints.maxHeight,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(bottom: 6, left: 10, right: 10, top: 10),
-                                                      child: NovelDetailInfoWidget(
-                                                        info: value[index],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                      ElevatedButton(child: const Text('閉じる'), onPressed: () => (Navigator.of(context).pop()),)
-                                                    ],),
-                                                  )
-                                                ],
-                                              ));
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ).then(
-                                  (value) => {
-                                    // ignore: avoid_print
-                                    print('dialog closed')
-                                  },
-                                );
+                                showNovelDetail(
+                                    context: context,
+                                    info: value[index],
+                                    actions: [
+                                      ElevatedButton(
+                                        child: const Text('閉じる'),
+                                        onPressed: () =>
+                                            (Navigator.of(context).pop()),
+                                      )
+                                    ]);
                               }));
                     },
                     itemCount: value.length,

@@ -3,9 +3,64 @@ import 'package:flutter/material.dart';
 import '../model/narou_novel_info.dart';
 import './util_ui.dart';
 
-class NovelDetailInfoWidget extends StatelessWidget {
+void showNovelDetail(
+    {required BuildContext context,
+    required NarouNovelInfo info,
+    List<Widget>? actions}) {
+  final mediaQuery = MediaQuery.of(context);
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: mediaQuery.size.width * 0.025,
+          vertical: mediaQuery.size.height * 0.025,
+        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SizedBox(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 6, left: 10, right: 10, top: 10),
+                        child: _NovelDetailInfoWidget(
+                          info: info,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: actions != null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: actions ?? [],
+                        ),
+                      ),
+                    )
+                  ],
+                ));
+          },
+        ),
+      );
+    },
+  ).then(
+    (value) => {
+      // ignore: avoid_print
+      print('dialog closed')
+    },
+  );
+}
+
+class _NovelDetailInfoWidget extends StatelessWidget {
   final NarouNovelInfo info;
-  const NovelDetailInfoWidget({super.key, required this.info});
+  const _NovelDetailInfoWidget({required this.info});
 
   @override
   Widget build(BuildContext context) {
