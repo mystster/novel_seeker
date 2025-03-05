@@ -21,57 +21,55 @@ class NovelInfoCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: EdgeInsets.all(padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
           children: [
-            LayoutBuilder(builder: (context, constraints) {
-              final span = TextSpan(
-                  text: info.title,
-                  style: Theme.of(context).textTheme.titleMedium);
-              final tp = TextPainter(
-                  text: span, textDirection: TextDirection.ltr, maxLines: 2);
-              tp.layout(maxWidth: constraints.maxWidth);
-              final numLines = tp.computeLineMetrics().length;
-              final height = tp.height;
-
-              return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        child: Text(
-                      info.title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      maxLines: numLines, // 行数を動的に決定
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                    if (popupMenuButton != null)
-                      ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: height),
-                          child: popupMenuButton!),
-                  ]);
-            }),
-            const SizedBox(height: 4),
-            textWithIcon(Icons.person, info.writer),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                textWithIcon(Icons.book, '${info.generalAllNo.toString()}話'),
-                Expanded(
-                  child: textWithIcon(Icons.category, info.genre.toString()),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  LayoutBuilder(builder: (context, constraints) {
+                    final span = TextSpan(
+                        text: info.title,
+                        style: Theme.of(context).textTheme.titleMedium);
+                    final tp = TextPainter(
+                        text: span, textDirection: TextDirection.ltr, maxLines: 2);
+                    tp.layout(maxWidth: constraints.maxWidth);
+                    final numLines = tp.computeLineMetrics().length;
+              
+                    return Text(
+                                        info.title,
+                                        style: Theme.of(context).textTheme.titleMedium,
+                                        maxLines: numLines, // 行数を動的に決定
+                                        overflow: TextOverflow.ellipsis,
+                                      );
+                  }),
+                  const SizedBox(height: 4),
+                  textWithIcon(Icons.person, info.writer),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      textWithIcon(Icons.book, '${info.generalAllNo.toString()}話'),
+                      Expanded(
+                        child: textWithIcon(Icons.category, info.genre.toString()),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      tag(context, info.isStop, '停止中'),
+                      tag(context, info.novelType == NovelType.shortStory, '短編'),
+                      tag(context, info.isR15, 'R15'),
+                      tag(context, info.isTensei, '転生'),
+                      tag(context, info.isBl, 'BL'),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                tag(context, info.isStop, '停止中'),
-                tag(context, info.novelType == NovelType.shortStory, '短編'),
-                tag(context, info.isR15, 'R15'),
-                tag(context, info.isTensei, '転生'),
-                tag(context, info.isBl, 'BL'),
-              ],
-            ),
+            if (popupMenuButton != null)
+                          SizedBox(width: 30, child: popupMenuButton!)
           ],
         ),
       ),
