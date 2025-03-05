@@ -149,12 +149,14 @@ class NovelContents extends HookConsumerWidget {
             _debouncer.cancel();
             final scrollControllerIndex = novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value);
-            _logger.d(
-                'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}');
-            await ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                ncode,
-                currentChapter.value,
-                scrollControllers[scrollControllerIndex].position.pixels);
+            if (scrollControllers[scrollControllerIndex].hasClients) {
+              _logger.d(
+                  'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}');
+              await ref.read(narouNovelProvider.notifier).updateScrollPosition(
+                  ncode,
+                  currentChapter.value,
+                  scrollControllers[scrollControllerIndex].position.pixels);
+            }
           },
           child: Scaffold(
             appBar: AppBar(
