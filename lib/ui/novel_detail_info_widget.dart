@@ -145,6 +145,14 @@ class _NovelDetailInfoWidget extends StatelessWidget {
         const SizedBox(height: 8),
         Text(info.story),
         const SizedBox(height: 8),
+        Text(
+          'キーワード',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
         _buildKeywordTags(context),
       ],
     );
