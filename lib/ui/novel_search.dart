@@ -126,7 +126,15 @@ class NovelSearch extends HookConsumerWidget {
     }, [isSearchDialogOpen.value]);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('検索'),
+          title: switch(searchResult) {
+            AsyncData(:final value) => value.isEmpty
+                ? const Text('検索結果：0件')
+                : Text('検索結果：${value.length}件'),
+            AsyncLoading() => const Text('検索中'),
+            AsyncError() => const Text('検索中にエラーが発生しました'),
+            // TODO: Handle this case.
+            AsyncValue<List<NarouNovelInfo>>() => throw UnimplementedError(),
+          },
           actions: [
             IconButton(
               icon: const Icon(Icons.search),
