@@ -5,13 +5,25 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:novel_seeker/ui/novel_detail_info_widget.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/narou_novel_info.dart';
 import '../provider/narou_novel_provider.dart';
 import '../provider/novel_search_provider.dart';
 import 'novel_info_card.dart';
 
+part 'novel_search.g.dart';
+
 final _logger = Logger();
+
+@riverpod
+bool _isRegistered(Ref ref, String ncode) {
+  final narouNovel = ref.watch(narouNovelProvider);
+  return narouNovel.when(
+      data: (data) => data.any((e) => e.ncode == ncode),
+      loading: () => false,
+      error: (e, s) => false);
+}
 
 class NovelSearch extends HookConsumerWidget {
   const NovelSearch({super.key});
@@ -130,9 +142,9 @@ class NovelSearch extends HookConsumerWidget {
                   )
                 : ListView.builder(
                     itemBuilder: (context, index) {
-                      final isRegistered = ref
-                          .read(narouNovelProvider.notifier)
-                          .isRegistered(value[index].ncode);
+                      final isRegistered =
+                          ref.watch(_isRegisteredProvider(value[index].ncode));
+
                       return ListTile(
                           horizontalTitleGap: 0,
                           contentPadding: const EdgeInsets.all(0),
