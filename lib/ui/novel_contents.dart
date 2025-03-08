@@ -198,8 +198,9 @@ class NovelContents extends HookConsumerWidget {
                           '${novelInfo.contents[index].chapter}. ${novelInfo.contents[index].title}',
                           overflow: TextOverflow.ellipsis,
                         ),
-                        onTap: () => currentChapter.value =
-                            novelInfo.contents[index].chapter,
+                        onTap: () {
+                          pageController.jumpToPage(index);
+                        },
                       );
                     }),
               ),
@@ -248,8 +249,7 @@ class NovelContents extends HookConsumerWidget {
                                     chapter: currentChapter.value,
                                     isShortStory:
                                         novelInfo.novelInfo?.novelType ==
-                                                NovelType.shortStory ??
-                                            false);
+                                            NovelType.shortStory);
                           },
                           child: const Text('Load'),
                         ),
