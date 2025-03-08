@@ -126,7 +126,7 @@ class NovelSearch extends HookConsumerWidget {
     }, [isSearchDialogOpen.value]);
     return Scaffold(
         appBar: AppBar(
-          title: switch(searchResult) {
+          title: switch (searchResult) {
             AsyncData(:final value) => value.isEmpty
                 ? const Text('検索結果：0件')
                 : Text('検索結果：${value.length}件'),
@@ -171,6 +171,14 @@ class NovelSearch extends HookConsumerWidget {
                           title: InkWell(
                               child: NovelInfoCard(
                                 info: value[index],
+                                additionalWidget: isRegistered
+                                    ? Icon(
+                                        Icons.bookmark,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer,
+                                      )
+                                    : null,
                                 padding: 1.0,
                               ),
                               onTap: () {
