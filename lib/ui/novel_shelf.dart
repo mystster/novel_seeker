@@ -46,12 +46,15 @@ class NovelShelf extends HookConsumerWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('検索'),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => const NovelSearch(),
-              )),
-            ),
+                leading: const Icon(Icons.search),
+                title: const Text('検索'),
+                onTap: () {
+                  // drawerを閉じる
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const NovelSearch(),
+                  ));
+                }),
             ListTile(
               leading: const Icon(Icons.add),
               title: const Text('Add Novel'),
