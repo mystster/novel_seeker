@@ -200,6 +200,7 @@ class NovelContents extends HookConsumerWidget {
                         ),
                         onTap: () {
                           pageController.jumpToPage(index);
+                          Scaffold.of(context).closeDrawer();
                         },
                       );
                     }),
