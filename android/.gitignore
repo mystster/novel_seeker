@@ -11,3 +11,7 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# https://stackoverflow.com/questions/58627619/gitignore-does-not-apply-to-the-cxx-folder
+*.cxx
+app/.cxx/*
