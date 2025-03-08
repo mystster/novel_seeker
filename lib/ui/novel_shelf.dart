@@ -162,6 +162,20 @@ class NovelShelf extends HookConsumerWidget {
         },
         child: NovelInfoCard(
           info: novelInfo.novelInfo!,
+          additionalWidget: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0), // padding追加
+              child: Text(
+                '${novelInfo.novelInfo!.generalAllNo - novelInfo.currentChapter}',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+          ),
           popupMenuButton: PopupMenuButton<String>(
             onSelected: (String result) {
               _logger.d('$result selected');
