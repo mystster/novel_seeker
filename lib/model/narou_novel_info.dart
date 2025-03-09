@@ -11,7 +11,7 @@ part 'narou_novel_info.g.dart';
 
 /// なろうAPIからのデータを格納するクラス
 @freezed
-class NarouNovelInfo
+abstract class NarouNovelInfo
     with _$NarouNovelInfo
     implements Insertable<NarouNovelInfo> {
   const factory NarouNovelInfo({
@@ -154,7 +154,7 @@ class NarouNovelInfo
   }
 }
 @freezed
-class NarouNovelInfoCollection with _$NarouNovelInfoCollection {
+abstract class NarouNovelInfoCollection with _$NarouNovelInfoCollection {
   const factory NarouNovelInfoCollection({List<NarouNovelInfo>? data}) =
       _NarouNovelInfoCollection;
 

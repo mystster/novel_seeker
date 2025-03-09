@@ -22,7 +22,7 @@ enum CacheStatus {
 
   final String displayName;
   final int id;
-  const CacheStatus (this.displayName, this.id);
+  const CacheStatus(this.displayName, this.id);
   int toId() => id;
   @override
   String toString() => displayName;
@@ -68,6 +68,19 @@ enum NovelType {
   final String displayName;
   final int id;
   const NovelType(this.displayName, this.id);
+  int toId() => id;
+  @override
+  String toString() => displayName;
+}
+
+enum ReadingStatus {
+  unread('未読', 0),
+  reading('読書中', 1),
+  completed('読了', 2);
+
+  final String displayName;
+  final int id;
+  const ReadingStatus(this.displayName, this.id);
   int toId() => id;
   @override
   String toString() => displayName;

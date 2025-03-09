@@ -13,8 +13,9 @@ bool intToBool(int value) => value == 1;
 CacheStatus intToCacheStatus(int value) => CacheStatus.values.firstWhere((e) => e.toId() == value, orElse: () => CacheStatus.noCache);
 Genre intToGenre(int value) => Genre.values.firstWhere((e) => e.toId() == value, orElse: () => Genre.unselected);
 NovelType intToNovelType(int value) => NovelType.values.firstWhere((e) => e.toId() == value, orElse: () => NovelType.unselected);
+ReadingStatus intToReadingStatus(int value) => ReadingStatus.values.firstWhere((e) => e.toId() == value, orElse: () => ReadingStatus.unread);
 int novelTypeToInt(NovelType value) => value.toId();
-
+int readingStatusToInt(ReadingStatus value) => value.toId();
 class BiggenreConverter extends TypeConverter<Biggenre, int>
     with JsonTypeConverter<Biggenre, int> {
   const BiggenreConverter();
@@ -63,6 +64,20 @@ class NovelTypeConverter extends TypeConverter<NovelType, int>
   @override
   fromSql(fromDb) {
     return NovelType.values.firstWhere((e) => e.toId() == fromDb);
+  }
+
+  @override
+  toSql(value) {
+    return value.toId();
+  }
+}
+
+class ReadingStatusConverter extends TypeConverter<ReadingStatus, int>
+    with JsonTypeConverter<ReadingStatus, int> {
+  const ReadingStatusConverter();
+  @override
+  fromSql(fromDb) {
+    return ReadingStatus.values.firstWhere((e) => e.toId() == fromDb);
   }
 
   @override

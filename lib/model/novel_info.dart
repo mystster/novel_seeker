@@ -10,7 +10,7 @@ part 'novel_info.g.dart';
 
 /// このソフト上で管理する本の情報をまとめるクラス
 @Freezed(makeCollectionsUnmodifiable: false)
-class NovelInfo with _$NovelInfo implements Insertable<NovelInfo> {
+abstract class NovelInfo with _$NovelInfo implements Insertable<NovelInfo> {
   const factory NovelInfo({
     required String ncode,
     NarouNovelInfo? novelInfo,

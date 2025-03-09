@@ -14,8 +14,6 @@ class $NarouNovelContentsTable extends NarouNovelContents
   late final GeneratedColumn<String> body = GeneratedColumn<String>(
       'body', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _cacheStatusMeta =
-      const VerificationMeta('cacheStatus');
   @override
   late final GeneratedColumnWithTypeConverter<CacheStatus, int> cacheStatus =
       GeneratedColumn<int>('cache_status', aliasedName, false,
@@ -39,6 +37,12 @@ class $NarouNovelContentsTable extends NarouNovelContents
   late final GeneratedColumn<String> ncode = GeneratedColumn<String>(
       'ncode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  late final GeneratedColumnWithTypeConverter<ReadingStatus, int>
+      readingStatus = GeneratedColumn<int>('reading_status', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<ReadingStatus>(
+              $NarouNovelContentsTable.$converterreadingStatus);
   static const VerificationMeta _scrollPositionMeta =
       const VerificationMeta('scrollPosition');
   @override
@@ -57,6 +61,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
         cacheUpdatedAt,
         chapter,
         ncode,
+        readingStatus,
         scrollPosition,
         title
       ];
@@ -74,7 +79,6 @@ class $NarouNovelContentsTable extends NarouNovelContents
       context.handle(
           _bodyMeta, body.isAcceptableOrUnknown(data['body']!, _bodyMeta));
     }
-    context.handle(_cacheStatusMeta, const VerificationResult.success());
     if (data.containsKey('cache_updated_at')) {
       context.handle(
           _cacheUpdatedAtMeta,
@@ -129,6 +133,9 @@ class $NarouNovelContentsTable extends NarouNovelContents
       cacheStatus: $NarouNovelContentsTable.$convertercacheStatus.fromSql(
           attachedDatabase.typeMapping
               .read(DriftSqlType.int, data['${effectivePrefix}cache_status'])!),
+      readingStatus: $NarouNovelContentsTable.$converterreadingStatus.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.int, data['${effectivePrefix}reading_status'])!),
       cacheUpdatedAt: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}cache_updated_at']),
     );
@@ -141,6 +148,8 @@ class $NarouNovelContentsTable extends NarouNovelContents
 
   static JsonTypeConverter2<CacheStatus, int, int> $convertercacheStatus =
       const CacheStatusConverter();
+  static JsonTypeConverter2<ReadingStatus, int, int> $converterreadingStatus =
+      const ReadingStatusConverter();
 }
 
 class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
@@ -149,6 +158,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   final Value<DateTime?> cacheUpdatedAt;
   final Value<int> chapter;
   final Value<String> ncode;
+  final Value<ReadingStatus> readingStatus;
   final Value<double> scrollPosition;
   final Value<String> title;
   final Value<int> rowid;
@@ -158,6 +168,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.cacheUpdatedAt = const Value.absent(),
     this.chapter = const Value.absent(),
     this.ncode = const Value.absent(),
+    this.readingStatus = const Value.absent(),
     this.scrollPosition = const Value.absent(),
     this.title = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -168,12 +179,14 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.cacheUpdatedAt = const Value.absent(),
     required int chapter,
     required String ncode,
+    required ReadingStatus readingStatus,
     required double scrollPosition,
     required String title,
     this.rowid = const Value.absent(),
   })  : cacheStatus = Value(cacheStatus),
         chapter = Value(chapter),
         ncode = Value(ncode),
+        readingStatus = Value(readingStatus),
         scrollPosition = Value(scrollPosition),
         title = Value(title);
   static Insertable<NarouNovelContent> custom({
@@ -182,6 +195,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     Expression<DateTime>? cacheUpdatedAt,
     Expression<int>? chapter,
     Expression<String>? ncode,
+    Expression<int>? readingStatus,
     Expression<double>? scrollPosition,
     Expression<String>? title,
     Expression<int>? rowid,
@@ -192,6 +206,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       if (cacheUpdatedAt != null) 'cache_updated_at': cacheUpdatedAt,
       if (chapter != null) 'chapter': chapter,
       if (ncode != null) 'ncode': ncode,
+      if (readingStatus != null) 'reading_status': readingStatus,
       if (scrollPosition != null) 'scroll_position': scrollPosition,
       if (title != null) 'title': title,
       if (rowid != null) 'rowid': rowid,
@@ -204,6 +219,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       Value<DateTime?>? cacheUpdatedAt,
       Value<int>? chapter,
       Value<String>? ncode,
+      Value<ReadingStatus>? readingStatus,
       Value<double>? scrollPosition,
       Value<String>? title,
       Value<int>? rowid}) {
@@ -213,6 +229,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       cacheUpdatedAt: cacheUpdatedAt ?? this.cacheUpdatedAt,
       chapter: chapter ?? this.chapter,
       ncode: ncode ?? this.ncode,
+      readingStatus: readingStatus ?? this.readingStatus,
       scrollPosition: scrollPosition ?? this.scrollPosition,
       title: title ?? this.title,
       rowid: rowid ?? this.rowid,
@@ -239,6 +256,11 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     if (ncode.present) {
       map['ncode'] = Variable<String>(ncode.value);
     }
+    if (readingStatus.present) {
+      map['reading_status'] = Variable<int>($NarouNovelContentsTable
+          .$converterreadingStatus
+          .toSql(readingStatus.value));
+    }
     if (scrollPosition.present) {
       map['scroll_position'] = Variable<double>(scrollPosition.value);
     }
@@ -259,6 +281,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
           ..write('cacheUpdatedAt: $cacheUpdatedAt, ')
           ..write('chapter: $chapter, ')
           ..write('ncode: $ncode, ')
+          ..write('readingStatus: $readingStatus, ')
           ..write('scrollPosition: $scrollPosition, ')
           ..write('title: $title, ')
           ..write('rowid: $rowid')
@@ -443,8 +466,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<int> allPoint = GeneratedColumn<int>(
       'all_point', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _biggenreMeta =
-      const VerificationMeta('biggenre');
   @override
   late final GeneratedColumnWithTypeConverter<Biggenre, int> biggenre =
       GeneratedColumn<int>('biggenre', aliasedName, false,
@@ -480,7 +501,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<DateTime> generalLastup =
       GeneratedColumn<DateTime>('general_lastup', aliasedName, false,
           type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _genreMeta = const VerificationMeta('genre');
   @override
   late final GeneratedColumnWithTypeConverter<Genre, int> genre =
       GeneratedColumn<int>('genre', aliasedName, false,
@@ -599,8 +619,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
   late final GeneratedColumn<String> ncode = GeneratedColumn<String>(
       'ncode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _novelTypeMeta =
-      const VerificationMeta('novelType');
   @override
   late final GeneratedColumnWithTypeConverter<NovelType, int> novelType =
       GeneratedColumn<int>('novel_type', aliasedName, false,
@@ -738,7 +756,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_allPointMeta);
     }
-    context.handle(_biggenreMeta, const VerificationResult.success());
     if (data.containsKey('daily_point')) {
       context.handle(
           _dailyPointMeta,
@@ -779,7 +796,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_generalLastupMeta);
     }
-    context.handle(_genreMeta, const VerificationResult.success());
     if (data.containsKey('gensaku')) {
       context.handle(_gensakuMeta,
           gensaku.isAcceptableOrUnknown(data['gensaku']!, _gensakuMeta));
@@ -882,7 +898,6 @@ class $NarouNovelInfosTable extends NarouNovelInfos
     } else if (isInserting) {
       context.missing(_ncodeMeta);
     }
-    context.handle(_novelTypeMeta, const VerificationResult.success());
     if (data.containsKey('novelupdated_at')) {
       context.handle(
           _novelupdatedAtMeta,
@@ -1589,6 +1604,7 @@ typedef $$NarouNovelContentsTableCreateCompanionBuilder
   Value<DateTime?> cacheUpdatedAt,
   required int chapter,
   required String ncode,
+  required ReadingStatus readingStatus,
   required double scrollPosition,
   required String title,
   Value<int> rowid,
@@ -1600,6 +1616,7 @@ typedef $$NarouNovelContentsTableUpdateCompanionBuilder
   Value<DateTime?> cacheUpdatedAt,
   Value<int> chapter,
   Value<String> ncode,
+  Value<ReadingStatus> readingStatus,
   Value<double> scrollPosition,
   Value<String> title,
   Value<int> rowid,
@@ -1631,6 +1648,11 @@ class $$NarouNovelContentsTableFilterComposer
 
   ColumnFilters<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<ReadingStatus, ReadingStatus, int>
+      get readingStatus => $composableBuilder(
+          column: $table.readingStatus,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnFilters<double> get scrollPosition => $composableBuilder(
       column: $table.scrollPosition,
@@ -1665,6 +1687,10 @@ class $$NarouNovelContentsTableOrderingComposer
   ColumnOrderings<String> get ncode => $composableBuilder(
       column: $table.ncode, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get readingStatus => $composableBuilder(
+      column: $table.readingStatus,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<double> get scrollPosition => $composableBuilder(
       column: $table.scrollPosition,
       builder: (column) => ColumnOrderings(column));
@@ -1697,6 +1723,10 @@ class $$NarouNovelContentsTableAnnotationComposer
 
   GeneratedColumn<String> get ncode =>
       $composableBuilder(column: $table.ncode, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<ReadingStatus, int> get readingStatus =>
+      $composableBuilder(
+          column: $table.readingStatus, builder: (column) => column);
 
   GeneratedColumn<double> get scrollPosition => $composableBuilder(
       column: $table.scrollPosition, builder: (column) => column);
@@ -1738,6 +1768,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             Value<DateTime?> cacheUpdatedAt = const Value.absent(),
             Value<int> chapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
+            Value<ReadingStatus> readingStatus = const Value.absent(),
             Value<double> scrollPosition = const Value.absent(),
             Value<String> title = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -1748,6 +1779,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             cacheUpdatedAt: cacheUpdatedAt,
             chapter: chapter,
             ncode: ncode,
+            readingStatus: readingStatus,
             scrollPosition: scrollPosition,
             title: title,
             rowid: rowid,
@@ -1758,6 +1790,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             Value<DateTime?> cacheUpdatedAt = const Value.absent(),
             required int chapter,
             required String ncode,
+            required ReadingStatus readingStatus,
             required double scrollPosition,
             required String title,
             Value<int> rowid = const Value.absent(),
@@ -1768,6 +1801,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             cacheUpdatedAt: cacheUpdatedAt,
             chapter: chapter,
             ncode: ncode,
+            readingStatus: readingStatus,
             scrollPosition: scrollPosition,
             title: title,
             rowid: rowid,

@@ -49,6 +49,15 @@ class NovelContents extends HookConsumerWidget {
         for (var i = 0; i < novelInfo.contents.length; i++) {
           useEffect(() {
             void onScroll() {
+              if (novelInfo.contents[i].readingStatus == ReadingStatus.unread &&
+                  novelInfo.contents[i].body != null) {
+                // 読書中に変更
+                ref.read(narouNovelProvider.notifier).updateReadingStatus(
+                    ncode: ncode,
+                    chapter: novelInfo.contents[i].chapter,
+                    readingStatus: ReadingStatus.reading);
+              }
+
               if (scrollControllers[i].hasClients) {
                 // スクロールが止まって5秒後にDBにスクロール位置を保存する。
                 _debouncer.debounce(
@@ -251,6 +260,13 @@ class NovelContents extends HookConsumerWidget {
                                     isShortStory:
                                         novelInfo.novelInfo?.novelType ==
                                             NovelType.shortStory);
+                            // 読書中に変更
+                            await ref
+                                .read(narouNovelProvider.notifier)
+                                .updateReadingStatus(
+                                    ncode: ncode,
+                                    chapter: currentChapter.value,
+                                    readingStatus: ReadingStatus.reading);
                           },
                           child: const Text('Load'),
                         ),
