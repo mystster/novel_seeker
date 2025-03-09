@@ -67,7 +67,8 @@ class NarouNovel extends _$NarouNovel {
               : (oldContent.cacheUpdatedAt!
                       .isBefore(info.novelInfo!.novelupdatedAt)
                   ? CacheStatus.stale
-                  : oldContent.cacheStatus));
+                  : oldContent.cacheStatus),
+          scrollPosition: oldContent?.scrollPosition ?? 0.0);
       _db.into(_db.narouNovelContents).insertOnConflictUpdate(content);
       ref.invalidate(_novelInfosProvider);
       ref.invalidateSelf();
@@ -118,6 +119,7 @@ class NarouNovel extends _$NarouNovel {
                   : oldContentInfo.cacheStatus),
           body: oldContentInfo?.body,
           cacheUpdatedAt: oldContentInfo?.cacheUpdatedAt,
+          scrollPosition: oldContentInfo?.scrollPosition ?? 0.0,
         );
         contents.add(content);
       });
