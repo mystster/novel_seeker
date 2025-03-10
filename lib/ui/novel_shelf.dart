@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:novel_seeker/model/narou_enum.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
@@ -169,7 +170,7 @@ class NovelShelf extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0), // padding追加
               child: Text(
-                '${novelInfo.novelInfo!.generalAllNo - novelInfo.currentChapter}',
+                '${novelInfo.contents.where((element) => (element.readingStatus != ReadingStatus.completed)).length}',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
