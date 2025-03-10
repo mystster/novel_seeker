@@ -82,7 +82,7 @@ class NovelInfoCard extends StatelessWidget {
               children: [
                 if (additionalWidget != null) additionalWidget!,
                 if (additionalWidget != null && popupMenuButton != null) 
-                  const SizedBox(height: 40), 
+                  const SizedBox(height: 4), 
                 if (popupMenuButton != null) 
                   popupMenuButton!
               ],

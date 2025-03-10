@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:novel_seeker/model/narou_enum.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 
 import '../provider/narou_novel_provider.dart';
@@ -46,12 +47,15 @@ class NovelShelf extends HookConsumerWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('検索'),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => const NovelSearch(),
-              )),
-            ),
+                leading: const Icon(Icons.search),
+                title: const Text('検索'),
+                onTap: () {
+                  // drawerを閉じる
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const NovelSearch(),
+                  ));
+                }),
             ListTile(
               leading: const Icon(Icons.add),
               title: const Text('Add Novel'),
@@ -159,6 +163,20 @@ class NovelShelf extends HookConsumerWidget {
         },
         child: NovelInfoCard(
           info: novelInfo.novelInfo!,
+          additionalWidget: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0), // padding追加
+              child: Text(
+                '${novelInfo.contents.where((element) => (element.readingStatus != ReadingStatus.completed)).length}',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+          ),
           popupMenuButton: PopupMenuButton<String>(
             onSelected: (String result) {
               _logger.d('$result selected');
