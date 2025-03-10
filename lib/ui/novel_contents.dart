@@ -28,10 +28,24 @@ class NovelContents extends HookConsumerWidget {
           return const Center(child: Text('No data'));
         }
         final currentChapter = useState(novelInfo.currentChapter);
+        final currentContent = useMemoized(() {
+          return novelInfo.contents
+              .firstWhereOrNull((e) => e.chapter == currentChapter.value);
+        }, [currentChapter.value]);
         final scrollControllers = List.generate(
             novelInfo.contents.length, (i) => useScrollController());
         useEffect(() {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            // 初回表示時にReadingStatusがunreadでbodyがnullでないときはReadingに変更
+            if (currentContent?.readingStatus == ReadingStatus.unread &&
+                currentContent?.body != null) {
+              // 読書中に変更
+              ref.read(narouNovelProvider.notifier).updateReadingStatus(
+                  ncode: ncode,
+                  chapter: currentChapter.value,
+                  readingStatus: ReadingStatus.reading);
+            }
+
             // 画面が初回表示されたときのスクロール位置を適切な値にする。
             // initialScrollOffsetを使用すると、PageViewを切り替えて戻したときに
             // 再度initialScrollOffsetの位置に戻ってしまうことがあるため不採用。
@@ -56,6 +70,21 @@ class NovelContents extends HookConsumerWidget {
                     ncode: ncode,
                     chapter: novelInfo.contents[i].chapter,
                     readingStatus: ReadingStatus.reading);
+              }
+
+              if (novelInfo.contents[i].readingStatus ==
+                      ReadingStatus.reading &&
+                  scrollControllers[i].hasClients) {
+                if (scrollControllers[i].position.maxScrollExtent !=
+                        0 /* スクロール可能 */ &&
+                    scrollControllers[i].position.pixels ==
+                        scrollControllers[i].position.maxScrollExtent) {
+                  // 最後までスクロールしたので読了に変更
+                  ref.read(narouNovelProvider.notifier).updateReadingStatus(
+                      ncode: ncode,
+                      chapter: novelInfo.contents[i].chapter,
+                      readingStatus: ReadingStatus.completed);
+                }
               }
 
               if (scrollControllers[i].hasClients) {
@@ -106,6 +135,19 @@ class NovelContents extends HookConsumerWidget {
                     ncode,
                     currentChapter.value,
                     scrollControllers[lastPage.toInt()].position.pixels);
+                if (scrollControllers[lastPage.toInt()]
+                            .position
+                            .maxScrollExtent ==
+                        0 &&
+                    novelInfo.contents[lastPage.toInt()].readingStatus ==
+                        ReadingStatus.reading) {
+                  // スクロールが不要な場合は、読了に変更
+                  _logger.d('現在読書中でスクロールバーがないので、読了に変更します');
+                  ref.read(narouNovelProvider.notifier).updateReadingStatus(
+                      ncode: ncode,
+                      chapter: currentChapter.value,
+                      readingStatus: ReadingStatus.completed);
+                }
               } else {
                 _logger.d('no attached scrollController');
               }
