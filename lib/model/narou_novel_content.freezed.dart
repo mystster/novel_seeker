@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,117 +10,68 @@ part of 'narou_novel_content.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-NarouNovelContent _$NarouNovelContentFromJson(Map<String, dynamic> json) {
-  return _NarouNovelContent.fromJson(json);
-}
 
 /// @nodoc
 mixin _$NarouNovelContent {
-  String get title => throw _privateConstructorUsedError;
-  String get ncode => throw _privateConstructorUsedError;
-  String? get body => throw _privateConstructorUsedError;
-  int get chapter =>
-      throw _privateConstructorUsedError; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-  double get scrollPosition => throw _privateConstructorUsedError;
+  String get title;
+  String get ncode;
+  String? get body;
+  int get chapter;
+  double get scrollPosition;
   @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
-  CacheStatus get cacheStatus => throw _privateConstructorUsedError;
-  DateTime? get cacheUpdatedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this NarouNovelContent to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  CacheStatus get cacheStatus;
+  @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+  ReadingStatus get readingStatus;
+  DateTime? get cacheUpdatedAt;
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $NarouNovelContentCopyWith<NarouNovelContent> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NarouNovelContentCopyWith<$Res> {
-  factory $NarouNovelContentCopyWith(
-          NarouNovelContent value, $Res Function(NarouNovelContent) then) =
-      _$NarouNovelContentCopyWithImpl<$Res, NarouNovelContent>;
-  @useResult
-  $Res call(
-      {String title,
-      String ncode,
-      String? body,
-      int chapter,
-      double scrollPosition,
-      @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
-      CacheStatus cacheStatus,
-      DateTime? cacheUpdatedAt});
-}
-
-/// @nodoc
-class _$NarouNovelContentCopyWithImpl<$Res, $Val extends NarouNovelContent>
-    implements $NarouNovelContentCopyWith<$Res> {
-  _$NarouNovelContentCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NarouNovelContent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $NarouNovelContentCopyWith<NarouNovelContent> get copyWith =>
+      _$NarouNovelContentCopyWithImpl<NarouNovelContent>(
+          this as NarouNovelContent, _$identity);
+
+  /// Serializes this NarouNovelContent to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? title = null,
-    Object? ncode = null,
-    Object? body = freezed,
-    Object? chapter = null,
-    Object? scrollPosition = null,
-    Object? cacheStatus = null,
-    Object? cacheUpdatedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      ncode: null == ncode
-          ? _value.ncode
-          : ncode // ignore: cast_nullable_to_non_nullable
-              as String,
-      body: freezed == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
-              as String?,
-      chapter: null == chapter
-          ? _value.chapter
-          : chapter // ignore: cast_nullable_to_non_nullable
-              as int,
-      scrollPosition: null == scrollPosition
-          ? _value.scrollPosition
-          : scrollPosition // ignore: cast_nullable_to_non_nullable
-              as double,
-      cacheStatus: null == cacheStatus
-          ? _value.cacheStatus
-          : cacheStatus // ignore: cast_nullable_to_non_nullable
-              as CacheStatus,
-      cacheUpdatedAt: freezed == cacheUpdatedAt
-          ? _value.cacheUpdatedAt
-          : cacheUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NarouNovelContent &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.ncode, ncode) || other.ncode == ncode) &&
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.chapter, chapter) || other.chapter == chapter) &&
+            (identical(other.scrollPosition, scrollPosition) ||
+                other.scrollPosition == scrollPosition) &&
+            (identical(other.cacheStatus, cacheStatus) ||
+                other.cacheStatus == cacheStatus) &&
+            (identical(other.readingStatus, readingStatus) ||
+                other.readingStatus == readingStatus) &&
+            (identical(other.cacheUpdatedAt, cacheUpdatedAt) ||
+                other.cacheUpdatedAt == cacheUpdatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, ncode, body, chapter,
+      scrollPosition, cacheStatus, readingStatus, cacheUpdatedAt);
+
+  @override
+  String toString() {
+    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPosition: $scrollPosition, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$NarouNovelContentImplCopyWith<$Res>
-    implements $NarouNovelContentCopyWith<$Res> {
-  factory _$$NarouNovelContentImplCopyWith(_$NarouNovelContentImpl value,
-          $Res Function(_$NarouNovelContentImpl) then) =
-      __$$NarouNovelContentImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $NarouNovelContentCopyWith<$Res> {
+  factory $NarouNovelContentCopyWith(
+          NarouNovelContent value, $Res Function(NarouNovelContent) _then) =
+      _$NarouNovelContentCopyWithImpl;
   @useResult
   $Res call(
       {String title,
@@ -129,16 +81,18 @@ abstract class _$$NarouNovelContentImplCopyWith<$Res>
       double scrollPosition,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       CacheStatus cacheStatus,
+      @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+      ReadingStatus readingStatus,
       DateTime? cacheUpdatedAt});
 }
 
 /// @nodoc
-class __$$NarouNovelContentImplCopyWithImpl<$Res>
-    extends _$NarouNovelContentCopyWithImpl<$Res, _$NarouNovelContentImpl>
-    implements _$$NarouNovelContentImplCopyWith<$Res> {
-  __$$NarouNovelContentImplCopyWithImpl(_$NarouNovelContentImpl _value,
-      $Res Function(_$NarouNovelContentImpl) _then)
-      : super(_value, _then);
+class _$NarouNovelContentCopyWithImpl<$Res>
+    implements $NarouNovelContentCopyWith<$Res> {
+  _$NarouNovelContentCopyWithImpl(this._self, this._then);
+
+  final NarouNovelContent _self;
+  final $Res Function(NarouNovelContent) _then;
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.
@@ -151,35 +105,40 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
     Object? chapter = null,
     Object? scrollPosition = null,
     Object? cacheStatus = null,
+    Object? readingStatus = null,
     Object? cacheUpdatedAt = freezed,
   }) {
-    return _then(_$NarouNovelContentImpl(
+    return _then(_self.copyWith(
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       ncode: null == ncode
-          ? _value.ncode
+          ? _self.ncode
           : ncode // ignore: cast_nullable_to_non_nullable
               as String,
       body: freezed == body
-          ? _value.body
+          ? _self.body
           : body // ignore: cast_nullable_to_non_nullable
               as String?,
       chapter: null == chapter
-          ? _value.chapter
+          ? _self.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as int,
       scrollPosition: null == scrollPosition
-          ? _value.scrollPosition
+          ? _self.scrollPosition
           : scrollPosition // ignore: cast_nullable_to_non_nullable
               as double,
       cacheStatus: null == cacheStatus
-          ? _value.cacheStatus
+          ? _self.cacheStatus
           : cacheStatus // ignore: cast_nullable_to_non_nullable
               as CacheStatus,
+      readingStatus: null == readingStatus
+          ? _self.readingStatus
+          : readingStatus // ignore: cast_nullable_to_non_nullable
+              as ReadingStatus,
       cacheUpdatedAt: freezed == cacheUpdatedAt
-          ? _value.cacheUpdatedAt
+          ? _self.cacheUpdatedAt
           : cacheUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
@@ -188,8 +147,8 @@ class __$$NarouNovelContentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NarouNovelContentImpl extends _NarouNovelContent {
-  const _$NarouNovelContentImpl(
+class _NarouNovelContent extends NarouNovelContent {
+  const _NarouNovelContent(
       {required this.title,
       required this.ncode,
       required this.body,
@@ -197,11 +156,12 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
       this.scrollPosition = 0.0,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       this.cacheStatus = CacheStatus.noCache,
+      @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+      this.readingStatus = ReadingStatus.unread,
       this.cacheUpdatedAt = null})
       : super._();
-
-  factory _$NarouNovelContentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NarouNovelContentImplFromJson(json);
+  factory _NarouNovelContent.fromJson(Map<String, dynamic> json) =>
+      _$NarouNovelContentFromJson(json);
 
   @override
   final String title;
@@ -211,7 +171,6 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   final String? body;
   @override
   final int chapter;
-//TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
   @override
   @JsonKey()
   final double scrollPosition;
@@ -219,19 +178,32 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
   final CacheStatus cacheStatus;
   @override
+  @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+  final ReadingStatus readingStatus;
+  @override
   @JsonKey()
   final DateTime? cacheUpdatedAt;
 
+  /// Create a copy of NarouNovelContent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPosition: $scrollPosition, cacheStatus: $cacheStatus, cacheUpdatedAt: $cacheUpdatedAt)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NarouNovelContentCopyWith<_NarouNovelContent> get copyWith =>
+      __$NarouNovelContentCopyWithImpl<_NarouNovelContent>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$NarouNovelContentToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NarouNovelContentImpl &&
+            other is _NarouNovelContent &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.ncode, ncode) || other.ncode == ncode) &&
             (identical(other.body, body) || other.body == body) &&
@@ -240,6 +212,8 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
                 other.scrollPosition == scrollPosition) &&
             (identical(other.cacheStatus, cacheStatus) ||
                 other.cacheStatus == cacheStatus) &&
+            (identical(other.readingStatus, readingStatus) ||
+                other.readingStatus == readingStatus) &&
             (identical(other.cacheUpdatedAt, cacheUpdatedAt) ||
                 other.cacheUpdatedAt == cacheUpdatedAt));
   }
@@ -247,60 +221,92 @@ class _$NarouNovelContentImpl extends _NarouNovelContent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, ncode, body, chapter,
-      scrollPosition, cacheStatus, cacheUpdatedAt);
-
-  /// Create a copy of NarouNovelContent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$NarouNovelContentImplCopyWith<_$NarouNovelContentImpl> get copyWith =>
-      __$$NarouNovelContentImplCopyWithImpl<_$NarouNovelContentImpl>(
-          this, _$identity);
+      scrollPosition, cacheStatus, readingStatus, cacheUpdatedAt);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$$NarouNovelContentImplToJson(
-      this,
-    );
+  String toString() {
+    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPosition: $scrollPosition, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
   }
 }
 
-abstract class _NarouNovelContent extends NarouNovelContent {
-  const factory _NarouNovelContent(
-      {required final String title,
-      required final String ncode,
-      required final String? body,
-      required final int chapter,
-      final double scrollPosition,
+/// @nodoc
+abstract mixin class _$NarouNovelContentCopyWith<$Res>
+    implements $NarouNovelContentCopyWith<$Res> {
+  factory _$NarouNovelContentCopyWith(
+          _NarouNovelContent value, $Res Function(_NarouNovelContent) _then) =
+      __$NarouNovelContentCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String title,
+      String ncode,
+      String? body,
+      int chapter,
+      double scrollPosition,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
-      final CacheStatus cacheStatus,
-      final DateTime? cacheUpdatedAt}) = _$NarouNovelContentImpl;
-  const _NarouNovelContent._() : super._();
+      CacheStatus cacheStatus,
+      @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+      ReadingStatus readingStatus,
+      DateTime? cacheUpdatedAt});
+}
 
-  factory _NarouNovelContent.fromJson(Map<String, dynamic> json) =
-      _$NarouNovelContentImpl.fromJson;
+/// @nodoc
+class __$NarouNovelContentCopyWithImpl<$Res>
+    implements _$NarouNovelContentCopyWith<$Res> {
+  __$NarouNovelContentCopyWithImpl(this._self, this._then);
 
-  @override
-  String get title;
-  @override
-  String get ncode;
-  @override
-  String? get body;
-  @override
-  int get chapter; //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
-  @override
-  double get scrollPosition;
-  @override
-  @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
-  CacheStatus get cacheStatus;
-  @override
-  DateTime? get cacheUpdatedAt;
+  final _NarouNovelContent _self;
+  final $Res Function(_NarouNovelContent) _then;
 
   /// Create a copy of NarouNovelContent
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NarouNovelContentImplCopyWith<_$NarouNovelContentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? title = null,
+    Object? ncode = null,
+    Object? body = freezed,
+    Object? chapter = null,
+    Object? scrollPosition = null,
+    Object? cacheStatus = null,
+    Object? readingStatus = null,
+    Object? cacheUpdatedAt = freezed,
+  }) {
+    return _then(_NarouNovelContent(
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      ncode: null == ncode
+          ? _self.ncode
+          : ncode // ignore: cast_nullable_to_non_nullable
+              as String,
+      body: freezed == body
+          ? _self.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapter: null == chapter
+          ? _self.chapter
+          : chapter // ignore: cast_nullable_to_non_nullable
+              as int,
+      scrollPosition: null == scrollPosition
+          ? _self.scrollPosition
+          : scrollPosition // ignore: cast_nullable_to_non_nullable
+              as double,
+      cacheStatus: null == cacheStatus
+          ? _self.cacheStatus
+          : cacheStatus // ignore: cast_nullable_to_non_nullable
+              as CacheStatus,
+      readingStatus: null == readingStatus
+          ? _self.readingStatus
+          : readingStatus // ignore: cast_nullable_to_non_nullable
+              as ReadingStatus,
+      cacheUpdatedAt: freezed == cacheUpdatedAt
+          ? _self.cacheUpdatedAt
+          : cacheUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
+
+// dart format on

@@ -6,8 +6,8 @@ part of 'narou_novel_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NarouNovelInfoImpl _$$NarouNovelInfoImplFromJson(Map<String, dynamic> json) =>
-    _$NarouNovelInfoImpl(
+_NarouNovelInfo _$NarouNovelInfoFromJson(Map<String, dynamic> json) =>
+    _NarouNovelInfo(
       title: json['title'] as String,
       ncode: json['ncode'] as String,
       userid: (json['userid'] as num?)?.toInt() ?? 0,
@@ -56,8 +56,7 @@ _$NarouNovelInfoImpl _$$NarouNovelInfoImplFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$NarouNovelInfoImplToJson(
-        _$NarouNovelInfoImpl instance) =>
+Map<String, dynamic> _$NarouNovelInfoToJson(_NarouNovelInfo instance) =>
     <String, dynamic>{
       'title': instance.title,
       'ncode': instance.ncode,
