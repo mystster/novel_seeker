@@ -68,6 +68,7 @@ class NarouNovel extends _$NarouNovel {
                       .isBefore(info.novelInfo!.novelupdatedAt)
                   ? CacheStatus.stale
                   : oldContent.cacheStatus),
+          readingStatus: oldContent?.readingStatus ?? ReadingStatus.unread,
           scrollPosition: oldContent?.scrollPosition ?? 0.0);
       _db.into(_db.narouNovelContents).insertOnConflictUpdate(content);
       ref.invalidate(_novelInfosProvider);
@@ -103,7 +104,8 @@ class NarouNovel extends _$NarouNovel {
             .firstMatch(
                 dateTimeElement.querySelector('span')?.attributes['title'] ??
                     dateTimeElement.text)
-            ?.group(0)?.replaceAll('/', '-');
+            ?.group(0)
+            ?.replaceAll('/', '-');
         final oldContentInfo = info.contents.firstWhereOrNull(
             (e) => e.ncode == info.ncode && e.chapter == chapterNumber);
         final content = NarouNovelContent(
@@ -119,6 +121,7 @@ class NarouNovel extends _$NarouNovel {
                   : oldContentInfo.cacheStatus),
           body: oldContentInfo?.body,
           cacheUpdatedAt: oldContentInfo?.cacheUpdatedAt,
+          readingStatus: oldContentInfo?.readingStatus ?? ReadingStatus.unread,
           scrollPosition: oldContentInfo?.scrollPosition ?? 0.0,
         );
         contents.add(content);
@@ -311,6 +314,34 @@ class NarouNovel extends _$NarouNovel {
     prevState[ncodeIndex] = newNarouInfo;
     state = AsyncData(prevState);
     await _db.into(_db.novelInfos).insertOnConflictUpdate(newNarouInfo);
+  }
+
+  Future<void> updateReadingStatus(
+      {required String ncode,
+      required int chapter,
+      required ReadingStatus readingStatus}) async {
+    if (state.value == null) {
+      _logger.d('state.value is null');
+      return;
+    }
+    final ncodeIndex =
+        state.value!.indexWhere((element) => element.ncode == ncode);
+    if (ncodeIndex == -1) {
+      _logger.d('ncode not found');
+      return;
+    }
+    final chapterIndex = state.value![ncodeIndex].contents
+        .indexWhere((element) => element.chapter == chapter);
+    if (chapterIndex == -1) {
+      _logger.d('chapter not found');
+      return;
+    }
+    final newContent = state.value![ncodeIndex].contents[chapterIndex]
+        .copyWith(readingStatus: readingStatus);
+    final prevState = await future;
+    prevState[ncodeIndex].contents[chapterIndex] = newContent;
+    state = AsyncData(prevState);
+    await _db.into(_db.narouNovelContents).insertOnConflictUpdate(newContent);
   }
 
   Future<void> updateScrollPosition(

@@ -10,7 +10,7 @@ part 'narou_novel_content.g.dart';
 
 @freezed
 /// なろうの小説の1章のデータが入っているクラス
-class NarouNovelContent
+abstract class NarouNovelContent
     with _$NarouNovelContent
     implements Insertable<NarouNovelContent> {
   const factory NarouNovelContent(
@@ -18,11 +18,12 @@ class NarouNovelContent
       required String ncode,
       required String? body,
       required int chapter,
-      //TODO: スクロール位置からそのcontentの読み状態（読了、未読）を判断して、その状態を保存したい
       @Default(0.0) double scrollPosition,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       //TODO: キャッシュを更新したときに、すでに読了中もしくは済みの場合は、内容が変わったことがわかるようにしたい
       @Default(CacheStatus.noCache) CacheStatus cacheStatus,
+      @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
+      @Default(ReadingStatus.unread) ReadingStatus readingStatus,
       @Default(null) DateTime? cacheUpdatedAt}) = _NarouNovelContent;
   factory NarouNovelContent.fromJson(Map<String, dynamic> json) =>
       _$NarouNovelContentFromJson(json);
@@ -37,6 +38,7 @@ class NarouNovelContent
       ncode: Value(ncode),
       scrollPosition: Value(scrollPosition),
       cacheStatus: Value(cacheStatus),
+      readingStatus: Value(readingStatus),
       cacheUpdatedAt: Value(cacheUpdatedAt),
     ).toColumns(nullToAbsent);
   }

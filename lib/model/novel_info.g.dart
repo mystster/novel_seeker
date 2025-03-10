@@ -6,8 +6,7 @@ part of 'novel_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NovelInfoImpl _$$NovelInfoImplFromJson(Map<String, dynamic> json) =>
-    _$NovelInfoImpl(
+_NovelInfo _$NovelInfoFromJson(Map<String, dynamic> json) => _NovelInfo(
       ncode: json['ncode'] as String,
       novelInfo: json['novel_info'] == null
           ? null
@@ -21,7 +20,7 @@ _$NovelInfoImpl _$$NovelInfoImplFromJson(Map<String, dynamic> json) =>
       currentChapter: (json['current_chapter'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$NovelInfoImplToJson(_$NovelInfoImpl instance) =>
+Map<String, dynamic> _$NovelInfoToJson(_NovelInfo instance) =>
     <String, dynamic>{
       'ncode': instance.ncode,
       'novel_info': instance.novelInfo,
