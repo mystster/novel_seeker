@@ -158,10 +158,13 @@ class NovelSearch extends HookConsumerWidget {
                           contentPadding: const EdgeInsets.all(0),
                           minVerticalPadding: 0,
                           leading: IconButton(
-                            icon: const Icon(Icons.bookmark_add),
-                            color: isRegistered ? Colors.grey : null,
+                            icon: isRegistered? const Icon(Icons.bookmark_remove): Icon(Icons.bookmark_add),
                             onPressed: isRegistered
-                                ? null
+                                ? () async {
+                                    await ref
+                                        .read(narouNovelProvider.notifier)
+                                        .removeNovel(value[index].ncode);
+                                  }
                                 : () async {
                                     await ref
                                         .read(narouNovelProvider.notifier)

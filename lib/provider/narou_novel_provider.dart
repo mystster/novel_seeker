@@ -297,6 +297,23 @@ class NarouNovel extends _$NarouNovel {
     return state.value!.any((element) => element.ncode == ncode);
   }
 
+  Future<void> removeNovel(String ncode) async {
+    final count = await (_db.select(_db.narouNovelInfos)
+          ..where((r) => r.ncode.equals(ncode)))
+        .get();
+    if (count.isEmpty) {
+      _logger.d('Novel with ncode: $ncode not found');
+      return;
+    }
+
+    await (_db.delete(_db.narouNovelInfos)..where((r) => r.ncode.equals(ncode)))
+        .go();
+    await (_db.delete(_db.novelInfos)..where((r) => r.ncode.equals(ncode)))
+        .go();
+    ref.invalidate(_novelInfosProvider);
+    ref.invalidateSelf();
+  }
+
   Future<void> updateCurrentChapter(String ncode, int chapter) async {
     if (state.value == null) {
       _logger.d('state.value is null');
