@@ -51,6 +51,8 @@ class NovelSearch extends HookConsumerWidget {
                             children: [
                               FormBuilderTextField(
                                 name: NovelSearchParam.word.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.word.name],
                                 decoration: InputDecoration(
                                     labelText:
                                         NovelSearchParam.word.displayName),
@@ -63,12 +65,16 @@ class NovelSearch extends HookConsumerWidget {
                               ),
                               FormBuilderTextField(
                                 name: NovelSearchParam.notword.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.notword.name],
                                 decoration: InputDecoration(
                                     labelText:
                                         NovelSearchParam.notword.displayName),
                               ),
                               FormBuilderCheckboxGroup(
                                 name: NovelSearchParam.searchRange.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.searchRange.name],
                                 decoration: InputDecoration(
                                     labelText: NovelSearchParam
                                         .searchRange.displayName),
@@ -158,10 +164,15 @@ class NovelSearch extends HookConsumerWidget {
                           contentPadding: const EdgeInsets.all(0),
                           minVerticalPadding: 0,
                           leading: IconButton(
-                            icon: const Icon(Icons.bookmark_add),
-                            color: isRegistered ? Colors.grey : null,
+                            icon: isRegistered
+                                ? const Icon(Icons.bookmark_remove)
+                                : Icon(Icons.bookmark_add),
                             onPressed: isRegistered
-                                ? null
+                                ? () async {
+                                    await ref
+                                        .read(narouNovelProvider.notifier)
+                                        .removeNovel(value[index].ncode);
+                                  }
                                 : () async {
                                     await ref
                                         .read(narouNovelProvider.notifier)
@@ -198,7 +209,8 @@ class NovelSearch extends HookConsumerWidget {
                   ),
             AsyncLoading() => const CircularProgressIndicator(),
             AsyncError(:final error, :final stackTrace) =>
-              Text('Error: $error, ST: $stackTrace'),
+              SingleChildScrollView(
+                  child: Text('Error: $error, ST: $stackTrace')),
             // TODO: Handle this case.
             AsyncValue<List<NarouNovelInfo>>() => throw UnimplementedError(),
           },
