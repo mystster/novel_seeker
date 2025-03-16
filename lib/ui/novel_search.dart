@@ -51,6 +51,8 @@ class NovelSearch extends HookConsumerWidget {
                             children: [
                               FormBuilderTextField(
                                 name: NovelSearchParam.word.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.word.name],
                                 decoration: InputDecoration(
                                     labelText:
                                         NovelSearchParam.word.displayName),
@@ -63,12 +65,16 @@ class NovelSearch extends HookConsumerWidget {
                               ),
                               FormBuilderTextField(
                                 name: NovelSearchParam.notword.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.notword.name],
                                 decoration: InputDecoration(
                                     labelText:
                                         NovelSearchParam.notword.displayName),
                               ),
                               FormBuilderCheckboxGroup(
                                 name: NovelSearchParam.searchRange.name,
+                                initialValue: searchParam
+                                    .value?[NovelSearchParam.searchRange.name],
                                 decoration: InputDecoration(
                                     labelText: NovelSearchParam
                                         .searchRange.displayName),
@@ -158,7 +164,9 @@ class NovelSearch extends HookConsumerWidget {
                           contentPadding: const EdgeInsets.all(0),
                           minVerticalPadding: 0,
                           leading: IconButton(
-                            icon: isRegistered? const Icon(Icons.bookmark_remove): Icon(Icons.bookmark_add),
+                            icon: isRegistered
+                                ? const Icon(Icons.bookmark_remove)
+                                : Icon(Icons.bookmark_add),
                             onPressed: isRegistered
                                 ? () async {
                                     await ref

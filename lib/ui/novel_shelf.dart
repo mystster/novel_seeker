@@ -53,7 +53,7 @@ class NovelShelf extends HookConsumerWidget {
                   // drawerを閉じる
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => const NovelSearch(),
+                    builder: (_) => NovelSearch(),
                   ));
                 }),
             ListTile(
