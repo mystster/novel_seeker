@@ -51,9 +51,12 @@ class NovelContents extends HookConsumerWidget {
             // 再度initialScrollOffsetの位置に戻ってしまうことがあるため不採用。
             for (var i = 0; i < novelInfo.contents.length; i++) {
               if (scrollControllers[i].hasClients) {
-                _logger.d('scrollController[$i] is fire');
-                scrollControllers[i]
-                    .jumpTo(novelInfo.contents[i].scrollPosition);
+                final scrollPosition = novelInfo.contents[i].scrollPosition *
+                    scrollControllers[i].position.maxScrollExtent /
+                    100.0;
+                _logger.d(
+                    'scrollController[$i] is fire, scrollPosition: $scrollPosition(${novelInfo.contents[i].scrollPosition}%)');
+                scrollControllers[i].jumpTo(scrollPosition);
               }
             }
           });
@@ -93,12 +96,16 @@ class NovelContents extends HookConsumerWidget {
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
                       if (scrollControllers[i].hasClients) {
+                        final scrollPercent =
+                            scrollControllers[i].position.pixels /
+                                scrollControllers[i].position.maxScrollExtent *
+                                100.0;
                         _logger.d(
-                            'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}');
+                            'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}($scrollPercent %)');
                         ref
                             .read(narouNovelProvider.notifier)
-                            .updateScrollPosition(ncode, currentChapter.value,
-                                scrollControllers[i].position.pixels);
+                            .updateScrollPosition(
+                                ncode, currentChapter.value, scrollPercent);
                       }
                     });
               }
@@ -129,12 +136,16 @@ class NovelContents extends HookConsumerWidget {
               //PageView変更開始
               _logger.d('page change start!');
               if (scrollControllers[lastPage.toInt()].hasClients) {
+                final scrollPercent =
+                    scrollControllers[lastPage.toInt()].position.pixels /
+                        scrollControllers[lastPage.toInt()]
+                            .position
+                            .maxScrollExtent *
+                        100.0;
                 _logger.d(
-                    'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[lastPage.toInt()].position.pixels}');
+                    'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[lastPage.toInt()].position.pixels}($scrollPercent %)');
                 ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                    ncode,
-                    currentChapter.value,
-                    scrollControllers[lastPage.toInt()].position.pixels);
+                    ncode, currentChapter.value, scrollPercent);
                 if (scrollControllers[lastPage.toInt()]
                             .position
                             .maxScrollExtent ==
@@ -171,9 +182,15 @@ class NovelContents extends HookConsumerWidget {
               } else {
                 if (scrollControllers[destinationIndex].hasClients) {
                   // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
-                  _logger.d('scrollPosition restore');
-                  scrollControllers[destinationIndex].jumpTo(
-                      novelInfo.contents[destinationIndex].scrollPosition);
+                  final scrollPosition =
+                      novelInfo.contents[destinationIndex].scrollPosition *
+                          scrollControllers[destinationIndex]
+                              .position
+                              .maxScrollExtent /
+                          100.0;
+                  _logger.d(
+                      'scrollPosition restore to $scrollPosition(${novelInfo.contents[destinationIndex].scrollPosition} %)');
+                  scrollControllers[destinationIndex].jumpTo(scrollPosition);
                   isDestinationScrollPositionRestore = true;
                 }
               }
@@ -201,12 +218,16 @@ class NovelContents extends HookConsumerWidget {
             final scrollControllerIndex = novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value);
             if (scrollControllers[scrollControllerIndex].hasClients) {
+              final scrollPercent =
+                  scrollControllers[scrollControllerIndex].position.pixels /
+                      scrollControllers[scrollControllerIndex]
+                          .position
+                          .maxScrollExtent *
+                      100.0;
               _logger.d(
-                  'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}');
+                  'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}($scrollPercent %)');
               await ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                  ncode,
-                  currentChapter.value,
-                  scrollControllers[scrollControllerIndex].position.pixels);
+                  ncode, currentChapter.value, scrollPercent);
             }
           },
           child: Scaffold(
