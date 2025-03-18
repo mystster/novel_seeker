@@ -120,6 +120,8 @@ class NovelContents extends HookConsumerWidget {
             initialPage: novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value));
         // ページを切り替えたときに、スクロール位置の保存と復元を行う
+        // PageView.builderのonPageChangedイベントだとタイミングが微妙で
+        // scrollController.hasClientがfalseになる場合があるため自前で実装。
         useEffect(() {
           double lastPage = novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value)
