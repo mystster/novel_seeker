@@ -35,6 +35,10 @@ class NovelContents extends HookConsumerWidget {
           return novelInfo.contents
               .firstWhereOrNull((e) => e.chapter == currentChapter.value);
         }, [currentChapter.value]);
+        final currentIndex = useMemoized(() {
+          return novelInfo.contents
+              .indexWhere((e) => e.chapter == currentChapter.value);
+        }, [currentChapter.value]);
         final scrollControllers = List.generate(
             novelInfo.contents.length, (i) => useScrollController());
         useEffect(() {
@@ -110,15 +114,12 @@ class NovelContents extends HookConsumerWidget {
         }
 
         final pageController = usePageController(
-            initialPage: novelInfo.contents
-                .indexWhere((e) => e.chapter == currentChapter.value));
+            initialPage: currentIndex);
         // ページを切り替えたときに、スクロール位置の保存と復元を行う
         // PageView.builderのonPageChangedイベントだとタイミングが微妙で
         // scrollController.hasClientがfalseになる場合があるため自前で実装。
         useEffect(() {
-          double lastPage = novelInfo.contents
-              .indexWhere((e) => e.chapter == currentChapter.value)
-              .toDouble();
+          double lastPage = currentIndex.toDouble();
           bool isPageChanging = false;
           bool isDestinationScrollPositionRestore = true;
           void onPageChaged() async {
@@ -168,7 +169,8 @@ class NovelContents extends HookConsumerWidget {
                 _logger.w('destinationIndex of PageView is out of range');
               } else {
                 // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
-                if (await waitForControllerToAttach(scrollControllers[destinationIndex])) {
+                if (await waitForControllerToAttach(
+                    scrollControllers[destinationIndex])) {
                   loadScrollPotision(novelInfo.contents[destinationIndex],
                       scrollControllers[destinationIndex]);
                   isDestinationScrollPositionRestore = true;
@@ -195,16 +197,14 @@ class NovelContents extends HookConsumerWidget {
           onPopInvokedWithResult: (didpop, _) async {
             // この画面から抜けるときにスクロール位置を保存する。
             _debouncer.cancel();
-            final scrollControllerIndex = novelInfo.contents
-                .indexWhere((e) => e.chapter == currentChapter.value);
+            final scrollControllerIndex = currentIndex;
             saveScrollPosition(ref, ncode, currentChapter.value,
                 scrollControllers[scrollControllerIndex]);
           },
           child: Scaffold(
             appBar: AppBar(
-              title: Text(currentContent?.title ??
-                  novelInfo.novelInfo?.title ??
-                  ''),
+              title: Text(
+                  currentContent?.title ?? novelInfo.novelInfo?.title ?? ''),
               leading: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -251,8 +251,7 @@ class NovelContents extends HookConsumerWidget {
               controller: pageController,
               onPageChanged: (value) async {
                 _logger.d('onPageChaged is fire!');
-                final oldIndex = novelInfo.contents
-                    .indexWhere((e) => e.chapter == currentChapter.value);
+                final oldIndex = currentIndex;
                 saveScrollPosition(ref, ncode, currentChapter.value,
                     scrollControllers[oldIndex]);
 
