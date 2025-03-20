@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
@@ -6,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
 import '../model/narou_enum.dart';
+import '../model/narou_novel_content.dart';
 import '../provider/narou_novel_provider.dart';
 
 final _debouncer = Debouncer();
@@ -95,18 +98,8 @@ class NovelContents extends HookConsumerWidget {
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
-                      if (scrollControllers[i].hasClients) {
-                        final scrollPercent =
-                            scrollControllers[i].position.pixels /
-                                scrollControllers[i].position.maxScrollExtent *
-                                100.0;
-                        _logger.d(
-                            'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[i].position.pixels}($scrollPercent %)');
-                        ref
-                            .read(narouNovelProvider.notifier)
-                            .updateScrollPosition(
-                                ncode, currentChapter.value, scrollPercent);
-                      }
+                      saveScrollPosition(ref, ncode, currentChapter.value,
+                          scrollControllers[i]);
                     });
               }
             }
@@ -138,16 +131,8 @@ class NovelContents extends HookConsumerWidget {
               //PageView変更開始
               _logger.d('page change start!');
               if (scrollControllers[lastPage.toInt()].hasClients) {
-                final scrollPercent =
-                    scrollControllers[lastPage.toInt()].position.pixels /
-                        scrollControllers[lastPage.toInt()]
-                            .position
-                            .maxScrollExtent *
-                        100.0;
-                _logger.d(
-                    'chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[lastPage.toInt()].position.pixels}($scrollPercent %)');
-                ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                    ncode, currentChapter.value, scrollPercent);
+                saveScrollPosition(ref, ncode, currentChapter.value,
+                    scrollControllers[lastPage.toInt()]);
                 if (scrollControllers[lastPage.toInt()]
                             .position
                             .maxScrollExtent ==
@@ -182,17 +167,10 @@ class NovelContents extends HookConsumerWidget {
                   destinationIndex > novelInfo.contents.length - 1) {
                 _logger.w('destinationIndex of PageView is out of range');
               } else {
+                // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
                 if (scrollControllers[destinationIndex].hasClients) {
-                  // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
-                  final scrollPosition =
-                      novelInfo.contents[destinationIndex].scrollPosition *
-                          scrollControllers[destinationIndex]
-                              .position
-                              .maxScrollExtent /
-                          100.0;
-                  _logger.d(
-                      'scrollPosition restore to $scrollPosition(${novelInfo.contents[destinationIndex].scrollPosition} %)');
-                  scrollControllers[destinationIndex].jumpTo(scrollPosition);
+                  loadScrollPotision(novelInfo.contents[destinationIndex],
+                      scrollControllers[destinationIndex]);
                   isDestinationScrollPositionRestore = true;
                 }
               }
@@ -219,18 +197,8 @@ class NovelContents extends HookConsumerWidget {
             _debouncer.cancel();
             final scrollControllerIndex = novelInfo.contents
                 .indexWhere((e) => e.chapter == currentChapter.value);
-            if (scrollControllers[scrollControllerIndex].hasClients) {
-              final scrollPercent =
-                  scrollControllers[scrollControllerIndex].position.pixels /
-                      scrollControllers[scrollControllerIndex]
-                          .position
-                          .maxScrollExtent *
-                      100.0;
-              _logger.d(
-                  'popscope chapter: ${currentChapter.value}, scroll pos: ${scrollControllers[scrollControllerIndex].position.pixels}($scrollPercent %)');
-              await ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                  ncode, currentChapter.value, scrollPercent);
-            }
+            saveScrollPosition(ref, ncode, currentChapter.value,
+                scrollControllers[scrollControllerIndex]);
           },
           child: Scaffold(
             appBar: AppBar(
@@ -267,6 +235,7 @@ class NovelContents extends HookConsumerWidget {
                     // padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      // ドロアーの各章へ飛ぶボタン
                       return ListTile(
                         title: Text(
                           '${novelInfo.contents[index].chapter}. ${novelInfo.contents[index].title}',
@@ -287,21 +256,15 @@ class NovelContents extends HookConsumerWidget {
                 _logger.d('onPageChaged is fire!');
                 final oldIndex = novelInfo.contents
                     .indexWhere((e) => e.chapter == currentChapter.value);
-                if (scrollControllers[oldIndex].hasClients) {
-                  ref.read(narouNovelProvider.notifier).updateScrollPosition(
-                      ncode,
-                      currentChapter.value,
-                      scrollControllers[oldIndex].position.pixels);
-                }
+                saveScrollPosition(ref, ncode, currentChapter.value,
+                    scrollControllers[oldIndex]);
 
                 currentChapter.value = novelInfo.contents[value].chapter;
                 await ref
                     .read(narouNovelProvider.notifier)
                     .updateCurrentChapter(ncode, currentChapter.value);
-                if (scrollControllers[value].hasClients) {
-                  scrollControllers[value]
-                      .jumpTo(novelInfo.contents[value].scrollPosition);
-                }
+                loadScrollPotision(
+                    novelInfo.contents[value], scrollControllers[value]);
               },
               itemBuilder: (context, index) =>
                   novelInfo.contents[index].body != null
@@ -340,5 +303,52 @@ class NovelContents extends HookConsumerWidget {
         );
       },
     );
+  }
+
+  void loadScrollPotision(
+      NarouNovelContent content, ScrollController controller) {
+    if (!controller.hasClients) {
+      _logger
+          .w('scrollController(chapter: ${content.chapter}) is not attached');
+      return;
+    }
+    final scrollPosition = controller.position
+        .getScrollPotisionFromPercent(content.scrollPosition);
+    _logger.d('restore $scrollPosition to ${content.chapter}');
+    controller.jumpTo(scrollPosition);
+  }
+
+  Future<void> saveScrollPosition(WidgetRef ref, String ncode, int chapter,
+      ScrollController controller) async {
+    if (!controller.hasClients) {
+      _logger.w('scrollController(chapter: $chapter) is not attached');
+      return;
+    }
+    final scrollPercent = controller.position.getScrollPercent();
+    await saveScrollPositionPercent(ref, ncode, chapter, scrollPercent);
+  }
+
+  Future<void> saveScrollPositionPercent(
+      WidgetRef ref, String ncode, int chapter, double percent) async {
+    _logger.d('[save]chapter: $chapter, scroll pos: $percent %');
+    await ref
+        .read(narouNovelProvider.notifier)
+        .updateScrollPosition(ncode, chapter, percent);
+  }
+}
+
+extension _ScrollPotionExtension on ScrollPosition {
+  double getScrollPercent() {
+    if (maxScrollExtent == 0) {
+      return 0.0;
+    }
+    return pixels / maxScrollExtent * 100.0;
+  }
+
+  double getScrollPotisionFromPercent(double percent) {
+    if (maxScrollExtent == 0) {
+      return 0.0;
+    }
+    return percent * maxScrollExtent / 100.0;
   }
 }
