@@ -202,10 +202,7 @@ class NovelContents extends HookConsumerWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: Text(novelInfo.contents
-                      .firstWhereOrNull(
-                          (e) => e.chapter == currentChapter.value)
-                      ?.title ??
+              title: Text(currentContent?.title ??
                   novelInfo.novelInfo?.title ??
                   ''),
               leading: Row(
