@@ -68,7 +68,7 @@ class NovelContents extends HookConsumerWidget {
 
         for (var i = 0; i < novelInfo.contents.length; i++) {
           useEffect(() {
-            void onScroll() {
+            void onScroll() async {
               if (novelInfo.contents[i].readingStatus == ReadingStatus.unread &&
                   novelInfo.contents[i].body != null) {
                 // 読書中に変更
@@ -80,7 +80,7 @@ class NovelContents extends HookConsumerWidget {
 
               if (novelInfo.contents[i].readingStatus ==
                       ReadingStatus.reading &&
-                  scrollControllers[i].hasClients) {
+                  await waitForControllerToAttach(scrollControllers[i])) {
                 if (scrollControllers[i].position.maxScrollExtent !=
                         0 /* スクロール可能 */ &&
                     scrollControllers[i].position.pixels ==
@@ -93,7 +93,7 @@ class NovelContents extends HookConsumerWidget {
                 }
               }
 
-              if (scrollControllers[i].hasClients) {
+              if (await waitForControllerToAttach(scrollControllers[i])) {
                 // スクロールが止まって5秒後にDBにスクロール位置を保存する。
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
@@ -121,7 +121,7 @@ class NovelContents extends HookConsumerWidget {
               .toDouble();
           bool isPageChanging = false;
           bool isDestinationScrollPositionRestore = true;
-          void onPageChaged() {
+          void onPageChaged() async {
             if (pageController.page == null) {
               _logger.d('pageController.page is null');
               return;
@@ -168,7 +168,7 @@ class NovelContents extends HookConsumerWidget {
                 _logger.w('destinationIndex of PageView is out of range');
               } else {
                 // 切り替え先のPageViewにあるscrollControllerにscrollPositionをセットする
-                if (scrollControllers[destinationIndex].hasClients) {
+                if (await waitForControllerToAttach(scrollControllers[destinationIndex])) {
                   loadScrollPotision(novelInfo.contents[destinationIndex],
                       scrollControllers[destinationIndex]);
                   isDestinationScrollPositionRestore = true;
@@ -306,8 +306,8 @@ class NovelContents extends HookConsumerWidget {
   }
 
   void loadScrollPotision(
-      NarouNovelContent content, ScrollController controller) {
-    if (!controller.hasClients) {
+      NarouNovelContent content, ScrollController controller) async {
+    if (!await waitForControllerToAttach(controller)) {
       _logger
           .w('scrollController(chapter: ${content.chapter}) is not attached');
       return;
@@ -320,7 +320,7 @@ class NovelContents extends HookConsumerWidget {
 
   Future<void> saveScrollPosition(WidgetRef ref, String ncode, int chapter,
       ScrollController controller) async {
-    if (!controller.hasClients) {
+    if (!await waitForControllerToAttach(controller)) {
       _logger.w('scrollController(chapter: $chapter) is not attached');
       return;
     }
@@ -334,6 +334,24 @@ class NovelContents extends HookConsumerWidget {
     await ref
         .read(narouNovelProvider.notifier)
         .updateScrollPosition(ncode, chapter, percent);
+  }
+
+  Future<bool> waitForControllerToAttach(ScrollController controller,
+      [maxRetryCount = 3,
+      retryInterval = const Duration(milliseconds: 500)]) async {
+    int retryCount = 0;
+    while (!controller.hasClients) {
+      if (retryCount >= maxRetryCount) {
+        _logger.w(
+            'scrollController is not attached after $maxRetryCount retries. giving up.');
+        return false;
+      }
+      _logger.d(
+          'scrollController is not attached. retrying...(retry: ${retryCount + 1}/$maxRetryCount)');
+      await Future.delayed(retryInterval);
+      retryCount++;
+    }
+    return true;
   }
 }
 
