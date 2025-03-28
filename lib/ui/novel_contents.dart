@@ -67,9 +67,7 @@ class NovelContents extends HookConsumerWidget {
             // 再度initialScrollOffsetの位置に戻ってしまうことがあるため不採用。
             for (var i = 0; i < novelInfo.contents.length; i++) {
               if (scrollControllers[i].hasClients) {
-                final scrollPosition = novelInfo.contents[i].scrollPosition *
-                    scrollControllers[i].position.maxScrollExtent /
-                    100.0;
+                final scrollPosition = scrollControllers[i].position.getScrollPotisionFromPercent(novelInfo.contents[i].scrollPosition);
                 _logger.d(
                     'scrollController[$i] is fire, scrollPosition: $scrollPosition(${novelInfo.contents[i].scrollPosition}%)');
                 scrollControllers[i].jumpTo(scrollPosition);
