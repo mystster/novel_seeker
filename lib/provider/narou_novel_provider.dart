@@ -69,7 +69,7 @@ class NarouNovel extends _$NarouNovel {
                   ? CacheStatus.stale
                   : oldContent.cacheStatus),
           readingStatus: oldContent?.readingStatus ?? ReadingStatus.unread,
-          scrollPosition: oldContent?.scrollPosition ?? 0.0);
+          scrollPercent: oldContent?.scrollPercent ?? 0.0);
       _db.into(_db.narouNovelContents).insertOnConflictUpdate(content);
       ref.invalidate(_novelInfosProvider);
       ref.invalidateSelf();
@@ -122,7 +122,7 @@ class NarouNovel extends _$NarouNovel {
           body: oldContentInfo?.body,
           cacheUpdatedAt: oldContentInfo?.cacheUpdatedAt,
           readingStatus: oldContentInfo?.readingStatus ?? ReadingStatus.unread,
-          scrollPosition: oldContentInfo?.scrollPosition ?? 0.0,
+          scrollPercent: oldContentInfo?.scrollPercent ?? 0.0,
         );
         contents.add(content);
       });
@@ -380,7 +380,7 @@ class NarouNovel extends _$NarouNovel {
       return;
     }
     final newContent = state.value![ncodeIndex].contents[chapterIndex]
-        .copyWith(scrollPosition: scrollPosition);
+        .copyWith(scrollPercent: scrollPosition);
     final prevState = await future;
     prevState[ncodeIndex].contents[chapterIndex] = newContent;
     state = AsyncData(prevState);

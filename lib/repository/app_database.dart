@@ -68,7 +68,7 @@ class NarouNovelContents extends Table {
   Set<Column> get primaryKey => {ncode, chapter};
   IntColumn get readingStatus =>
       integer().map(const ReadingStatusConverter())();
-  RealColumn get scrollPosition => real()();
+  RealColumn get scrollPercent => real()();
   TextColumn get title => text()();
 }
 

@@ -18,7 +18,7 @@ abstract class NarouNovelContent
       required String ncode,
       required String? body,
       required int chapter,
-      @Default(0.0) double scrollPosition,
+      @Default(0.0) double scrollPercent,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       //TODO: キャッシュを更新したときに、すでに読了中もしくは済みの場合は、内容が変わったことがわかるようにしたい
       @Default(CacheStatus.noCache) CacheStatus cacheStatus,
@@ -36,7 +36,7 @@ abstract class NarouNovelContent
       body: Value(body),
       chapter: Value(chapter),
       ncode: Value(ncode),
-      scrollPosition: Value(scrollPosition),
+      scrollPercent: Value(scrollPercent),
       cacheStatus: Value(cacheStatus),
       readingStatus: Value(readingStatus),
       cacheUpdatedAt: Value(cacheUpdatedAt),

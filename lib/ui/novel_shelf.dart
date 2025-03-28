@@ -134,13 +134,15 @@ class NovelShelf extends HookConsumerWidget {
       ),
       body: Center(
         child: switch (narouProvider) {
-          AsyncData(:final value) => ListView.builder(
-              itemCount: value.length,
-              itemBuilder: (context, index) {
-                return novelInfo(
-                    context: context, ref: ref, novelInfo: value[index]);
-              },
-            ),
+          AsyncData(:final value) => value.isEmpty
+              ? Text('本が登録されてません')
+              : ListView.builder(
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return novelInfo(
+                        context: context, ref: ref, novelInfo: value[index]);
+                  },
+                ),
           AsyncLoading() => const CircularProgressIndicator(),
           AsyncError(:final error, :final stackTrace) => SingleChildScrollView(
               child: Text('Error: $error, ST: $stackTrace')),
