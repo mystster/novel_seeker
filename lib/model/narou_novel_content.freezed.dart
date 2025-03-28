@@ -19,7 +19,7 @@ mixin _$NarouNovelContent {
   String get ncode;
   String? get body;
   int get chapter;
-  double get scrollPosition;
+  double get scrollPercent;
   @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
   CacheStatus get cacheStatus;
   @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
@@ -46,8 +46,8 @@ mixin _$NarouNovelContent {
             (identical(other.ncode, ncode) || other.ncode == ncode) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.chapter, chapter) || other.chapter == chapter) &&
-            (identical(other.scrollPosition, scrollPosition) ||
-                other.scrollPosition == scrollPosition) &&
+            (identical(other.scrollPercent, scrollPercent) ||
+                other.scrollPercent == scrollPercent) &&
             (identical(other.cacheStatus, cacheStatus) ||
                 other.cacheStatus == cacheStatus) &&
             (identical(other.readingStatus, readingStatus) ||
@@ -59,11 +59,11 @@ mixin _$NarouNovelContent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, ncode, body, chapter,
-      scrollPosition, cacheStatus, readingStatus, cacheUpdatedAt);
+      scrollPercent, cacheStatus, readingStatus, cacheUpdatedAt);
 
   @override
   String toString() {
-    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPosition: $scrollPosition, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
+    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPercent: $scrollPercent, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
   }
 }
 
@@ -78,7 +78,7 @@ abstract mixin class $NarouNovelContentCopyWith<$Res> {
       String ncode,
       String? body,
       int chapter,
-      double scrollPosition,
+      double scrollPercent,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       CacheStatus cacheStatus,
       @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
@@ -103,7 +103,7 @@ class _$NarouNovelContentCopyWithImpl<$Res>
     Object? ncode = null,
     Object? body = freezed,
     Object? chapter = null,
-    Object? scrollPosition = null,
+    Object? scrollPercent = null,
     Object? cacheStatus = null,
     Object? readingStatus = null,
     Object? cacheUpdatedAt = freezed,
@@ -125,9 +125,9 @@ class _$NarouNovelContentCopyWithImpl<$Res>
           ? _self.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as int,
-      scrollPosition: null == scrollPosition
-          ? _self.scrollPosition
-          : scrollPosition // ignore: cast_nullable_to_non_nullable
+      scrollPercent: null == scrollPercent
+          ? _self.scrollPercent
+          : scrollPercent // ignore: cast_nullable_to_non_nullable
               as double,
       cacheStatus: null == cacheStatus
           ? _self.cacheStatus
@@ -153,7 +153,7 @@ class _NarouNovelContent extends NarouNovelContent {
       required this.ncode,
       required this.body,
       required this.chapter,
-      this.scrollPosition = 0.0,
+      this.scrollPercent = 0.0,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       this.cacheStatus = CacheStatus.noCache,
       @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
@@ -173,7 +173,7 @@ class _NarouNovelContent extends NarouNovelContent {
   final int chapter;
   @override
   @JsonKey()
-  final double scrollPosition;
+  final double scrollPercent;
   @override
   @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
   final CacheStatus cacheStatus;
@@ -208,8 +208,8 @@ class _NarouNovelContent extends NarouNovelContent {
             (identical(other.ncode, ncode) || other.ncode == ncode) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.chapter, chapter) || other.chapter == chapter) &&
-            (identical(other.scrollPosition, scrollPosition) ||
-                other.scrollPosition == scrollPosition) &&
+            (identical(other.scrollPercent, scrollPercent) ||
+                other.scrollPercent == scrollPercent) &&
             (identical(other.cacheStatus, cacheStatus) ||
                 other.cacheStatus == cacheStatus) &&
             (identical(other.readingStatus, readingStatus) ||
@@ -221,11 +221,11 @@ class _NarouNovelContent extends NarouNovelContent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, ncode, body, chapter,
-      scrollPosition, cacheStatus, readingStatus, cacheUpdatedAt);
+      scrollPercent, cacheStatus, readingStatus, cacheUpdatedAt);
 
   @override
   String toString() {
-    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPosition: $scrollPosition, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
+    return 'NarouNovelContent(title: $title, ncode: $ncode, body: $body, chapter: $chapter, scrollPercent: $scrollPercent, cacheStatus: $cacheStatus, readingStatus: $readingStatus, cacheUpdatedAt: $cacheUpdatedAt)';
   }
 }
 
@@ -242,7 +242,7 @@ abstract mixin class _$NarouNovelContentCopyWith<$Res>
       String ncode,
       String? body,
       int chapter,
-      double scrollPosition,
+      double scrollPercent,
       @JsonKey(fromJson: intToCacheStatus, toJson: cacheStatusToInt)
       CacheStatus cacheStatus,
       @JsonKey(fromJson: intToReadingStatus, toJson: readingStatusToInt)
@@ -267,7 +267,7 @@ class __$NarouNovelContentCopyWithImpl<$Res>
     Object? ncode = null,
     Object? body = freezed,
     Object? chapter = null,
-    Object? scrollPosition = null,
+    Object? scrollPercent = null,
     Object? cacheStatus = null,
     Object? readingStatus = null,
     Object? cacheUpdatedAt = freezed,
@@ -289,9 +289,9 @@ class __$NarouNovelContentCopyWithImpl<$Res>
           ? _self.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as int,
-      scrollPosition: null == scrollPosition
-          ? _self.scrollPosition
-          : scrollPosition // ignore: cast_nullable_to_non_nullable
+      scrollPercent: null == scrollPercent
+          ? _self.scrollPercent
+          : scrollPercent // ignore: cast_nullable_to_non_nullable
               as double,
       cacheStatus: null == cacheStatus
           ? _self.cacheStatus

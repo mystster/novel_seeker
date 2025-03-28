@@ -12,7 +12,7 @@ _NarouNovelContent _$NarouNovelContentFromJson(Map<String, dynamic> json) =>
       ncode: json['ncode'] as String,
       body: json['body'] as String?,
       chapter: (json['chapter'] as num).toInt(),
-      scrollPosition: (json['scroll_position'] as num?)?.toDouble() ?? 0.0,
+      scrollPercent: (json['scroll_percent'] as num?)?.toDouble() ?? 0.0,
       cacheStatus: json['cache_status'] == null
           ? CacheStatus.noCache
           : intToCacheStatus((json['cache_status'] as num).toInt()),
@@ -30,7 +30,7 @@ Map<String, dynamic> _$NarouNovelContentToJson(_NarouNovelContent instance) =>
       'ncode': instance.ncode,
       'body': instance.body,
       'chapter': instance.chapter,
-      'scroll_position': instance.scrollPosition,
+      'scroll_percent': instance.scrollPercent,
       'cache_status': cacheStatusToInt(instance.cacheStatus),
       'reading_status': readingStatusToInt(instance.readingStatus),
       'cache_updated_at': instance.cacheUpdatedAt?.toIso8601String(),

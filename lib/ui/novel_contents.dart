@@ -46,7 +46,7 @@ class NovelContents extends HookConsumerWidget {
         }, [currentChapter.value]);
         // 現在のスクロール位置(パーセント)
         final currentScrollPercents = List.generate(novelInfo.contents.length,
-            (i) => novelInfo.contents[i].scrollPosition);
+            (i) => novelInfo.contents[i].scrollPercent);
 
         final scrollControllers = List.generate(
             novelInfo.contents.length, (i) => useScrollController());
@@ -67,9 +67,12 @@ class NovelContents extends HookConsumerWidget {
             // 再度initialScrollOffsetの位置に戻ってしまうことがあるため不採用。
             for (var i = 0; i < novelInfo.contents.length; i++) {
               if (scrollControllers[i].hasClients) {
-                final scrollPosition = scrollControllers[i].position.getScrollPotisionFromPercent(novelInfo.contents[i].scrollPosition);
+                final scrollPosition = scrollControllers[i]
+                    .position
+                    .getScrollPotisionFromPercent(
+                        novelInfo.contents[i].scrollPercent);
                 _logger.d(
-                    'scrollController[$i] is fire, scrollPosition: $scrollPosition(${novelInfo.contents[i].scrollPosition}%)');
+                    'scrollController[$i] is fire, scrollPosition: $scrollPosition(${novelInfo.contents[i].scrollPercent}%)');
                 scrollControllers[i].jumpTo(scrollPosition);
               }
             }
@@ -113,8 +116,8 @@ class NovelContents extends HookConsumerWidget {
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
-                      saveScrollPosition(ref, ncode, novelInfo.contents[i].chapter,
-                          scrollControllers[i]);
+                      saveScrollPosition(ref, ncode,
+                          novelInfo.contents[i].chapter, scrollControllers[i]);
                     });
               }
             }
@@ -320,7 +323,7 @@ class NovelContents extends HookConsumerWidget {
       return;
     }
     final scrollPosition = controller.position
-        .getScrollPotisionFromPercent(content.scrollPosition);
+        .getScrollPotisionFromPercent(content.scrollPercent);
     _logger.d('restore $scrollPosition to ${content.chapter}');
     controller.jumpTo(scrollPosition);
   }

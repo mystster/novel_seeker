@@ -43,11 +43,11 @@ class $NarouNovelContentsTable extends NarouNovelContents
               type: DriftSqlType.int, requiredDuringInsert: true)
           .withConverter<ReadingStatus>(
               $NarouNovelContentsTable.$converterreadingStatus);
-  static const VerificationMeta _scrollPositionMeta =
-      const VerificationMeta('scrollPosition');
+  static const VerificationMeta _scrollPercentMeta =
+      const VerificationMeta('scrollPercent');
   @override
-  late final GeneratedColumn<double> scrollPosition = GeneratedColumn<double>(
-      'scroll_position', aliasedName, false,
+  late final GeneratedColumn<double> scrollPercent = GeneratedColumn<double>(
+      'scroll_percent', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
@@ -62,7 +62,7 @@ class $NarouNovelContentsTable extends NarouNovelContents
         chapter,
         ncode,
         readingStatus,
-        scrollPosition,
+        scrollPercent,
         title
       ];
   @override
@@ -97,13 +97,13 @@ class $NarouNovelContentsTable extends NarouNovelContents
     } else if (isInserting) {
       context.missing(_ncodeMeta);
     }
-    if (data.containsKey('scroll_position')) {
+    if (data.containsKey('scroll_percent')) {
       context.handle(
-          _scrollPositionMeta,
-          scrollPosition.isAcceptableOrUnknown(
-              data['scroll_position']!, _scrollPositionMeta));
+          _scrollPercentMeta,
+          scrollPercent.isAcceptableOrUnknown(
+              data['scroll_percent']!, _scrollPercentMeta));
     } else if (isInserting) {
-      context.missing(_scrollPositionMeta);
+      context.missing(_scrollPercentMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -128,8 +128,8 @@ class $NarouNovelContentsTable extends NarouNovelContents
           .read(DriftSqlType.string, data['${effectivePrefix}body']),
       chapter: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}chapter'])!,
-      scrollPosition: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}scroll_position'])!,
+      scrollPercent: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}scroll_percent'])!,
       cacheStatus: $NarouNovelContentsTable.$convertercacheStatus.fromSql(
           attachedDatabase.typeMapping
               .read(DriftSqlType.int, data['${effectivePrefix}cache_status'])!),
@@ -159,7 +159,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
   final Value<int> chapter;
   final Value<String> ncode;
   final Value<ReadingStatus> readingStatus;
-  final Value<double> scrollPosition;
+  final Value<double> scrollPercent;
   final Value<String> title;
   final Value<int> rowid;
   const NarouNovelContentsCompanion({
@@ -169,7 +169,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     this.chapter = const Value.absent(),
     this.ncode = const Value.absent(),
     this.readingStatus = const Value.absent(),
-    this.scrollPosition = const Value.absent(),
+    this.scrollPercent = const Value.absent(),
     this.title = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -180,14 +180,14 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     required int chapter,
     required String ncode,
     required ReadingStatus readingStatus,
-    required double scrollPosition,
+    required double scrollPercent,
     required String title,
     this.rowid = const Value.absent(),
   })  : cacheStatus = Value(cacheStatus),
         chapter = Value(chapter),
         ncode = Value(ncode),
         readingStatus = Value(readingStatus),
-        scrollPosition = Value(scrollPosition),
+        scrollPercent = Value(scrollPercent),
         title = Value(title);
   static Insertable<NarouNovelContent> custom({
     Expression<String>? body,
@@ -196,7 +196,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
     Expression<int>? chapter,
     Expression<String>? ncode,
     Expression<int>? readingStatus,
-    Expression<double>? scrollPosition,
+    Expression<double>? scrollPercent,
     Expression<String>? title,
     Expression<int>? rowid,
   }) {
@@ -207,7 +207,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       if (chapter != null) 'chapter': chapter,
       if (ncode != null) 'ncode': ncode,
       if (readingStatus != null) 'reading_status': readingStatus,
-      if (scrollPosition != null) 'scroll_position': scrollPosition,
+      if (scrollPercent != null) 'scroll_percent': scrollPercent,
       if (title != null) 'title': title,
       if (rowid != null) 'rowid': rowid,
     });
@@ -220,7 +220,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       Value<int>? chapter,
       Value<String>? ncode,
       Value<ReadingStatus>? readingStatus,
-      Value<double>? scrollPosition,
+      Value<double>? scrollPercent,
       Value<String>? title,
       Value<int>? rowid}) {
     return NarouNovelContentsCompanion(
@@ -230,7 +230,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
       chapter: chapter ?? this.chapter,
       ncode: ncode ?? this.ncode,
       readingStatus: readingStatus ?? this.readingStatus,
-      scrollPosition: scrollPosition ?? this.scrollPosition,
+      scrollPercent: scrollPercent ?? this.scrollPercent,
       title: title ?? this.title,
       rowid: rowid ?? this.rowid,
     );
@@ -261,8 +261,8 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
           .$converterreadingStatus
           .toSql(readingStatus.value));
     }
-    if (scrollPosition.present) {
-      map['scroll_position'] = Variable<double>(scrollPosition.value);
+    if (scrollPercent.present) {
+      map['scroll_percent'] = Variable<double>(scrollPercent.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -282,7 +282,7 @@ class NarouNovelContentsCompanion extends UpdateCompanion<NarouNovelContent> {
           ..write('chapter: $chapter, ')
           ..write('ncode: $ncode, ')
           ..write('readingStatus: $readingStatus, ')
-          ..write('scrollPosition: $scrollPosition, ')
+          ..write('scrollPercent: $scrollPercent, ')
           ..write('title: $title, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -1605,7 +1605,7 @@ typedef $$NarouNovelContentsTableCreateCompanionBuilder
   required int chapter,
   required String ncode,
   required ReadingStatus readingStatus,
-  required double scrollPosition,
+  required double scrollPercent,
   required String title,
   Value<int> rowid,
 });
@@ -1617,7 +1617,7 @@ typedef $$NarouNovelContentsTableUpdateCompanionBuilder
   Value<int> chapter,
   Value<String> ncode,
   Value<ReadingStatus> readingStatus,
-  Value<double> scrollPosition,
+  Value<double> scrollPercent,
   Value<String> title,
   Value<int> rowid,
 });
@@ -1654,9 +1654,8 @@ class $$NarouNovelContentsTableFilterComposer
           column: $table.readingStatus,
           builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<double> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition,
-      builder: (column) => ColumnFilters(column));
+  ColumnFilters<double> get scrollPercent => $composableBuilder(
+      column: $table.scrollPercent, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnFilters(column));
@@ -1691,8 +1690,8 @@ class $$NarouNovelContentsTableOrderingComposer
       column: $table.readingStatus,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<double> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition,
+  ColumnOrderings<double> get scrollPercent => $composableBuilder(
+      column: $table.scrollPercent,
       builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get title => $composableBuilder(
@@ -1728,8 +1727,8 @@ class $$NarouNovelContentsTableAnnotationComposer
       $composableBuilder(
           column: $table.readingStatus, builder: (column) => column);
 
-  GeneratedColumn<double> get scrollPosition => $composableBuilder(
-      column: $table.scrollPosition, builder: (column) => column);
+  GeneratedColumn<double> get scrollPercent => $composableBuilder(
+      column: $table.scrollPercent, builder: (column) => column);
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
@@ -1769,7 +1768,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             Value<int> chapter = const Value.absent(),
             Value<String> ncode = const Value.absent(),
             Value<ReadingStatus> readingStatus = const Value.absent(),
-            Value<double> scrollPosition = const Value.absent(),
+            Value<double> scrollPercent = const Value.absent(),
             Value<String> title = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -1780,7 +1779,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             chapter: chapter,
             ncode: ncode,
             readingStatus: readingStatus,
-            scrollPosition: scrollPosition,
+            scrollPercent: scrollPercent,
             title: title,
             rowid: rowid,
           ),
@@ -1791,7 +1790,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             required int chapter,
             required String ncode,
             required ReadingStatus readingStatus,
-            required double scrollPosition,
+            required double scrollPercent,
             required String title,
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -1802,7 +1801,7 @@ class $$NarouNovelContentsTableTableManager extends RootTableManager<
             chapter: chapter,
             ncode: ncode,
             readingStatus: readingStatus,
-            scrollPosition: scrollPosition,
+            scrollPercent: scrollPercent,
             title: title,
             rowid: rowid,
           ),
