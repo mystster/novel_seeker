@@ -115,7 +115,7 @@ class NovelContents extends HookConsumerWidget {
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
                     onDebounce: () {
-                      saveScrollPosition(ref, ncode, currentChapter.value,
+                      saveScrollPosition(ref, ncode, novelInfo.contents[i].chapter,
                           scrollControllers[i]);
                     });
               }
@@ -132,7 +132,7 @@ class NovelContents extends HookConsumerWidget {
         // PageView.builderのonPageChangedイベントだとタイミングが微妙で
         // scrollController.hasClientがfalseになる場合があるため自前で実装。
         useEffect(() {
-          double lastPage = currentIndex.toDouble();
+          double lastPage = currentScrollControllerIndex.toDouble();
           bool isPageChanging = false;
           bool isDestinationScrollPositionRestore = true;
           void onPageChaged() async {
@@ -264,7 +264,7 @@ class NovelContents extends HookConsumerWidget {
               controller: pageController,
               onPageChanged: (value) async {
                 _logger.d('onPageChaged is fire!');
-                final oldIndex = currentIndex;
+                final oldIndex = currentScrollControllerIndex;
                 saveScrollPosition(ref, ncode, currentChapter.value,
                     scrollControllers[oldIndex]);
 
