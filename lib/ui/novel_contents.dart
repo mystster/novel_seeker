@@ -30,15 +30,24 @@ class NovelContents extends HookConsumerWidget {
         if (novelInfo == null) {
           return const Center(child: Text('No data'));
         }
+        // 現在表示しているチャプター番号
         final currentChapter = useState(novelInfo.currentChapter);
+        // 現在表示しているNarouNovelContent
         final currentContent = useMemoized(() {
           return novelInfo.contents
               .firstWhereOrNull((e) => e.chapter == currentChapter.value);
         }, [currentChapter.value]);
-        final currentIndex = useMemoized(() {
+        // 現在のスクロールコントローラのインデックス
+        final currentScrollControllerIndex = useMemoized(() {
+          _logger.d(
+              'current chapter in current scrollControllerIndex:${currentChapter.value}');
           return novelInfo.contents
               .indexWhere((e) => e.chapter == currentChapter.value);
         }, [currentChapter.value]);
+        // 現在のスクロール位置(パーセント)
+        final currentScrollPercents = List.generate(novelInfo.contents.length,
+            (i) => novelInfo.contents[i].scrollPosition);
+
         final scrollControllers = List.generate(
             novelInfo.contents.length, (i) => useScrollController());
         useEffect(() {
@@ -72,7 +81,7 @@ class NovelContents extends HookConsumerWidget {
 
         for (var i = 0; i < novelInfo.contents.length; i++) {
           useEffect(() {
-            void onScroll() async {
+            void onScroll() {
               if (novelInfo.contents[i].readingStatus == ReadingStatus.unread &&
                   novelInfo.contents[i].body != null) {
                 // 読書中に変更
@@ -84,7 +93,7 @@ class NovelContents extends HookConsumerWidget {
 
               if (novelInfo.contents[i].readingStatus ==
                       ReadingStatus.reading &&
-                  await waitForControllerToAttach(scrollControllers[i])) {
+                  scrollControllers[i].hasClients) {
                 if (scrollControllers[i].position.maxScrollExtent !=
                         0 /* スクロール可能 */ &&
                     scrollControllers[i].position.pixels ==
@@ -97,7 +106,11 @@ class NovelContents extends HookConsumerWidget {
                 }
               }
 
-              if (await waitForControllerToAttach(scrollControllers[i])) {
+              if (scrollControllers[i].hasClients) {
+                // 現在のスクロール位置を保存
+                currentScrollPercents[i] =
+                    scrollControllers[i].position.getScrollPercent();
+
                 // スクロールが止まって5秒後にDBにスクロール位置を保存する。
                 _debouncer.debounce(
                     duration: const Duration(seconds: 5),
@@ -113,8 +126,8 @@ class NovelContents extends HookConsumerWidget {
           }, scrollControllers);
         }
 
-        final pageController = usePageController(
-            initialPage: currentIndex);
+        final pageController =
+            usePageController(initialPage: currentScrollControllerIndex);
         // ページを切り替えたときに、スクロール位置の保存と復元を行う
         // PageView.builderのonPageChangedイベントだとタイミングが微妙で
         // scrollController.hasClientがfalseになる場合があるため自前で実装。
@@ -197,7 +210,7 @@ class NovelContents extends HookConsumerWidget {
           onPopInvokedWithResult: (didpop, _) async {
             // この画面から抜けるときにスクロール位置を保存する。
             _debouncer.cancel();
-            final scrollControllerIndex = currentIndex;
+            final scrollControllerIndex = currentScrollControllerIndex;
             saveScrollPosition(ref, ncode, currentChapter.value,
                 scrollControllers[scrollControllerIndex]);
           },
