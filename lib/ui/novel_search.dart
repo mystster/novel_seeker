@@ -31,7 +31,7 @@ class NovelSearch extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSearchDialogOpen = useState(true);
-    final searchParam = useState<Map<String, dynamic>?>(null);
+    final searchParam = useState<NovelSearchParam?>(null);
     final searchResult = ref.watch(novelSearchProvider(searchParam.value));
     final formKey = useMemoized(GlobalKey<FormBuilderState>.new);
     useEffect(() {
@@ -50,12 +50,9 @@ class NovelSearch extends HookConsumerWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               FormBuilderTextField(
-                                name: NovelSearchParam.word.name,
-                                initialValue: searchParam
-                                    .value?[NovelSearchParam.word.name],
-                                decoration: InputDecoration(
-                                    labelText:
-                                        NovelSearchParam.word.displayName),
+                                name: 'word',
+                                initialValue: searchParam.value?.word,
+                                decoration: InputDecoration(labelText: '検索文字列'),
                                 validator: FormBuilderValidators.required(
                                     errorText: '検索条件を入れてください',
                                     checkNullOrEmpty: true),
@@ -64,40 +61,31 @@ class NovelSearch extends HookConsumerWidget {
                                 // onChanged: (value) => (formKey.currentState?.validate()),
                               ),
                               FormBuilderTextField(
-                                name: NovelSearchParam.notword.name,
-                                initialValue: searchParam
-                                    .value?[NovelSearchParam.notword.name],
-                                decoration: InputDecoration(
-                                    labelText:
-                                        NovelSearchParam.notword.displayName),
+                                name: 'notword',
+                                initialValue: searchParam.value?.notword,
+                                decoration:
+                                    InputDecoration(labelText: '検索除外文字列'),
                               ),
                               FormBuilderCheckboxGroup(
-                                name: NovelSearchParam.searchRange.name,
-                                initialValue: searchParam
-                                    .value?[NovelSearchParam.searchRange.name],
-                                decoration: InputDecoration(
-                                    labelText: NovelSearchParam
-                                        .searchRange.displayName),
+                                name: 'searchRange',
+                                initialValue: searchParam.value?.searchRange,
+                                decoration: InputDecoration(labelText: '検索範囲'),
                                 options: [
                                   FormBuilderFieldOption(
-                                    value: NovelSearchParam.title.name,
-                                    child: Text(
-                                        NovelSearchParam.title.displayName),
+                                    value: 'title',
+                                    child: Text('タイトル'),
                                   ),
                                   FormBuilderFieldOption(
-                                    value: NovelSearchParam.ex.name,
-                                    child:
-                                        Text(NovelSearchParam.ex.displayName),
+                                    value: 'ex',
+                                    child: Text('あらすじ'),
                                   ),
                                   FormBuilderFieldOption(
-                                    value: NovelSearchParam.keyword.name,
-                                    child: Text(
-                                        NovelSearchParam.keyword.displayName),
+                                    value: 'keyword',
+                                    child: Text('キーワード'),
                                   ),
                                   FormBuilderFieldOption(
-                                    value: NovelSearchParam.wname.name,
-                                    child: Text(
-                                        NovelSearchParam.wname.displayName),
+                                    value: 'wname',
+                                    child: Text('作者名'),
                                   ),
                                 ],
                               )
@@ -111,7 +99,8 @@ class NovelSearch extends HookConsumerWidget {
                             onPressed: () {
                               if (formKey.currentState?.saveAndValidate() ??
                                   false) {
-                                searchParam.value = formKey.currentState?.value;
+                                searchParam.value = NovelSearchParam.fromJson(
+                                    formKey.currentState!.value);
                                 Navigator.of(context).pop();
                               }
                             }),

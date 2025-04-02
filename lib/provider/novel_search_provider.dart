@@ -1,23 +1,22 @@
 import 'dart:convert';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../model/narou_novel_info.dart';
 
-final novelSearchProvider = FutureProvider.autoDispose
-    .family<List<NarouNovelInfo>, Map<String, dynamic>?>(
+part 'novel_search_provider.freezed.dart';
+part 'novel_search_provider.g.dart';
+
+final novelSearchProvider =
+    FutureProvider.autoDispose.family<List<NarouNovelInfo>, NovelSearchParam?>(
   (ref, arg) async {
     if (arg == null) {
       return [];
     }
-    final baseUrl = Uri.parse('https://api.syosetu.com/novelapi/api/?out=json&lim=500');
-
-    Map<String, dynamic> queryParameters = _flattenListToMap(arg);
-    queryParameters.addAll(baseUrl.queryParameters);
-
-    final accessUrl = baseUrl.replace(queryParameters: queryParameters);
+    final accessUrl = arg.createSearchUrl();
     _logger.d('access url is ${accessUrl.toString()}');
     final response = await http.get(accessUrl);
     final json = jsonDecode(response.body) as List<dynamic>;
@@ -28,35 +27,47 @@ final novelSearchProvider = FutureProvider.autoDispose
 
 final _logger = Logger();
 
-Map<String, dynamic> _flattenListToMap(Map<String, dynamic> data) {
-  Map<String, dynamic> result = {};
-  data.forEach((key, value) {
-    if (value is List<String>) {
-      for (var element in value) {
-        (result.addAll({element: '1'}));
-      }
-    }
-    if (result.containsKey(key)) {
-      _logger.w('同じキーが存在しています($key)');
-    }
-    if (value != null && value is! List<String>) {
-      result[key] = value;
-    }
-  });
-  return result;
-}
+@freezed
+abstract class NovelSearchParam with _$NovelSearchParam {
+  factory NovelSearchParam(
+          {
+          // 検索文字
+          String? word,
+          // 検索除外文字
+          String? notword,
+          // Nコード
+          List<String>? ncode,
+          // タイトルを検索対象に入れるか？
+          @JsonKey(name: 'searchRange') List<String>? searchRange}) =
+      _NovelSearchParam;
 
-enum NovelSearchParam {
-  word('検索文字'),
-  notword('検索除外文字'),
-  searchRange('検索範囲'),
-  title('タイトル'),
-  ex('あらすじ'),
-  keyword('キーワード'),
-  wname('作者名');
+  factory NovelSearchParam.fromJson(Map<String, dynamic> json) =>
+      _$NovelSearchParamFromJson(json);
 
-  final String displayName;
-  const NovelSearchParam(this.displayName);
-  @override
-  String toString() => displayName;
+  const NovelSearchParam._();
+
+  Uri createSearchUrl() {
+    final baseUrl =
+        Uri.parse('https://api.syosetu.com/novelapi/api/?out=json&lim=500');
+
+    Map<String, dynamic> queryParameters = {};
+    queryParameters.addAll(baseUrl.queryParameters);
+
+    queryParameters.addAll({
+      if (word != null) 'word': word,
+      if (notword != null) 'notword': notword,
+      if (ncode?.isNotEmpty ?? false) 'ncode': ncode!.join('-'),
+      if ((searchRange?.isNotEmpty ?? false) && searchRange!.contains('title'))
+        'title': '1',
+      if ((searchRange?.isNotEmpty ?? false) && searchRange!.contains('ex'))
+        'ex': '1',
+      if ((searchRange?.isNotEmpty ?? false) &&
+          searchRange!.contains('keyword'))
+        'keyword': '1',
+      if ((searchRange?.isNotEmpty ?? false) && searchRange!.contains('wname'))
+        'wname': '1',
+    });
+
+    return baseUrl.replace(queryParameters: queryParameters);
+  }
 }
