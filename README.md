@@ -61,23 +61,23 @@ Novel Seeker is a Flutter application designed for reading and managing novels f
     *   Run the app: `flutter run`
 
 ## Project Structure
-novel_seeker/
-├── lib/
-│ ├── model/ # Data models (e.g., NarouEnum, NovelInfo, NarouNovelContent) 
-│ ├── provider/ # Riverpod providers for state management 
-│ │ └── narou_novel_provider.dart # Fetching and managing novel data 
-│ ├── ui/ # UI components 
-│ │ ├── novel_ranking.dart # Ranking screen 
-│ │ ├── novel_info_card.dart # Novel information card 
-│ │ ├── novel_contents.dart # Novel content display screen 
-│ │ ├── novel_shelf.dart # Novel shelf screen 
-│ │ └── novel_search.dart # Novel search screen 
-│ ├── repository/ # Database related 
-│ │ └── app_database.dart # Database 
-│ ├── main.dart # Entry point of the application 
-├── test/ # Unit and widget tests 
-├── pubspec.yaml # Project dependencies and metadata
-└── README.md # This file
+novel_seeker/  
+├── lib/  
+│ ├── model/ # Data models (e.g., NarouEnum, NovelInfo, NarouNovelContent)   
+│ ├── provider/ # Riverpod providers for state management   
+│ │ └── narou_novel_provider.dart # Fetching and managing novel data   
+│ ├── ui/ # UI components  
+│ │ ├── novel_ranking.dart # Ranking screen  
+│ │ ├── novel_info_card.dart # Novel information card  
+│ │ ├── novel_contents.dart # Novel content display screen  
+│ │ ├── novel_shelf.dart # Novel shelf screen  
+│ │ └── novel_search.dart # Novel search screen  
+│ ├── repository/ # Database related  
+│ │ └── app_database.dart # Database  
+│ ├── main.dart # Entry point of the application  
+├── test/ # Unit and widget tests  
+├── pubspec.yaml # Project dependencies and metadata  
+└── README.md # This file  
 
 
 ## Contributing
