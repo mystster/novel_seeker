@@ -1,6 +1,6 @@
 {
-    "name": "novel_seeker",
-    "short_name": "novel_seeker",
+    "name": "Novel Seeker",
+    "short_name": "Novel Seeker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
