@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:novel_seeker/model/narou_enum.dart';
 import 'package:novel_seeker/model/novel_info.dart';
+import 'package:novel_seeker/ui/novel_ranking.dart';
 
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
@@ -54,6 +55,16 @@ class NovelShelf extends HookConsumerWidget {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => NovelSearch(),
+                  ));
+                }),
+            ListTile(
+                leading: const Icon(Icons.production_quantity_limits),
+                title: const Text('ランキング'),
+                onTap: () {
+                  // drawerを閉じる
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => NovelRanking(),
                   ));
                 }),
             ListTile(
