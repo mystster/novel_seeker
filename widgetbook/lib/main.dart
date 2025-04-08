@@ -21,14 +21,15 @@ class WidgetbookApp extends StatelessWidget {
       // it will be generaed in the next step
       directories: directories,
       addons: [
-        DeviceFrameAddon(
-          devices: [
-            Devices.android.mediumPhone,
-            Devices.android.bigPhone,
-            Devices.android.mediumTablet,
-          ],
-          initialDevice: Devices.android.bigPhone,
-        ),
+        ViewportAddon([Viewports.none, ...AndroidViewports.all]),
+        // DeviceFrameAddon(
+        //   devices: [
+        //     Devices.android.mediumPhone,
+        //     Devices.android.bigPhone,
+        //     Devices.android.mediumTablet,
+        //   ],
+        //   initialDevice: Devices.android.bigPhone,
+        // ),
         GridAddon(10),
         AlignmentAddon(),
         InspectorAddon(),
