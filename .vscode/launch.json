@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "novel_seeker",
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
-            "program": "lib/main.dart"
+            "program": "lib/main.dart",
+            "deviceId": "adb-a3653d89-J96vOt._adb-tls-connect._tcp"
+
+        },
+        {
+            "name": "widgetbook",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "widgetbook/lib/main.dart",
+            "deviceId": "windows"
 
         },
         {
