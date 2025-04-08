@@ -20,6 +20,26 @@ class WidgetbookApp extends StatelessWidget {
       // The [directories] variable does not exist yet,
       // it will be generaed in the next step
       directories: directories,
+      addons: [
+        DeviceFrameAddon(
+          devices: [
+            Devices.android.mediumPhone,
+            Devices.android.bigPhone,
+            Devices.android.mediumTablet,
+          ],
+          initialDevice: Devices.android.bigPhone,
+        ),
+        GridAddon(10),
+        AlignmentAddon(),
+        InspectorAddon(),
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(name: 'Light', data: ThemeData.light()),
+            WidgetbookTheme(name: 'Dark', data: ThemeData.dark()),
+          ],
+        ),
+        ZoomAddon(initialZoom: 1.0),
+      ],
     );
   }
 }
