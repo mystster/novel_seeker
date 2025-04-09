@@ -10,20 +10,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../model/narou_novel_info.dart';
 import '../provider/narou_novel_provider.dart';
 import '../provider/novel_search_provider.dart';
-import 'novel_info_card.dart';
-
-part 'novel_search.g.dart';
+import 'novel_info_card_with_registerdmark_tap_to_detail.dart';
 
 final _logger = Logger();
-
-@riverpod
-bool _isRegistered(Ref ref, String ncode) {
-  final narouNovel = ref.watch(narouNovelProvider);
-  return narouNovel.when(
-      data: (data) => data.any((e) => e.ncode == ncode),
-      loading: () => false,
-      error: (e, s) => false);
-}
 
 class NovelSearch extends HookConsumerWidget {
   const NovelSearch({super.key});
@@ -144,56 +133,8 @@ class NovelSearch extends HookConsumerWidget {
                     child: Text('No search result'),
                   )
                 : ListView.builder(
-                    itemBuilder: (context, index) {
-                      final isRegistered =
-                          ref.watch(_isRegisteredProvider(value[index].ncode));
-
-                      return ListTile(
-                          horizontalTitleGap: 0,
-                          contentPadding: const EdgeInsets.all(0),
-                          minVerticalPadding: 0,
-                          leading: IconButton(
-                            icon: isRegistered
-                                ? const Icon(Icons.bookmark_remove)
-                                : Icon(Icons.bookmark_add),
-                            onPressed: isRegistered
-                                ? () async {
-                                    await ref
-                                        .read(narouNovelProvider.notifier)
-                                        .removeNovel(value[index].ncode);
-                                  }
-                                : () async {
-                                    await ref
-                                        .read(narouNovelProvider.notifier)
-                                        .addNovel(value[index].ncode);
-                                  },
-                          ),
-                          title: InkWell(
-                              child: NovelInfoCard(
-                                info: value[index],
-                                additionalWidget: isRegistered
-                                    ? Icon(
-                                        Icons.bookmark,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimaryContainer,
-                                      )
-                                    : null,
-                                padding: 1.0,
-                              ),
-                              onTap: () {
-                                showNovelDetail(
-                                    context: context,
-                                    info: value[index],
-                                    actions: [
-                                      ElevatedButton(
-                                        child: const Text('閉じる'),
-                                        onPressed: () =>
-                                            (Navigator.of(context).pop()),
-                                      )
-                                    ]);
-                              }));
-                    },
+                    itemBuilder: (context, index) => NovelInfoCardWithRegisterdMarkTapToDetail(
+                          info: value[index]),
                     itemCount: value.length,
                   ),
             AsyncLoading() => const CircularProgressIndicator(),

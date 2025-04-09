@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'novel_search.dart';
+part of 'novel_info_card_with_registerdmark_tap_to_detail.dart';
 
 // **************************************************************************
 // RiverpodGenerator
