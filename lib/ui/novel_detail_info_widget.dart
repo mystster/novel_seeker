@@ -40,14 +40,11 @@ void showNovelDetail(
                       visible: (actions?.isNotEmpty ?? false) || addCloseButton,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 0),
+                            horizontal: 8.0, vertical: 4),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ...?actions,
-                            if ((actions?.isNotEmpty ?? false) &&
-                                addCloseButton)
-                              const SizedBox(width: 8),
                             addCloseButton
                                 ? ElevatedButton(
                                     child: const Text('閉じる'),
