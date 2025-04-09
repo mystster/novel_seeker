@@ -20,12 +20,13 @@ bool _isRegistered(Ref ref, String ncode) {
 
 class NovelInfoCardWithRegisterdMarkTapToDetail extends ConsumerWidget {
   final NarouNovelInfo info;
+  final bool? isRegistered;
   const NovelInfoCardWithRegisterdMarkTapToDetail(
-      {required this.info, super.key});
+      {required this.info, this.isRegistered, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isRegistered = ref.watch(_isRegisteredProvider(info.ncode));
+    final bool isRegistered = this.isRegistered ?? ref.watch(_isRegisteredProvider(info.ncode));
     return ListTile(
         horizontalTitleGap: 0,
         contentPadding: const EdgeInsets.all(0),
