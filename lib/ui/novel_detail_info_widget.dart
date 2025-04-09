@@ -6,18 +6,19 @@ import './util_ui.dart';
 void showNovelDetail(
     {required BuildContext context,
     required NarouNovelInfo info,
+    bool addCloseButton = true,
     List<Widget>? actions}) {
   final mediaQuery = MediaQuery.of(context);
   showDialog(
     context: context,
-    builder: (BuildContext context) {
+    builder: (BuildContext dialogContext) {
       return Dialog(
         insetPadding: EdgeInsets.symmetric(
           horizontal: mediaQuery.size.width * 0.025,
           vertical: mediaQuery.size.height * 0.025,
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
+          builder: (BuildContext _, BoxConstraints constraints) {
             return SizedBox(
                 width: constraints.maxWidth,
                 height: constraints.maxHeight,
@@ -34,13 +35,23 @@ void showNovelDetail(
                       ),
                     ),
                     Visibility(
-                      visible: actions != null,
+                      visible: (actions?.isNotEmpty ?? false) || addCloseButton ,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: actions ?? [],
+                          children: [
+                            ...?actions,
+                            if ((actions?.isNotEmpty ?? false) && addCloseButton) const SizedBox(width: 8),
+                            addCloseButton
+                                ? ElevatedButton(
+                                    child: const Text('閉じる'),
+                                    onPressed: () =>
+                                        (Navigator.of(dialogContext).pop()),
+                                  )
+                                : SizedBox.shrink()
+                          ],
                         ),
                       ),
                     )

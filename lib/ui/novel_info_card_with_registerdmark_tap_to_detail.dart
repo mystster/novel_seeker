@@ -59,12 +59,7 @@ class NovelInfoCardWithRegisterdMarkTapToDetail extends ConsumerWidget {
               padding: 1.0,
             ),
             onTap: () {
-              showNovelDetail(context: context, info: info, actions: [
-                ElevatedButton(
-                  child: const Text('閉じる'),
-                  onPressed: () => (Navigator.of(context).pop()),
-                )
-              ]);
+              showNovelDetail(context: context, info: info);
             }));
   }
 }
