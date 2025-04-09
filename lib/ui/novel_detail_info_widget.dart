@@ -6,11 +6,13 @@ import './util_ui.dart';
 void showNovelDetail(
     {required BuildContext context,
     required NarouNovelInfo info,
+    required bool useRootNavigator,
     bool addCloseButton = true,
     List<Widget>? actions}) {
   final mediaQuery = MediaQuery.of(context);
   showDialog(
     context: context,
+    useRootNavigator: useRootNavigator,
     builder: (BuildContext dialogContext) {
       return Dialog(
         insetPadding: EdgeInsets.symmetric(
@@ -35,7 +37,7 @@ void showNovelDetail(
                       ),
                     ),
                     Visibility(
-                      visible: (actions?.isNotEmpty ?? false) || addCloseButton ,
+                      visible: (actions?.isNotEmpty ?? false) || addCloseButton,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 0),
@@ -43,7 +45,9 @@ void showNovelDetail(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ...?actions,
-                            if ((actions?.isNotEmpty ?? false) && addCloseButton) const SizedBox(width: 8),
+                            if ((actions?.isNotEmpty ?? false) &&
+                                addCloseButton)
+                              const SizedBox(width: 8),
                             addCloseButton
                                 ? ElevatedButton(
                                     child: const Text('閉じる'),

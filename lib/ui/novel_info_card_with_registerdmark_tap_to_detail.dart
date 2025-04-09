@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:novel_seeker/model/narou_novel_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../provider/dialog_use_root_navigation_provider.dart';
 import '../provider/narou_novel_provider.dart';
 import 'novel_detail_info_widget.dart';
 import 'novel_info_card.dart';
@@ -26,16 +27,16 @@ class NovelInfoCardWithRegisterdMarkTapToDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isRegistered = this.isRegistered ?? ref.watch(_isRegisteredProvider(info.ncode));
+    final bool isRegisteredValue = isRegistered ?? ref.watch(_isRegisteredProvider(info.ncode));
     return ListTile(
         horizontalTitleGap: 0,
         contentPadding: const EdgeInsets.all(0),
         minVerticalPadding: 0,
         leading: IconButton(
-          icon: isRegistered
+          icon: isRegisteredValue
               ? const Icon(Icons.bookmark_remove)
               : Icon(Icons.bookmark_add),
-          onPressed: isRegistered
+          onPressed: isRegisteredValue
               ? () async {
                   await ref
                       .read(narouNovelProvider.notifier)
@@ -50,7 +51,7 @@ class NovelInfoCardWithRegisterdMarkTapToDetail extends ConsumerWidget {
         title: InkWell(
             child: NovelInfoCard(
               info: info,
-              additionalWidget: isRegistered
+              additionalWidget: isRegisteredValue
                   ? Icon(
                       Icons.bookmark,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -59,7 +60,7 @@ class NovelInfoCardWithRegisterdMarkTapToDetail extends ConsumerWidget {
               padding: 1.0,
             ),
             onTap: () {
-              showNovelDetail(context: context, info: info);
+              showNovelDetail(context: context, info: info, useRootNavigator: ref.watch(dialogUseRootNavigationProvider));
             }));
   }
 }

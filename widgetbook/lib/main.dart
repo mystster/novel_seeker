@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:novel_seeker/provider/dialog_use_root_navigation_provider.dart';
 import 'package:novel_seeker/repository/app_database.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -16,6 +17,7 @@ void main() {
           provider.onDispose(AppDatabase.dispose);
           return AppDatabase(isTesting: true);
         }),
+        dialogUseRootNavigationProvider.overrideWithValue(false),
       ],
       child: WidgetbookApp(),
     ),

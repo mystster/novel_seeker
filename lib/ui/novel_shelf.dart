@@ -5,6 +5,7 @@ import 'package:novel_seeker/model/narou_enum.dart';
 import 'package:novel_seeker/model/novel_info.dart';
 import 'package:novel_seeker/ui/novel_ranking.dart';
 
+import '../provider/dialog_use_root_navigation_provider.dart';
 import '../provider/narou_novel_provider.dart';
 import 'novel_contents.dart';
 import 'novel_detail_info_widget.dart';
@@ -198,7 +199,11 @@ class NovelShelf extends HookConsumerWidget {
                   ref.read(narouNovelProvider.notifier).addNarouToC(novelInfo);
                   break;
                 case 'detail':
-                  showNovelDetail(context: context, info: novelInfo.novelInfo!);
+                  showNovelDetail(
+                      context: context,
+                      info: novelInfo.novelInfo!,
+                      useRootNavigator:
+                          ref.watch(dialogUseRootNavigationProvider));
                   break;
                 case 'delete':
                   break;
