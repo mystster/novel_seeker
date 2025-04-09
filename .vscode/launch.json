@@ -12,7 +12,6 @@
             "type": "dart",
             "flutterMode": "debug",
             "program": "lib/main.dart",
-            "deviceId": "adb-a3653d89-J96vOt._adb-tls-connect._tcp"
 
         },
         {
